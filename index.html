@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gabriel Francis</title>
+<meta name="description" content="Gabriel Francis: ferramentas para times comerciais e de operações no mercado financeiro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: abertura escura com o nome, depois a grade de projetos em cartões brancos. */
+:root {
+  --bg: #F5F8FF;
+  --surface: #FFFFFF;
+  --ink: #0B1220;
+  --ink-2: rgba(11, 18, 32, 0.68);
+  --ink-3: rgba(11, 18, 32, 0.45);
+  --line: #E5E7EB;
+  --blue: #0066F0;
+  --blue-soft: #3B9BFF;
+  --blue-wash: rgba(0, 102, 240, 0.08);
+  --hero: #07122B;
+  --shadow: 0 24px 48px -24px rgba(11, 18, 32, 0.18);
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #070D1C; --surface: #0E1730; --ink: #EAF0FF; --ink-2: rgba(234,240,255,0.7);
+    --ink-3: rgba(234,240,255,0.45); --line: rgba(255,255,255,0.09); --blue: #3B8BFF; --blue-soft: #6CB4FF;
+    --blue-wash: rgba(59,139,255,0.14); --hero: #0A1A3F; --shadow: 0 24px 48px -24px rgba(0,0,0,0.6); color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { margin: 0; letter-spacing: -0.03em; text-wrap: balance; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 3px; }
+
+.hero { background: var(--hero); color: #FFFFFF; position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; width: 760px; height: 460px; right: -200px; top: -160px; background: radial-gradient(closest-side, rgba(0,102,240,0.55), transparent); pointer-events: none; }
+.hero .wrap { position: relative; z-index: 1; padding-block: 28px 72px; display: grid; gap: 56px; }
+.topo { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.marca { font-weight: 800; letter-spacing: -0.02em; font-size: 17px; text-decoration: none; }
+.marca span { color: var(--blue-soft); }
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-soft); }
+.hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 800; line-height: 1; margin-top: 12px; }
+.hero p { margin: 18px 0 0; max-width: 56ch; color: rgba(255,255,255,0.72); font-size: 18px; }
+
+main .wrap { padding-block: 48px 56px; display: grid; gap: 20px; }
+.secao-tit { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.secao-tit h2 { font-size: 26px; font-weight: 800; }
+.secao-tit span { color: var(--ink-3); font-size: 14px; }
+.projetos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.projeto { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 24px; box-shadow: var(--shadow); display: grid; gap: 14px; align-content: start; text-decoration: none; transition: border-color .15s, transform .15s; }
+a.projeto:hover { border-color: var(--blue); transform: translateY(-2px); }
+.icone { width: 44px; height: 44px; border-radius: 12px; background: var(--blue); display: grid; place-items: center; box-shadow: 0 0 24px rgba(0,102,240,0.45); }
+.projeto h3 { font-size: 21px; font-weight: 800; }
+.projeto p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--blue-wash); color: var(--ink-2); }
+.abrir { font-weight: 700; color: var(--blue); font-size: 14.5px; }
+.projeto.breve { box-shadow: none; background: transparent; border-style: dashed; }
+.projeto.breve h3 { color: var(--ink-3); }
+
+footer .wrap { padding-block: 0 36px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-3); }
+.bytrops { font-weight: 700; color: var(--ink-2); }
+.bytrops b { color: var(--blue); font-weight: 800; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="topo">
+      <a class="marca" href="/">gfrancis<span>.</span></a>
+    </div>
+    <div>
+      <div class="eyebrow">Projetos</div>
+      <h1>Gabriel Francis</h1>
+      <p>Construo ferramentas que facilitam o dia a dia de times comerciais e de operações no mercado financeiro: menos planilha, mais tempo com o cliente.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="secao-tit">
+      <h2>Projetos</h2>
+      <span>Demonstrações com dados fictícios</span>
+    </div>
+    <div class="projetos">
+      <a class="projeto" href="/radar/">
+        <span class="icone" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity=".45"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12 19 6"/></svg>
+        </span>
+        <h3>Radar do Assessor</h3>
+        <p>Lê o histórico de contatos do CRM e diz quem chamar hoje, por qual canal, em que horário e com qual mensagem. Inclui alertas de follow-up, carteira por situação na plataforma e aniversariantes.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">pandas</span><span class="tag">41 testes</span></div>
+        <span class="abrir">Abrir demonstração →</span>
+      </a>
+      <div class="projeto breve">
+        <h3>Próximo projeto</h3>
+        <p>Em construção.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="ano">2026</span> Gabriel Francis</span>
+    <span class="bytrops">By <b>trops</b></span>
+  </div>
+</footer>
+<script>document.getElementById("ano").textContent = new Date().getFullYear();</script>
+</body>
+</html>
