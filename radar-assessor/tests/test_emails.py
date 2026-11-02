@@ -108,3 +108,20 @@ def test_envio_manual_para_selecionados_e_simulado():
     assert len(r) == 2 and all(x["simulado"] for x in r)
     assert r[0]["url"] == ("https://api.hubapi.com/automation/v2/workflows/123/enrollments/contacts/"
                            "carla.almeida10%40example.com")
+
+
+# --- Mural de cotações -------------------------------------------------------- #
+def test_mural_entra_nas_duas_paginas_sem_token(tmp_path):
+    from pathlib import Path
+    from app import PAINEL, incluir_mural, renderizar_painel
+    pasta = Path(__file__).resolve().parent.parent
+    painel = renderizar_painel(PAINEL)
+    home = incluir_mural((pasta / "templates" / "home.html").read_text(encoding="utf-8"))
+    for html in (painel, home):
+        assert "data-mural" in html and "/api/cotacoes" in html and "<!--MURAL-->" not in html
+    # O token só pode existir na variável de ambiente da Netlify, nunca nos arquivos.
+    funcao = (pasta / "netlify" / "functions" / "cotacoes.mjs").read_text(encoding="utf-8")
+    assert "process.env.BRAPI_TOKEN" in funcao
+    import re
+    for arq in list((pasta / "templates").glob("*.html")) + [pasta / "netlify" / "functions" / "cotacoes.mjs"]:
+        assert not re.search(r"token=[A-Za-z0-9]{16,}", arq.read_text(encoding="utf-8"))

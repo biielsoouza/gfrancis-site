@@ -6,8 +6,12 @@ netlify.toml na raiz do repositório), depois de passar nos testes. Para
 gerar o site no seu computador, rode: python publicar_site.py
 
     site/
-    ├── index.html          página inicial (portfólio)
+    ├── index.html          página inicial (portfólio + mural de cotações)
     └── radar/index.html    demonstração do Radar do Assessor
+
+O mural de cotações chama /api/cotacoes, uma função da Netlify
+(netlify/functions/cotacoes.mjs). O token da brapi.dev fica na variável de
+ambiente BRAPI_TOKEN, configurada no painel da Netlify, e nunca no código.
 
 A versão pública usa um nome de empresa genérico nas mensagens e só dados
 fictícios. Para trocar o nome, altere NOME_PUBLICO abaixo.
@@ -22,7 +26,7 @@ import shutil                                # noqa: E402
 from datetime import date, datetime          # noqa: E402
 from pathlib import Path                     # noqa: E402
 
-from app import renderizar_painel            # noqa: E402
+from app import incluir_mural, renderizar_painel   # noqa: E402
 from radar.gerador import (gerar_contatos, gerar_followups, gerar_leads,  # noqa: E402
                            gerar_cadastros, gerar_execucoes, gerar_jornadas, gerar_nascimentos, gerar_status_profit)
 from radar.metricas import montar_painel     # noqa: E402
@@ -57,5 +61,6 @@ if __name__ == "__main__":
     radar = renderizar_painel(painel).replace(
         '<meta name="claude:viewport-fit-sides" content="cover">\n', "")
     (SAIDA / "radar" / "index.html").write_text(pagina_completa(radar, "Radar do Assessor"), encoding="utf-8")
-    shutil.copy(PASTA / "templates" / "home.html", SAIDA / "index.html")
+    home = incluir_mural((PASTA / "templates" / "home.html").read_text(encoding="utf-8"))
+    (SAIDA / "index.html").write_text(home, encoding="utf-8")
     print(f"Site pronto em {SAIDA.resolve()}")

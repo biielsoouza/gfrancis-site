@@ -9,3 +9,8 @@
 
 [build.environment]
   PYTHON_VERSION = "3.11"
+
+# Funções (pequenos programas que rodam na Netlify), relativas à pasta base.
+# /api/cotacoes busca as cotações do mural; o token fica na variável BRAPI_TOKEN.
+[functions]
+  directory = "netlify/functions"

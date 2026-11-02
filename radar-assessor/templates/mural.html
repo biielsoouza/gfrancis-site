@@ -1,0 +1,84 @@
+<!-- Mural de cotações (By trops). Lê /api/cotacoes, a função da Netlify que consulta a brapi.dev. -->
+<style>
+[data-mural] { min-width: 0; max-width: 100%; --m-alta: #0E9F6E; --m-baixa: #DC2626; --m-alta-bg: rgba(14,159,110,0.12); --m-baixa-bg: rgba(220,38,38,0.1); }
+@media (prefers-color-scheme: dark) { [data-mural] { --m-alta: #34D399; --m-baixa: #F87171; --m-alta-bg: rgba(52,211,153,0.14); --m-baixa-bg: rgba(248,113,113,0.14); } }
+:root[data-theme="dark"] [data-mural] { --m-alta: #34D399; --m-baixa: #F87171; --m-alta-bg: rgba(52,211,153,0.14); --m-baixa-bg: rgba(248,113,113,0.14); }
+.mural-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.mural-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; display: grid; gap: 2px; min-width: 0; }
+.mural-card .sim { font-weight: 800; font-size: 15px; letter-spacing: -0.01em; display: flex; justify-content: space-between; gap: 6px; align-items: center; }
+.mural-card .nome { font-size: 12.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mural-card .preco { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.mural-var { font-size: 12.5px; font-weight: 800; padding: 2px 8px; border-radius: 999px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.mural-var.alta { color: var(--m-alta); background: var(--m-alta-bg); }
+.mural-var.baixa { color: var(--m-baixa); background: var(--m-baixa-bg); }
+.mural-var.zero { color: var(--ink-3); background: var(--line); }
+.mural-tag { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-3); }
+.mural-nota { font-size: 12.5px; color: var(--ink-3); margin-top: 10px; }
+.mural-faixa { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: thin; }
+.mural-chip { flex: none; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 8px 7px 14px; font-size: 13.5px; white-space: nowrap; }
+.mural-chip b { font-weight: 800; }
+.mural-chip .p { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.mural-esq { background: var(--line); border-radius: 18px; min-height: 92px; animation: mural-pulsa 1.4s ease-in-out infinite; }
+.mural-faixa .mural-esq { min-height: 34px; width: 150px; flex: none; border-radius: 999px; }
+@keyframes mural-pulsa { 50% { opacity: 0.5; } }
+@media (prefers-reduced-motion: reduce) { .mural-esq { animation: none; } }
+</style>
+<script>
+(function () {
+  const caixas = document.querySelectorAll("[data-mural]");
+  if (!caixas.length) return;
+  const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const n = (v, casas) => Number(v).toLocaleString("pt-BR", { minimumFractionDigits: casas, maximumFractionDigits: casas });
+  function preco(i) {
+    if (i.tipo === "indice" || i.simbolo.startsWith("WIN")) return `${n(i.preco, 0)} pts`;
+    if (i.tipo === "moeda") return `R$ ${n(i.preco, 4)}`;
+    if (i.simbolo.startsWith("WDO")) return n(i.preco, 1);
+    return `R$ ${n(i.preco, 2)}`;
+  }
+  function variacao(v) {
+    if (v == null || !isFinite(v)) return '<span class="mural-var zero">—</span>';
+    const cls = v > 0.004 ? "alta" : v < -0.004 ? "baixa" : "zero";
+    return `<span class="mural-var ${cls}">${v > 0 ? "▲" : v < 0 ? "▼" : ""} ${n(Math.abs(v), 2)}%</span>`;
+  }
+  const hora = (iso) => new Date(iso).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+  function nota(d) {
+    const fut = d.itens.some((i) => i.tipo === "futuro");
+    return `Cotações com atraso de ${esc(d.atraso)}${fut ? " · minicontratos: ajuste do último pregão" : ""} · fonte: brapi.dev · atualizado às ${hora(d.atualizado_em)}${d.em_pregao ? "" : " · mercado fechado"}. Não é recomendação de investimento.`;
+  }
+  function desenhar(caixa, d) {
+    const faixa = caixa.dataset.variante === "faixa";
+    if (!d || !d.itens || !d.itens.length) {
+      caixa.innerHTML = `<p class="mural-nota" style="margin:0">Cotações indisponíveis no momento.</p>`;
+      return;
+    }
+    if (faixa) {
+      caixa.innerHTML = `<div class="mural-faixa" role="list" aria-label="Cotações">${d.itens.map((i) =>
+        `<span class="mural-chip" role="listitem"><b>${esc(i.simbolo)}</b><span class="p">${preco(i)}</span>${variacao(i.variacao)}</span>`).join("")}</div>
+        <p class="mural-nota" style="margin-top:4px">${nota(d)}</p>`;
+    } else {
+      caixa.innerHTML = `<div class="mural-grade">${d.itens.map((i) => `<div class="mural-card">
+          <span class="sim">${esc(i.simbolo)}${i.tipo === "futuro" ? '<span class="mural-tag">futuro</span>' : ""}</span>
+          <span class="nome">${esc(i.nome)}</span>
+          <span class="preco">${preco(i)}</span>
+          <span>${variacao(i.variacao)}</span></div>`).join("")}</div>
+        <p class="mural-nota">${nota(d)}</p>`;
+    }
+  }
+  function esqueleto(caixa) {
+    const faixa = caixa.dataset.variante === "faixa";
+    const itens = Array.from({ length: faixa ? 8 : 6 }, () => '<div class="mural-esq"></div>').join("");
+    caixa.innerHTML = faixa ? `<div class="mural-faixa">${itens}</div>` : `<div class="mural-grade">${itens}</div>`;
+  }
+  async function atualizar(primeira) {
+    if (primeira) caixas.forEach(esqueleto);
+    let d = null;
+    try {
+      const r = await fetch("/api/cotacoes", { headers: { Accept: "application/json" } });
+      if (r.ok) d = await r.json();
+    } catch (e) {}
+    if (d || primeira) caixas.forEach((c) => desenhar(c, d));
+  }
+  atualizar(true);
+  setInterval(() => { if (!document.hidden) atualizar(false); }, 5 * 60 * 1000);
+})();
+</script>

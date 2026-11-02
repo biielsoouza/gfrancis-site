@@ -66,7 +66,12 @@ def renderizar_painel(painel: dict) -> str:
     """Injeta os dados no HTML. Usado pelo servidor e pela exportação estática."""
     modelo = (PASTA / "templates" / "painel.html").read_text(encoding="utf-8")
     dados = json.dumps(painel, ensure_ascii=False, default=str).replace("</", "<\\/")
-    return modelo.replace("__DADOS__", dados)
+    return incluir_mural(modelo.replace("__DADOS__", dados))
+
+
+def incluir_mural(html: str) -> str:
+    """Coloca o mural de cotações (templates/mural.html) onde houver <!--MURAL-->."""
+    return html.replace("<!--MURAL-->", (PASTA / "templates" / "mural.html").read_text(encoding="utf-8"))
 
 
 def carregar_cadastros(contatos, profit):
