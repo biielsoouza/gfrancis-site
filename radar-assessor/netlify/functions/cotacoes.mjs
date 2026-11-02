@@ -95,7 +95,8 @@ async function dolar(token) {
                variacao: c.percentageChange != null ? Number(c.percentageChange) : null, quando: c.updatedAtDate || null };
     }
   } catch (e) { console.log("cotacoes: dólar na brapi falhou, usando AwesomeAPI", String(e.message || e)); }
-  const json = await pegarJson("https://economia.awesomeapi.com.br/json/last/USD-BRL");
+  const json = await pegarJson("https://economia.awesomeapi.com.br/json/last/USD-BRL")
+    .catch((e) => { throw new Error(`AwesomeAPI: ${e.message || e}`); });
   const c = json.USDBRL;
   if (!c) throw new Error("sem cotação do dólar");
   return { simbolo: "USD", nome: "Dólar comercial", tipo: "moeda", preco: Number(c.bid),
@@ -125,7 +126,8 @@ export default async () => {
 
   const pregao = emPregao();
   let corpo = { atualizado_em: new Date().toISOString(), em_pregao: pregao, fonte: "brapi.dev",
-                atraso: "cerca de 30 minutos", itens, erros: erros.length };
+                atraso: "cerca de 30 minutos", itens, erros: erros.length,
+                falhas: erros.map((e) => e.slice(0, 160)) };
   if (erros.length) console.log("cotacoes: falhas", erros);
   if (itens.length) ultimaBoa = corpo;
   else if (ultimaBoa) corpo = { ...ultimaBoa, de_reserva: true };
