@@ -1,2 +1,11 @@
+# Publicação automática do gfrancis.com.br
+# A cada envio para a branch main, a Netlify: instala as dependências,
+# roda os testes (se falharem, não publica) e monta o site.
+
 [build]
-  publish = "."
+  base    = "radar-assessor"
+  command = "pip install -q -r requirements.txt && python -m pytest -q -p no:cacheprovider && python publicar_site.py"
+  publish = "site"
+
+[build.environment]
+  PYTHON_VERSION = "3.11"

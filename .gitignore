@@ -1,0 +1,7 @@
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+radar-assessor/site/
+radar-assessor/radar_do_assessor.html
+radar-assessor/empresa.txt
