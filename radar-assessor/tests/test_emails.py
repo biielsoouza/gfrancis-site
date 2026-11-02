@@ -100,3 +100,11 @@ def test_rotas_de_campanhas_e_hubspot():
     assert {c["id"] for c in camps} == {c["id"] for c in CAMPANHAS}
     previa = cli.get("/api/hubspot/previa").get_json()
     assert previa["contatos"] == 200 and previa["lotes"] == 2
+
+
+def test_envio_manual_para_selecionados_e_simulado():
+    from radar.hubspot import inscrever_selecionados
+    r = inscrever_selecionados(["carla.almeida10@example.com", "joao.prado22@example.net"], workflow_id=123)
+    assert len(r) == 2 and all(x["simulado"] for x in r)
+    assert r[0]["url"] == ("https://api.hubapi.com/automation/v2/workflows/123/enrollments/contacts/"
+                           "carla.almeida10%40example.com")

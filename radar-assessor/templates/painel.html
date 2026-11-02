@@ -453,6 +453,13 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 .pv-resumo { font-size: 13.5px; color: var(--ink-2); display: grid; gap: 4px; }
 .pv-resumo b { color: var(--ink); }
 .pv-lista { display: grid; gap: 6px; max-height: 360px; overflow-y: auto; }
+.pv-barra { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 12.5px; color: var(--ink-3); }
+.pv-barra span { margin-left: auto; font-weight: 700; color: var(--ink-2); }
+.pv-linha { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: center; }
+.pv-linha input { width: 18px; height: 18px; accent-color: var(--blue); cursor: pointer; margin: 0; }
+.pv-linha.marcada .pv-item { border-color: var(--blue); background: var(--blue-wash); }
+.pv-item.atual { box-shadow: inset 3px 0 0 var(--blue); }
+#pv-enviar:disabled { opacity: 0.45; cursor: default; filter: none; }
 .pv-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); font-size: 13px; text-align: left; color: inherit; cursor: pointer; font-family: inherit; width: 100%; }
 .pv-item:hover { border-color: var(--blue); }
 .pv-item b { display: block; font-size: 13.5px; }
@@ -702,7 +709,17 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
           <div class="pv-lado">
             <div class="secao">Destinatários desta campanha</div>
             <div class="pv-resumo" id="pv-resumo"></div>
+            <label class="busca" for="pv-busca">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="pv-busca" type="search" placeholder="Buscar por nome ou e-mail" autocomplete="off">
+            </label>
+            <div class="pv-barra">
+              <button class="mini-bt" type="button" id="pv-todos">Selecionar todos</button>
+              <button class="mini-bt" type="button" id="pv-limpar">Limpar</button>
+              <span class="num" id="pv-contagem">0 selecionados</span>
+            </div>
             <div class="pv-lista" id="pv-lista"></div>
+            <button class="copiar" type="button" id="pv-enviar" disabled>Enviar para os selecionados</button>
             <button class="bt" type="button" id="pv-copiar">Copiar HTML para o HubSpot</button>
             <span class="msg-aviso" id="pv-copiar-msg">O HTML vai com as variáveis do HubSpot no lugar dos dados do cliente.</span>
           </div>
@@ -1718,11 +1735,11 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
           <span>Público hoje: <b class="num">${pub.lista.length} ${camp.publico === "leads" ? "lead" : "cliente"}${pub.lista.length === 1 ? "" : "s"}</b>${pub.excluidos ? ` · ${pub.excluidos} fora por perfil incompatível` : ""}</span>
         </div>
         <div class="camp-acoes">
-          <button class="bt ${DSP.camp === camp.id ? "prim" : ""}" type="button" data-ver="${camp.id}">Ver e-mail</button>
-          <button class="bt" type="button" data-disparar="${camp.id}" ${pub.lista.length && ligada(camp.id) ? "" : "disabled"}>Disparar agora</button>
+          <button class="bt ${DSP.camp === camp.id ? "prim" : ""}" type="button" data-ver="${camp.id}">Escolher destinatários</button>
+          <button class="bt" type="button" data-disparar="${camp.id}" ${pub.lista.length && ligada(camp.id) ? "" : "disabled"}>Enviar para todos</button>
         </div></article>`;
     }).join("");
-    $("camp-grade").querySelectorAll("[data-ver]").forEach((b) => b.addEventListener("click", () => { DSP.camp = b.dataset.ver; DSP.dest = null; desenharDisparos(); $("pv-titulo").scrollIntoView({ behavior: "smooth", block: "start" }); }));
+    $("camp-grade").querySelectorAll("[data-ver]").forEach((b) => b.addEventListener("click", () => { DSP.camp = b.dataset.ver; DSP.dest = null; DSP.busca = ""; $("pv-busca").value = ""; desenharDisparos(); $("pv-titulo").scrollIntoView({ behavior: "smooth", block: "start" }); }));
     $("camp-grade").querySelectorAll("[data-chave]").forEach((b) => b.addEventListener("click", () => {
       campanhasLigadas[b.dataset.chave] = !ligada(b.dataset.chave);
       try { localStorage.setItem("radar-campanhas", JSON.stringify(campanhasLigadas)); } catch (e) {}
@@ -1773,13 +1790,51 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 
     $("pv-resumo").innerHTML = `<span><b class="num">${pub.lista.length}</b> ${camp.publico === "leads" ? "leads" : "clientes"} hoje · ${esc(camp.publico_descricao)}.</span>
       ${pub.excluidos ? `<span>${pub.excluidos} ficaram de fora por perfil de investidor incompatível com derivativos.</span>` : ""}`;
-    $("pv-lista").innerHTML = pub.lista.slice(0, 60).map((c) => `<button type="button" class="pv-item" data-dest="${c.cliente_id}">
-        <span><b>${esc(c.cliente)}</b><small>${esc(c.email || "sem e-mail")}</small></span>
-        <span class="chip ${c._lead ? "neutro" : c.status_profit === "sem_operar" ? "alerta" : c.status_profit === "abaixo" ? "aviso" : "neutro"}">${
-          camp.publico === "cobranca" ? `faltam ${c.faltam_isencao}` : c._lead ? "lead" : camp.publico === "aniversario" ? `${c.idade_no_aniversario} anos` : "sem Profit"}</span></button>`).join("")
-      + (pub.lista.length > 60 ? `<span class="vazio">e mais ${pub.lista.length - 60}…</span>` : "");
-    $("pv-lista").querySelectorAll("[data-dest]").forEach((b) => b.addEventListener("click", () => { DSP.dest = b.dataset.dest; desenharPrevia(); }));
+    desenharSelecao(camp, pub);
   }
+
+  // Seleção manual: o assessor escolhe quem recebe. Cada campanha guarda a sua seleção.
+  DSP.sel = {};
+  DSP.busca = "";
+  const selecaoDe = (id) => (DSP.sel[id] = DSP.sel[id] || new Set());
+  function desenharSelecao(camp, pub) {
+    const sel = selecaoDe(camp.id);
+    const ids = new Set(pub.lista.map((c) => c.cliente_id));
+    [...sel].forEach((id) => { if (!ids.has(id)) sel.delete(id); });      // quem saiu do público sai da seleção
+    const q = DSP.busca.trim().toLowerCase();
+    const visiveis = pub.lista.filter((c) => !q || c.cliente.toLowerCase().includes(q) || String(c.email || "").includes(q));
+    const etiqueta = (c) => camp.publico === "cobranca" ? `faltam ${c.faltam_isencao}` : c._lead ? "lead"
+      : camp.publico === "aniversario" ? `${c.idade_no_aniversario} anos` : "sem Profit";
+    const cor = (c) => c._lead ? "neutro" : c.status_profit === "sem_operar" ? "alerta" : c.status_profit === "abaixo" ? "aviso" : "neutro";
+    $("pv-lista").innerHTML = visiveis.length ? visiveis.map((c) => `<div class="pv-linha ${sel.has(c.cliente_id) ? "marcada" : ""}">
+        <input type="checkbox" id="sel-${c.cliente_id}" data-sel="${c.cliente_id}" ${sel.has(c.cliente_id) ? "checked" : ""} aria-label="Selecionar ${esc(c.cliente)}">
+        <button type="button" class="pv-item ${c.cliente_id === DSP.dest ? "atual" : ""}" data-dest="${c.cliente_id}" title="Ver o e-mail deste destinatário">
+          <span><b>${esc(c.cliente)}</b><small>${esc(c.email || "sem e-mail")}</small></span>
+          <span class="chip ${cor(c)}">${etiqueta(c)}</span></button></div>`).join("")
+      : `<span class="vazio">${pub.lista.length ? "Ninguém encontrado nessa busca." : "Ninguém no público desta campanha hoje."}</span>`;
+    $("pv-lista").querySelectorAll("[data-dest]").forEach((b) => b.addEventListener("click", () => { DSP.dest = b.dataset.dest; desenharPrevia(); }));
+    $("pv-lista").querySelectorAll("[data-sel]").forEach((cb) => cb.addEventListener("change", () => {
+      cb.checked ? sel.add(cb.dataset.sel) : sel.delete(cb.dataset.sel);
+      cb.closest(".pv-linha").classList.toggle("marcada", cb.checked);
+      if (cb.checked) { DSP.dest = cb.dataset.sel; desenharPrevia(); } else atualizarContagem(camp);
+    }));
+    $("pv-todos").textContent = q ? `Selecionar os ${visiveis.length} da busca` : "Selecionar todos";
+    $("pv-todos").onclick = () => { visiveis.forEach((c) => sel.add(c.cliente_id)); desenharPrevia(); };
+    $("pv-limpar").onclick = () => { sel.clear(); desenharPrevia(); };
+    atualizarContagem(camp);
+  }
+  function atualizarContagem(camp) {
+    const n = selecaoDe(camp.id).size;
+    $("pv-contagem").textContent = `${n} selecionado${n === 1 ? "" : "s"}`;
+    $("pv-enviar").disabled = n === 0 || !ligada(camp.id);
+    $("pv-enviar").textContent = !ligada(camp.id) ? "Campanha pausada" : n ? `Enviar para ${n} selecionado${n === 1 ? "" : "s"}` : "Selecione quem vai receber";
+  }
+  $("pv-busca").addEventListener("input", (e) => { DSP.busca = e.target.value; const camp = DADOS.campanhas.find((c) => c.id === DSP.camp); desenharSelecao(camp, publicoDe(camp)); });
+  $("pv-enviar").addEventListener("click", () => {
+    const camp = DADOS.campanhas.find((c) => c.id === DSP.camp);
+    const ids = [...selecaoDe(camp.id)];
+    if (ids.length) dispararSimulado(camp.id, ids);
+  });
   $("pv-dest").addEventListener("change", (e) => { DSP.dest = e.target.value; desenharPrevia(); });
   $("pv-copiar").addEventListener("click", () => {
     const camp = DADOS.campanhas.find((c) => c.id === DSP.camp);
@@ -1789,11 +1844,16 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     try { navigator.clipboard.writeText(texto).then(ok, falhou); } catch (e) { falhou(); }
   });
 
-  function dispararSimulado(id) {
-    const camp = DADOS.campanhas.find((c) => c.id === id), n = publicoDe(camp).lista.length;
-    DSP.simulados.unshift({ campanha: id, quando: new Date(), enviados: n });
-    popup({ titulo: "Simulação de disparo", nome: `${n} e-mail${n === 1 ? "" : "s"} · ${camp.nome}`,
-      obs: "Em produção, o Radar atualizaria esses contatos no HubSpot e o Workflow da campanha faria o envio. Nada foi enviado.",
+  function dispararSimulado(id, ids) {
+    const camp = DADOS.campanhas.find((c) => c.id === id);
+    const pub = publicoDe(camp).lista;
+    const destinatarios = ids ? pub.filter((c) => ids.includes(c.cliente_id)) : pub;
+    const n = destinatarios.length;
+    const nomes = destinatarios.slice(0, 3).map((c) => primeiro(c.cliente)).join(", ") + (n > 3 ? ` e mais ${n - 3}` : "");
+    DSP.simulados.unshift({ campanha: id, quando: new Date(), enviados: n, manual: !!ids, nomes });
+    if (ids) selecaoDe(id).clear();
+    popup({ titulo: ids ? "Simulação: envio para selecionados" : "Simulação de disparo", nome: `${n} e-mail${n === 1 ? "" : "s"} · ${camp.nome}`,
+      obs: `${ids ? `Para: ${nomes}. ` : ""}Em produção, o Radar inscreveria ${n === 1 ? "esse contato" : "esses contatos"} no Workflow da campanha no HubSpot, que faria o envio. Nada foi enviado.`,
       acoes: [{ rotulo: "Ver histórico", fazer: () => $("hist-disparos").scrollIntoView({ behavior: "smooth", block: "center" }) }] });
     desenharDisparos();
   }
@@ -1803,7 +1863,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     const hoje = inicioDoDia(new Date());
     const pct = (a, b) => b ? `${Math.round((a / b) * 100)}%` : "—";
     const sim = DSP.simulados.map((h) => `<tr><td class="num">${h.quando.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" })} ${h.quando.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</td>
-        <td><b>${esc(nomes[h.campanha])}</b><small>simulação · nada foi enviado</small></td><td class="num dir">${h.enviados}</td><td class="num dir">—</td><td class="num dir">—</td><td class="num dir">—</td></tr>`).join("");
+        <td><b>${esc(nomes[h.campanha])}</b><small>${h.manual ? `envio manual para ${esc(h.nomes)}` : "público completo"} · simulação, nada foi enviado</small></td><td class="num dir">${h.enviados}</td><td class="num dir">—</td><td class="num dir">—</td><td class="num dir">—</td></tr>`).join("");
     const fict = (DADOS.historico_disparos || []).slice(0, 30).map((h) => {
       const d = new Date(hoje); d.setDate(d.getDate() - h.dias_atras);
       return `<tr><td class="num">${d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" })}</td><td><b>${esc(nomes[h.campanha] || h.campanha)}</b></td>

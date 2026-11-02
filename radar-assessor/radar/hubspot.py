@@ -14,6 +14,9 @@ Como funciona:
        tokens de personalização. Enviar e-mail por Workflow exige o
        Marketing Hub Professional ou Enterprise.
 
+    4. Envio manual: o assessor seleciona os destinatários no painel e o Radar
+       inscreve só esses contatos no Workflow da campanha (inscrever_selecionados).
+
 Nesta demonstração NADA é enviado: `enviar_lotes` só faz a chamada de verdade se
 receber um token de aplicativo privado do HubSpot e `simular=False`.
 """
@@ -21,10 +24,12 @@ receber um token de aplicativo privado do HubSpot e `simular=False`.
 from __future__ import annotations
 
 import json
+import urllib.parse
 import urllib.request
 from datetime import date
 
 URL_UPSERT = "https://api.hubapi.com/crm/v3/objects/contacts/batch/upsert"
+URL_INSCRICAO = "https://api.hubapi.com/automation/v2/workflows/{workflow_id}/enrollments/contacts/{email}"
 TAMANHO_LOTE = 100   # limite da API do HubSpot por chamada
 
 # Propriedades personalizadas que precisam existir no HubSpot (Configurações > Propriedades > Contato).
@@ -97,4 +102,23 @@ def enviar_lotes(lotes: list[dict], token: str | None = None, simular: bool = Tr
                                      headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=30) as resp:
             resultados.append({"simulado": False, "status": resp.status, "contatos": len(lote["inputs"])})
+    return resultados
+
+
+def inscrever_selecionados(emails: list[str], workflow_id: int, token: str | None = None,
+                           simular: bool = True) -> list[dict]:
+    """
+    Envio manual: o assessor escolhe os destinatários no painel e o Radar inscreve
+    cada um no Workflow da campanha (API de Workflows do HubSpot). O Workflow envia o
+    e-mail na hora. Com simular=True (padrão), só devolve o que SERIA feito.
+    """
+    resultados = []
+    for email in emails:
+        url = URL_INSCRICAO.format(workflow_id=workflow_id, email=urllib.parse.quote(email))
+        if simular or not token:
+            resultados.append({"simulado": True, "email": email, "url": url})
+            continue
+        req = urllib.request.Request(url, method="POST", headers={"Authorization": f"Bearer {token}"})
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            resultados.append({"simulado": False, "email": email, "status": resp.status})
     return resultados
