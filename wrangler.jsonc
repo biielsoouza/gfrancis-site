@@ -1,0 +1,19 @@
+// Publicação na Cloudflare (Workers + arquivos estáticos).
+// A cada envio para a branch main, a Cloudflare roda "npx wrangler deploy", que:
+//   1. executa o build abaixo: instala as dependências, roda os testes (se falharem,
+//      não publica) e monta a pasta radar-assessor/site;
+//   2. publica os arquivos do site e o Worker que atende /api/cotacoes.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gfrancis-site",
+  "main": "radar-assessor/cloudflare/worker.mjs",
+  "compatibility_date": "2026-10-13",
+  "build": {
+    "command": "cd radar-assessor && pip install -q -r requirements.txt && python -m pytest -q -p no:cacheprovider && python publicar_site.py"
+  },
+  "assets": {
+    "directory": "./radar-assessor/site",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": { "enabled": true }
+}

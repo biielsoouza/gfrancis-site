@@ -5,3 +5,5 @@ __pycache__/
 radar-assessor/site/
 radar-assessor/radar_do_assessor.html
 radar-assessor/empresa.txt
+.wrangler/
+node_modules/
