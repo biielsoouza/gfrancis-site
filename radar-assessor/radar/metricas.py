@@ -21,8 +21,10 @@ from datetime import date, datetime
 import numpy as np
 import pandas as pd
 
-from .gerador import CANAIS, FAIXAS
-from .mensagens import (MODELOS, MODELOS_ISENCAO, OFERTA, sugerir_aniversario, sugerir_isencao,
+from .emails import campanhas_para_painel
+from .gerador import CANAIS, FAIXAS, gerar_historico_disparos
+from .hubspot import PROPRIEDADES
+from .mensagens import (EMPRESA, MODELOS, MODELOS_ISENCAO, OFERTA, REGRAS_ISENCAO, minimo_isencao, sugerir_aniversario, sugerir_isencao,
                         sugerir_lead, sugerir_mensagens, sugerir_ofertas)
 
 PESO_SUAVIZACAO = 5          # "contatos imaginários" na média de referência
@@ -311,6 +313,14 @@ def proximo_aniversario(nascimento: date, hoje: date) -> tuple[date, int, int]:
     return prox, (prox - hoje).days, prox.year - nascimento.year
 
 
+def ultimo_dia_util(ano: int, mes: int) -> date:
+    """Último dia útil do mês (sem feriados): é quando a plataforma é cobrada."""
+    d = (pd.Timestamp(ano, mes, 1) + pd.offsets.MonthEnd(0)).date()
+    while d.weekday() >= 5:
+        d -= pd.Timedelta(days=1)
+    return d
+
+
 def dias_uteis_restantes(hoje: date) -> int:
     """Dias úteis do mês a partir de hoje (inclusive). Não considera feriados."""
     fim = (pd.Timestamp(hoje) + pd.offsets.MonthEnd(0)).date()
@@ -381,6 +391,12 @@ def montar_painel(df_bruto: pd.DataFrame, hoje: date | None = None, tamanho_list
         for col in ("mini_30d_win", "mini_30d_wdo", "mini_30d_bit"):
             clientes[col] = clientes[col].fillna(0).astype(int)
         clientes["mini_30d_total"] = clientes["mini_30d_win"] + clientes["mini_30d_wdo"] + clientes["mini_30d_bit"]
+        # Cada plataforma tem o seu mínimo de isenção: refaz a situação de cada cliente.
+        clientes["minimo_isencao"] = clientes["plataforma"].map(minimo_isencao)
+        clientes["status_profit"] = [classificar_profit(t, n, m) for t, n, m in
+                                     zip(clientes["tem_profit"], clientes["minicontratos_mes"], clientes["minimo_isencao"])]
+        clientes["faltam_isencao"] = np.where(clientes["tem_profit"],
+                                              (clientes["minimo_isencao"] - clientes["minicontratos_mes"]).clip(lower=0), 0)
         # Derivativos para perfil conservador: o painel avisa antes de oferecer.
         clientes["perfil_compativel_derivativos"] = clientes["perfil_investidor"].isin(["Arrojado", "Agressivo"])
         clientes = clientes.astype(object).where(clientes.notna(), None)
@@ -390,6 +406,7 @@ def montar_painel(df_bruto: pd.DataFrame, hoje: date | None = None, tamanho_list
         for l in leads.sort_values("entrou_em").itertuples():
             lista_leads.append({
                 "lead_id": l.lead_id, "nome": l.nome, "assessor": l.assessor,
+                "email": getattr(l, "email", None),
                 "origem": l.origem, "interesse": l.interesse,
                 "entrou_em": pd.Timestamp(l.entrou_em).strftime("%d/%m/%Y"),
                 "dias_sem_contato": (pd.Timestamp(hoje) - pd.Timestamp(l.entrou_em)).days,
@@ -437,7 +454,13 @@ def montar_painel(df_bruto: pd.DataFrame, hoje: date | None = None, tamanho_list
         "modelos_lead": sugerir_lead("{cliente}", "{assessor}"),
         "modelos_aniversario": sugerir_aniversario("{cliente}", "{assessor}"),
         "execucoes": compactar_execucoes(execucoes),
+        "campanhas": campanhas_para_painel(),
+        "empresa": EMPRESA,
+        "historico_disparos": gerar_historico_disparos(),
+        "hubspot": {"propriedades": PROPRIEDADES},
         "leads": lista_leads,
         "isencao": {"minimo": minimo, "dias_uteis_restantes": dias_uteis_restantes(hoje),
+                    "regras": REGRAS_ISENCAO,
+                    "data_cobranca": ultimo_dia_util(hoje.year, hoje.month).isoformat(),
                     "plataforma": OFERTA["plataforma"], "automacao": OFERTA["automacao"]},
     }

@@ -10,6 +10,8 @@ Rotas:
     /api/aniversarios       aniversariantes de hoje e dos próximos 7 dias
     /api/sem-isencao        plataformas ainda não isentas no mês
     /api/execucoes          execuções dos últimos 30 dias (formato compacto)
+    /api/campanhas          campanhas de e-mail com HTML pronto para o HubSpot
+    /api/hubspot/previa     prévia do que seria enviado ao HubSpot (simulação)
     /api/clientes/<id>      detalhe de um cliente em JSON
 
 Os dados vêm do gerador fictício. Para plugar no CRM de verdade, basta trocar
@@ -124,6 +126,26 @@ def api_sem_isencao():
 def api_execucoes():
     """Execuções dos últimos 30 dias, no formato compacto usado pelo painel."""
     return jsonify(PAINEL["execucoes"])
+
+
+@app.get("/api/campanhas")
+def api_campanhas():
+    """Campanhas de e-mail, com o HTML pronto para o HubSpot (tokens de personalização)."""
+    from radar.emails import CAMPANHAS, html_hubspot, para_hubspot
+    return jsonify([{"id": c["id"], "nome": c["nome"], "agenda": c["agenda"],
+                     "assunto": para_hubspot(c["assunto"]), "preheader": para_hubspot(c["preheader"]),
+                     "html": html_hubspot(c)} for c in CAMPANHAS])
+
+
+@app.get("/api/hubspot/previa")
+def api_hubspot_previa():
+    """O que seria enviado ao HubSpot (simulação: nada sai daqui)."""
+    from radar.hubspot import montar_lotes
+    from radar.metricas import ultimo_dia_util
+    hoje = date.today()
+    lotes = montar_lotes(list(PAINEL["clientes"].values()), ultimo_dia_util(hoje.year, hoje.month))
+    return jsonify({"lotes": len(lotes), "contatos": sum(len(l["inputs"]) for l in lotes),
+                    "exemplo": lotes[0]["inputs"][:3] if lotes else []})
 
 
 @app.get("/api/segmentos")

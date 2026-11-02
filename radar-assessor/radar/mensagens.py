@@ -51,6 +51,18 @@ OFERTA = {
 }
 OFERTA["produto"] = f"{OFERTA['plataforma']} + {OFERTA['automacao']}"
 
+# Mínimo de minicontratos no mês para a plataforma ser isenta. A cobrança acontece
+# no último dia útil do mês para quem não atingir o mínimo. Mudou a regra? Altere aqui.
+REGRAS_ISENCAO: dict[str, int] = {
+    "Profit Pro": 10,
+    "Profit Ultra + Automação Premium 1.000": 10,
+}
+
+
+def minimo_isencao(plataforma: str | None) -> int:
+    return REGRAS_ISENCAO.get(plataforma or "", OFERTA["contratos_minimos"])
+
+
 AVISO_RISCO = ("Operações com derivativos envolvem riscos e podem não ser adequadas "
                "ao seu perfil de investidor.")
 

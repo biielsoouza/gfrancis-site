@@ -350,7 +350,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 .busca input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink); font: inherit; padding: 11px 0; outline: none; }
 .busca:focus-within { border-color: var(--blue); }
 .tabela-scroll { overflow-x: auto; margin: 0 -4px; }
-.tabela { width: 100%; border-collapse: separate; border-spacing: 0 6px; min-width: 760px; font-size: 14px; }
+.tabela { width: 100%; border-collapse: separate; border-spacing: 0 6px; min-width: 900px; font-size: 14px; }
 .tabela th { text-align: left; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-3); padding: 0 12px 4px; white-space: nowrap; }
 .tabela td { padding: 10px 12px; background: var(--surface-2); border-block: 1px solid var(--line); white-space: nowrap; }
 .tabela td:first-child { border-left: 1px solid var(--line); border-radius: 12px 0 0 12px; }
@@ -405,6 +405,62 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 .ex-tip b { font-family: var(--mono); }
 .tabela td.dir { text-align: right; }
 .chip.ativo-win, .chip.ativo-wdo, .chip.ativo-bit { display: inline-block; min-width: 42px; }
+
+/* ---------- Disparos de e-mail ---------- */
+.hs-status { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; }
+.hs-status > div { display: grid; gap: 2px; font-size: 14px; }
+.hs-status > div span { color: var(--ink-2); font-size: 13.5px; }
+.hs-sinal { width: 10px; height: 10px; border-radius: 50%; background: var(--warn); margin-top: 6px; box-shadow: 0 0 0 4px var(--warn-wash); }
+.hs-como { grid-column: 2; font-size: 13.5px; color: var(--ink-2); }
+.hs-como summary { cursor: pointer; color: var(--blue); font-weight: 700; margin-top: 4px; }
+.hs-como ol { margin: 8px 0; padding-left: 20px; display: grid; gap: 4px; max-width: 80ch; }
+.hs-como code, .hs-props code { font-family: var(--mono); font-size: 12px; background: var(--blue-wash); padding: 1px 6px; border-radius: 6px; color: var(--ink); }
+.hs-props { display: flex; flex-wrap: wrap; gap: 6px; }
+.camp-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.camp { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+.camp.sel { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+.camp.desligada { opacity: 0.6; }
+.camp-top { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.camp h3 { font-size: 16px; font-weight: 800; letter-spacing: -0.01em; }
+.camp p { margin: 0; font-size: 13px; color: var(--ink-2); }
+.camp-info { display: grid; gap: 4px; font-size: 12.5px; color: var(--ink-3); }
+.camp-info b { color: var(--ink); font-weight: 700; }
+.camp-acoes { display: flex; gap: 6px; flex-wrap: wrap; }
+.chave { position: relative; width: 38px; height: 22px; flex: none; border-radius: 999px; background: var(--line); border: 0; cursor: pointer; padding: 0; }
+.chave::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #FFFFFF; transition: transform .15s; box-shadow: 0 1px 3px rgba(0,0,0,0.25); }
+.chave[aria-checked="true"] { background: var(--good); }
+.chave[aria-checked="true"]::after { transform: translateX(16px); }
+.pv-controles { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.pv-sel { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink-3); }
+.pv-sel select { font: inherit; font-size: 13.5px; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; max-width: 240px; }
+.pv-grade { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.email-mock { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface-2); }
+.em-cab { padding: 12px 16px; border-bottom: 1px solid var(--line); display: grid; gap: 3px; font-size: 13px; color: var(--ink-3); background: var(--surface); }
+.em-cab b { color: var(--ink); font-weight: 600; }
+.em-assunto { font-size: 16px !important; font-weight: 800 !important; color: var(--ink) !important; letter-spacing: -0.01em; }
+.em-corpo { background: #FFFFFF; color: #1F2937; margin: 16px; border-radius: 12px; padding: 22px 22px 18px; display: grid; gap: 12px; font-size: 14.5px; line-height: 1.6; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.em-corpo p { margin: 0; white-space: pre-line; }
+.em-marca { display: flex; align-items: center; gap: 8px; font-weight: 800; color: #07122B; padding-bottom: 10px; border-bottom: 1px solid #E5E7EB; }
+.em-marca i { width: 22px; height: 22px; border-radius: 7px; background: #0066F0; display: inline-block; }
+.em-destaque { background: #EEF4FF; border-radius: 10px; padding: 12px 14px; font-weight: 700; color: #07122B; }
+.em-lista b { display: block; margin-bottom: 4px; }
+.em-lista ul { margin: 0; padding-left: 20px; }
+.em-botao { justify-self: start; background: #0066F0; color: #FFFFFF; border-radius: 999px; padding: 10px 18px; font-weight: 700; font-size: 14px; }
+.em-risco { font-size: 12px; color: #6B7280; font-style: italic; }
+.em-rodape { font-size: 11.5px; color: #6B7280; border-top: 1px solid #E5E7EB; padding-top: 10px; }
+.em-corpo .token { font-family: var(--mono); font-size: 0.86em; background: #FFF4D6; color: #8A5A00; border-radius: 5px; padding: 0 4px; }
+.pv-lado { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.pv-resumo { font-size: 13.5px; color: var(--ink-2); display: grid; gap: 4px; }
+.pv-resumo b { color: var(--ink); }
+.pv-lista { display: grid; gap: 6px; max-height: 360px; overflow-y: auto; }
+.pv-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); font-size: 13px; text-align: left; color: inherit; cursor: pointer; font-family: inherit; width: 100%; }
+.pv-item:hover { border-color: var(--blue); }
+.pv-item b { display: block; font-size: 13.5px; }
+.pv-item small { color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.tabela-leve { min-width: 640px; }
+.tabela-leve tbody tr { cursor: default; }
+.tabela .dir, .tabela th.dir { text-align: right; }
+@media (max-width: 960px) { .pv-grade { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- Ficha cadastral ---------- */
 .nav-ficha { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-3); }
@@ -479,6 +535,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     <a href="#sem-isencao" data-vista="sem-isencao"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="m9.5 8 5 5M14.5 8l-5 5"/></svg>Plataformas sem isenção<b class="cont-nav calmo" id="nav-isencao" hidden>0</b></a>
     <a href="#tempo-real" data-vista="tempo-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Operação em tempo real<span class="pill-beta">Beta</span></a>
     <a href="#execucoes" data-vista="execucoes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="m8.5 14.5 2 2 4-4"/></svg>Execuções</a>
+    <a href="#disparos" data-vista="disparos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Disparos de e-mail</a>
   </div>
   <div class="perfil" id="perfil"></div>
   <span class="bytrops">By <b>trops</b></span>
@@ -579,14 +636,14 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
         <div class="cli-barra">
           <label class="busca" for="busca-cliente">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input id="busca-cliente" type="search" placeholder="Buscar por nome, CPF ou código" autocomplete="off">
+            <input id="busca-cliente" type="search" placeholder="Buscar por nome, e-mail, CPF ou código" autocomplete="off">
           </label>
           <div class="subfiltro" id="cli-filtros" style="margin:0"></div>
           <span class="sub" id="cli-total"></span>
         </div>
         <div class="tabela-scroll">
           <table class="tabela">
-            <thead><tr><th>Cliente</th><th>Código</th><th>CPF</th><th>Telefone</th><th>Perfil</th><th>Mini 30 dias</th><th>Profit</th></tr></thead>
+            <thead><tr><th>Cliente</th><th>Código</th><th>CPF</th><th>Telefone</th><th>E-mail</th><th>Perfil</th><th>Mini 30 dias</th><th>Profit</th></tr></thead>
             <tbody id="cli-tabela"></tbody>
           </table>
         </div>
@@ -612,6 +669,54 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
       </div>
       <div class="kpis-claros seis" id="tr-kpis"></div>
       <div class="card"><div class="feed" id="tr-feed"></div></div>
+    </section>
+
+    <section class="vista" id="v-disparos" hidden>
+      <div class="vista-head">
+        <div><div class="eyebrow-claro">E-mail marketing · HubSpot</div><h2>Disparos de e-mail</h2>
+          <p>Campanhas automáticas enviadas pelo HubSpot. O Radar decide quem entra em cada campanha e atualiza os contatos lá; os Workflows do HubSpot fazem o envio no horário de cada uma.</p></div>
+      </div>
+      <div class="hs-status">
+        <span class="hs-sinal" aria-hidden="true"></span>
+        <div><b>Modo demonstração: nenhum e-mail é enviado.</b>
+          <span>Destinatários, e-mails e histórico são fictícios. Para enviar de verdade, o Radar precisa de um token de aplicativo privado do HubSpot.</span></div>
+        <details class="hs-como"><summary>Como a integração funciona</summary>
+          <ol>
+            <li>Todo dia, o Radar calcula em quais campanhas cada cliente entra e os dados do e-mail (plataforma, mínimo, quanto falta, data da cobrança).</li>
+            <li>Esses dados vão para os contatos do HubSpot como propriedades <code>radar_…</code>, em lotes de 100, pela API de contatos.</li>
+            <li>No HubSpot, um Workflow por campanha inscreve quem tem a campanha marcada e envia o e-mail, com os dados como variáveis de personalização (requer Marketing Hub Professional ou superior).</li>
+          </ol>
+          <div class="hs-props" id="hs-props"></div>
+        </details>
+      </div>
+      <div class="camp-grade" id="camp-grade"></div>
+      <div class="card">
+        <div class="card-head"><h2 id="pv-titulo">Pré-visualização</h2>
+          <div class="pv-controles">
+            <label class="pv-sel" for="pv-dest">Destinatário <select id="pv-dest"></select></label>
+            <div class="seg-periodo" role="group" aria-label="Versão" id="pv-modo"></div>
+          </div>
+        </div>
+        <div class="pv-grade">
+          <div class="email-mock" id="pv-email"></div>
+          <div class="pv-lado">
+            <div class="secao">Destinatários desta campanha</div>
+            <div class="pv-resumo" id="pv-resumo"></div>
+            <div class="pv-lista" id="pv-lista"></div>
+            <button class="bt" type="button" id="pv-copiar">Copiar HTML para o HubSpot</button>
+            <span class="msg-aviso" id="pv-copiar-msg">O HTML vai com as variáveis do HubSpot no lugar dos dados do cliente.</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Histórico de disparos</h2><span class="sub">dados fictícios</span></div>
+        <div class="tabela-scroll">
+          <table class="tabela tabela-leve">
+            <thead><tr><th>Data</th><th>Campanha</th><th class="dir">Enviados</th><th class="dir">Entregues</th><th class="dir">Abertura</th><th class="dir">Cliques</th></tr></thead>
+            <tbody id="hist-disparos"></tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <section class="vista" id="v-execucoes" hidden>
@@ -815,6 +920,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     if (typeof vistaAtual !== "undefined" && vistaAtual === "clientes") desenharClientes();
     if (typeof vistaAtual !== "undefined" && vistaAtual === "sem-isencao") desenharSemIsencao();
     if (typeof vistaAtual !== "undefined" && vistaAtual === "execucoes") desenharExecucoes();
+    if (typeof vistaAtual !== "undefined" && vistaAtual === "disparos") desenharDisparos();
     desenharCalor(v.calor);
     desenharLinha(v.evolucao);
   }
@@ -943,12 +1049,12 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     isento: { rotulo: "Isento", classe: "ok" },
   };
   function progresso(c) {
-    const min = DADOS.isencao.minimo, n = c.minicontratos_mes;
+    const min = c.minimo_isencao || DADOS.isencao.minimo, n = c.minicontratos_mes;
     return `<span class="prog ${n >= min ? "cheio" : ""}"><i style="width:${Math.min(n / min, 1) * 100}%"></i></span>`;
   }
   function blocoProfit(c) {
     const st = STATUS_PROFIT[c.status_profit];
-    const min = DADOS.isencao.minimo;
+    const min = c.minimo_isencao || DADOS.isencao.minimo;
     if (!c.tem_profit) {
       return `<div class="bloco-profit"><div class="linha-p"><b>Tem Profit?</b><span class="chip neutro">Não</span></div>
         <span style="font-size:13px;color:var(--ink-2)">Oportunidade de oferecer o ${esc(DADOS.isencao.plataforma)} com a ${esc(DADOS.isencao.automacao)}.</span></div>`;
@@ -986,8 +1092,10 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   // Preenche os modelos com o primeiro nome do cliente e do assessor.
   const primeiro = (n) => String(n).trim().split(/\s+/)[0];
   function preencher(modelos, c) {
-    const valores = { cliente: primeiro(c.cliente), assessor: primeiro(c.assessor),
-      operados: c.minicontratos_mes, faltam: c.faltam_isencao, interesse: c.interesse };
+    const valores = { cliente: primeiro(c.cliente), nome: primeiro(c.cliente), assessor: primeiro(c.assessor),
+      operados: c.minicontratos_mes, faltam: c.faltam_isencao, interesse: c.interesse,
+      plataforma: c.plataforma || DADOS.isencao.plataforma, minimo: c.minimo_isencao || DADOS.isencao.minimo,
+      data_cobranca: dataCobranca().toLocaleDateString("pt-BR") };
     const troca = (s) => s && s.replace(/\{(\w+)\}/g, (m, k) => (valores[k] ?? m));
     const out = {};
     for (const canal in modelos) out[canal] = modelos[canal].map((v) => ({ ...v, texto: troca(v.texto), assunto: troca(v.assunto) }));
@@ -1104,7 +1212,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 
   function linhaCliente(c) {
     const st = STATUS_PROFIT[c.status_profit];
-    const min = DADOS.isencao.minimo;
+    const min = c.minimo_isencao || DADOS.isencao.minimo;
     const lado = c.tem_profit
       ? `<span class="chip ${st.classe}">${st.rotulo}</span>${progresso(c)}<span class="num">${c.minicontratos_mes}/${min}${c.faltam_isencao ? ` · faltam ${c.faltam_isencao}` : ""}</span>`
       : `<span class="chip neutro">Sem Profit</span><span>${ICONES[c.melhor_canal] || ""} ${esc(c.melhor_canal)} · ${esc(c.melhor_faixa)}</span>`;
@@ -1210,6 +1318,8 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
           <button class="mini-bt" type="button" id="cpf-ver" aria-pressed="false">Mostrar</button></dd></div>
         <div><dt>Telefone</dt><dd class="num"><span id="tel-val">${esc(c.telefone || "—")}</span>
           <button class="mini-bt" type="button" id="tel-copiar">Copiar</button></dd></div>
+        <div class="largo"><dt>E-mail</dt><dd><span id="email-val">${esc(c.email || "—")}</span>
+          <button class="mini-bt" type="button" id="email-copiar">Copiar</button></dd></div>
         <div><dt>Perfil de investidor</dt><dd>${esc(c.perfil_investidor || "—")}
           ${c.perfil_compativel_derivativos === false && c.tem_profit ? '<span class="chip alerta">incompatível com derivativos</span>' : ""}</dd></div>
         <div><dt>Cliente desde</dt><dd class="num">${dataBR(c.cliente_desde)}</dd></div>
@@ -1229,6 +1339,12 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
       e.currentTarget.textContent = ver ? "Ocultar" : "Mostrar";
       $("cpf-val").textContent = ver ? c.cpf : mascararCpf(c.cpf);
     });
+    $("email-copiar").addEventListener("click", (e) => {
+      const b = e.currentTarget;
+      const ok = () => { b.textContent = "Copiado"; setTimeout(() => { b.textContent = "Copiar"; }, 1500); };
+      const sel = () => { const r = document.createRange(); r.selectNodeContents($("email-val")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+      try { navigator.clipboard.writeText(c.email).then(ok, sel); } catch (err) { sel(); }
+    });
     $("tel-copiar").addEventListener("click", (e) => {
       const b = e.currentTarget;
       const ok = () => { b.textContent = "Copiado"; setTimeout(() => { b.textContent = "Copiar"; }, 1500); };
@@ -1245,7 +1361,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   // ------------------------------------------------------------------------
   // Telas (Painel, Clientes, Plataformas sem isenção, Tempo real)
   // ------------------------------------------------------------------------
-  const VISTAS = ["clientes", "sem-isencao", "tempo-real", "execucoes"];
+  const VISTAS = ["clientes", "sem-isencao", "tempo-real", "execucoes", "disparos"];
   let vistaAtual = "painel";
   function mostrarVista(nome) {
     vistaAtual = VISTAS.includes(nome) ? nome : "painel";
@@ -1257,6 +1373,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     if (vistaAtual === "clientes") desenharClientes();
     if (vistaAtual === "sem-isencao") desenharSemIsencao();
     if (vistaAtual === "execucoes") desenharExecucoes();
+    if (vistaAtual === "disparos") desenharDisparos();
     TR.ativo(vistaAtual === "tempo-real");
   }
   function irPara(hash) {
@@ -1276,7 +1393,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     const q = CLI.busca.trim().toLowerCase(), qd = soDigitos(q);
     return clientesDaCarteira()
       .filter((c) => CLI.filtro === "todos" || (CLI.filtro === "com" ? c.tem_profit : !c.tem_profit))
-      .filter((c) => !q || c.cliente.toLowerCase().includes(q) || (qd.length >= 3 && (soDigitos(c.cpf).includes(qd) || String(c.codigo).includes(qd))))
+      .filter((c) => !q || c.cliente.toLowerCase().includes(q) || String(c.email || "").includes(q) || (qd.length >= 3 && (soDigitos(c.cpf).includes(qd) || String(c.codigo).includes(qd))))
       .sort((a, b) => a.cliente.localeCompare(b.cliente));
   }
   function desenharClientes() {
@@ -1294,11 +1411,12 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
         <td class="num">${esc(c.codigo || "—")}</td>
         <td class="num">${esc(mascararCpf(c.cpf))}</td>
         <td class="num">${esc(c.telefone || "—")}</td>
+        <td>${esc(c.email || "—")}</td>
         <td>${esc(c.perfil_investidor || "—")}</td>
         <td class="num">${c.mini_30d_total || 0}</td>
         <td><span class="chip ${st.classe}">${st.rotulo}</span></td></tr>`;
     }).join("");
-    $("cli-tabela").innerHTML = lista.length ? linhas : `<tr><td colspan="7" class="vazio">Nenhum cliente encontrado para “${esc(CLI.busca)}”.</td></tr>`;
+    $("cli-tabela").innerHTML = lista.length ? linhas : `<tr><td colspan="8" class="vazio">Nenhum cliente encontrado para “${esc(CLI.busca)}”.</td></tr>`;
     $("cli-tabela").querySelectorAll("[data-cli]").forEach((tr) => {
       const abre = () => abrir(tr.dataset.cli, "clientes", ids);
       tr.addEventListener("click", abre);
@@ -1542,6 +1660,158 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   $("ex-busca").addEventListener("input", (e) => { EXF.busca = e.target.value; EXF.limite = 50; desenharExecucoes(); });
   $("ex-mais").addEventListener("click", () => { EXF.limite += 50; desenharExecucoes(); });
 
+
+  // ------------------------------------------------------------------------
+  // Disparos de e-mail (HubSpot) — modo demonstração
+  // ------------------------------------------------------------------------
+  function ultimoDiaUtilMes(ano, mes) { const d = new Date(ano, mes + 1, 0); while (!diaUtil(d)) d.setDate(d.getDate() - 1); return d; }
+  function dataCobranca() { const h = new Date(); return ultimoDiaUtilMes(h.getFullYear(), h.getMonth()); }
+  function menosDiasUteis(d, n) { const r = new Date(d); while (n > 0) { r.setDate(r.getDate() - 1); if (diaUtil(r)) n--; } return r; }
+  function proximoDisparo(camp) {
+    const hoje = inicioDoDia(new Date());
+    if (camp.dias_uteis_antes != null) {
+      for (let k = 0; k < 3; k++) {
+        const base = new Date(hoje.getFullYear(), hoje.getMonth() + k, 1);
+        const dia = menosDiasUteis(ultimoDiaUtilMes(base.getFullYear(), base.getMonth()), camp.dias_uteis_antes);
+        if (dia >= hoje) return dia;
+      }
+    }
+    if (camp.id === "oferta_profit") {
+      for (let k = 0; k < 3; k++) { const d = primeiroDiaUtil(hoje.getFullYear(), hoje.getMonth() + k); if (d >= hoje) return d; }
+    }
+    return null;   // campanhas diárias / contínuas
+  }
+  const dataLonga = (d) => d.toLocaleDateString("pt-BR", { weekday: "short", day: "2-digit", month: "2-digit" }).replace(".", "");
+
+  function publicoDe(camp) {
+    const cs = clientesDaCarteira();
+    if (camp.publico === "cobranca") {
+      const base = cs.filter((c) => c.tem_profit && (c.status_profit === "sem_operar" || c.status_profit === "abaixo"));
+      return { lista: base.filter((c) => c.perfil_compativel_derivativos !== false).sort((a, b) => a.faltam_isencao - b.faltam_isencao), excluidos: base.filter((c) => c.perfil_compativel_derivativos === false).length };
+    }
+    if (camp.publico === "oferta") {
+      const base = cs.filter((c) => !c.tem_profit);
+      return { lista: base.filter((c) => c.perfil_compativel_derivativos !== false), excluidos: base.filter((c) => c.perfil_compativel_derivativos === false).length };
+    }
+    if (camp.publico === "aniversario") return { lista: cs.filter((c) => c.dias_ate_aniversario === 0), excluidos: 0 };
+    const leads = DADOS.leads.filter((l) => sel.value === "Todos" || l.assessor === sel.value)
+      .map((l) => ({ _lead: true, cliente_id: l.lead_id, cliente: l.nome, assessor: l.assessor, email: l.email, interesse: l.interesse }));
+    return { lista: leads, excluidos: 0 };
+  }
+
+  const DSP = { camp: DADOS.campanhas[0] && DADOS.campanhas[0].id, dest: null, modo: "cliente", simulados: [] };
+  let campanhasLigadas = {};
+  try { campanhasLigadas = JSON.parse(localStorage.getItem("radar-campanhas") || "{}"); } catch (e) {}
+  const ligada = (id) => campanhasLigadas[id] !== false;
+
+  function desenharDisparos() {
+    $("hs-props").innerHTML = (DADOS.hubspot ? DADOS.hubspot.propriedades : []).map((p) => `<code title="${esc(p.label)}">${esc(p.name)}</code>`).join("");
+    $("camp-grade").innerHTML = DADOS.campanhas.map((camp) => {
+      const pub = publicoDe(camp), prox = proximoDisparo(camp), hora = (camp.agenda.match(/\d{1,2}h/) || [""])[0];
+      return `<article class="camp ${DSP.camp === camp.id ? "sel" : ""} ${ligada(camp.id) ? "" : "desligada"}">
+        <div class="camp-top"><h3>${esc(camp.nome)}</h3>
+          <button class="chave" type="button" role="switch" aria-checked="${ligada(camp.id)}" aria-label="Campanha ativa" data-chave="${camp.id}"></button></div>
+        <p>${esc(camp.descricao)}</p>
+        <div class="camp-info">
+          <span>Quando: <b>${esc(camp.agenda)}</b></span>
+          <span>Próximo disparo: <b>${!ligada(camp.id) ? "pausada" : prox ? `${dataLonga(prox)}${hora ? " às " + hora : ""}` : "automático, todos os dias"}</b></span>
+          <span>Público hoje: <b class="num">${pub.lista.length} ${camp.publico === "leads" ? "lead" : "cliente"}${pub.lista.length === 1 ? "" : "s"}</b>${pub.excluidos ? ` · ${pub.excluidos} fora por perfil incompatível` : ""}</span>
+        </div>
+        <div class="camp-acoes">
+          <button class="bt ${DSP.camp === camp.id ? "prim" : ""}" type="button" data-ver="${camp.id}">Ver e-mail</button>
+          <button class="bt" type="button" data-disparar="${camp.id}" ${pub.lista.length && ligada(camp.id) ? "" : "disabled"}>Disparar agora</button>
+        </div></article>`;
+    }).join("");
+    $("camp-grade").querySelectorAll("[data-ver]").forEach((b) => b.addEventListener("click", () => { DSP.camp = b.dataset.ver; DSP.dest = null; desenharDisparos(); $("pv-titulo").scrollIntoView({ behavior: "smooth", block: "start" }); }));
+    $("camp-grade").querySelectorAll("[data-chave]").forEach((b) => b.addEventListener("click", () => {
+      campanhasLigadas[b.dataset.chave] = !ligada(b.dataset.chave);
+      try { localStorage.setItem("radar-campanhas", JSON.stringify(campanhasLigadas)); } catch (e) {}
+      desenharDisparos();
+    }));
+    $("camp-grade").querySelectorAll("[data-disparar]").forEach((b) => b.addEventListener("click", () => dispararSimulado(b.dataset.disparar)));
+    desenharPrevia();
+    desenharHistorico();
+  }
+
+  function desenharPrevia() {
+    const camp = DADOS.campanhas.find((c) => c.id === DSP.camp);
+    if (!camp) return;
+    const pub = publicoDe(camp);
+    if (!DSP.dest || !pub.lista.some((c) => c.cliente_id === DSP.dest)) DSP.dest = pub.lista[0] ? pub.lista[0].cliente_id : null;
+    const dest = pub.lista.find((c) => c.cliente_id === DSP.dest);
+    $("pv-titulo").textContent = `Pré-visualização: ${camp.nome}`;
+    $("pv-dest").innerHTML = pub.lista.length ? pub.lista.slice(0, 200).map((c) => `<option value="${c.cliente_id}" ${c.cliente_id === DSP.dest ? "selected" : ""}>${esc(c.cliente)}</option>`).join("") : "<option>Ninguém no público hoje</option>";
+    $("pv-dest").disabled = !pub.lista.length;
+    $("pv-modo").innerHTML = [["cliente", "Com dados do cliente"], ["hubspot", "Variáveis do HubSpot"]]
+      .map(([id, r]) => `<button type="button" data-modo="${id}" aria-pressed="${DSP.modo === id}">${r}</button>`).join("");
+    $("pv-modo").querySelectorAll("[data-modo]").forEach((b) => b.addEventListener("click", () => { DSP.modo = b.dataset.modo; desenharPrevia(); }));
+
+    // Texto: no modo HubSpot, os marcadores viram {{ contact.... }} destacados; no modo cliente, os dados reais.
+    const tokens = { nome: "{{ contact.firstname }}", assessor: "{{ contact.radar_assessor }}", plataforma: "{{ contact.radar_plataforma }}", minimo: "{{ contact.radar_minimo_isencao }}",
+      operados: "{{ contact.radar_minicontratos_mes }}", faltam: "{{ contact.radar_faltam_isencao }}", data_cobranca: "{{ contact.radar_data_cobranca }}", interesse: "{{ contact.radar_interesse }}" };
+    const exemplo = dest || { cliente: "Cliente", assessor: "Assessor" };
+    const valores = { nome: primeiro(exemplo.cliente), assessor: exemplo.assessor, plataforma: exemplo.plataforma || DADOS.isencao.plataforma,
+      minimo: exemplo.minimo_isencao || DADOS.isencao.minimo, operados: exemplo.minicontratos_mes ?? 0, faltam: exemplo.faltam_isencao ?? 0,
+      data_cobranca: dataCobranca().toLocaleDateString("pt-BR"), interesse: exemplo.interesse || "investimentos" };
+    const txt = (t) => esc(t).replace(/\{(\w+)\}/g, (m, k) => DSP.modo === "hubspot" ? `<span class="token">${esc(tokens[k] || m)}</span>` : esc(String(valores[k] ?? m)));
+    const blocos = camp.blocos.map((b) => {
+      if (b.tipo === "p") return `<p>${txt(b.texto)}</p>`;
+      if (b.tipo === "destaque") return `<div class="em-destaque">${txt(b.texto)}</div>`;
+      if (b.tipo === "lista") return `<div class="em-lista"><b>${esc(b.titulo)}</b><ul>${b.itens.map((i) => `<li>${esc(i)}</li>`).join("")}</ul></div>`;
+      if (b.tipo === "botao") return `<span class="em-botao">${esc(b.texto)}</span>`;
+      return "";
+    }).join("");
+    const rodape = esc(camp.rodape).replace("{{ unsubscribe_link }}", DSP.modo === "hubspot" ? '<span class="token">{{ unsubscribe_link }}</span>' : "<u>descadastrar</u>");
+    $("pv-email").innerHTML = `<div class="em-cab">
+        <span>De: <b>${esc(primeiro(exemplo.assessor))} · ${esc(DADOS.empresa || "")}</b></span>
+        <span>Para: <b>${DSP.modo === "hubspot" ? '<span class="token">{{ contact.email }}</span>' : esc(exemplo.email || "—")}</b></span>
+        <span class="em-assunto">${txt(camp.assunto)}</span>
+        <span>${txt(camp.preheader)}</span></div>
+      <div class="em-corpo"><div class="em-marca"><i></i>${esc(DADOS.empresa || "")}</div>${blocos}
+        ${camp.aviso_risco ? `<p class="em-risco">${esc(camp.aviso_risco)}</p>` : ""}
+        <p class="em-rodape">${rodape}</p></div>`;
+
+    $("pv-resumo").innerHTML = `<span><b class="num">${pub.lista.length}</b> ${camp.publico === "leads" ? "leads" : "clientes"} hoje · ${esc(camp.publico_descricao)}.</span>
+      ${pub.excluidos ? `<span>${pub.excluidos} ficaram de fora por perfil de investidor incompatível com derivativos.</span>` : ""}`;
+    $("pv-lista").innerHTML = pub.lista.slice(0, 60).map((c) => `<button type="button" class="pv-item" data-dest="${c.cliente_id}">
+        <span><b>${esc(c.cliente)}</b><small>${esc(c.email || "sem e-mail")}</small></span>
+        <span class="chip ${c._lead ? "neutro" : c.status_profit === "sem_operar" ? "alerta" : c.status_profit === "abaixo" ? "aviso" : "neutro"}">${
+          camp.publico === "cobranca" ? `faltam ${c.faltam_isencao}` : c._lead ? "lead" : camp.publico === "aniversario" ? `${c.idade_no_aniversario} anos` : "sem Profit"}</span></button>`).join("")
+      + (pub.lista.length > 60 ? `<span class="vazio">e mais ${pub.lista.length - 60}…</span>` : "");
+    $("pv-lista").querySelectorAll("[data-dest]").forEach((b) => b.addEventListener("click", () => { DSP.dest = b.dataset.dest; desenharPrevia(); }));
+  }
+  $("pv-dest").addEventListener("change", (e) => { DSP.dest = e.target.value; desenharPrevia(); });
+  $("pv-copiar").addEventListener("click", () => {
+    const camp = DADOS.campanhas.find((c) => c.id === DSP.camp);
+    const texto = `Assunto: ${camp.assunto_hubspot}\nPré-cabeçalho: ${camp.preheader_hubspot}\n\n${camp.html_hubspot}`;
+    const ok = () => { $("pv-copiar").textContent = "HTML copiado"; setTimeout(() => { $("pv-copiar").textContent = "Copiar HTML para o HubSpot"; }, 1800); };
+    const falhou = () => { $("pv-copiar-msg").textContent = "Não foi possível copiar neste navegador. Use a rota /api/campanhas no servidor local."; };
+    try { navigator.clipboard.writeText(texto).then(ok, falhou); } catch (e) { falhou(); }
+  });
+
+  function dispararSimulado(id) {
+    const camp = DADOS.campanhas.find((c) => c.id === id), n = publicoDe(camp).lista.length;
+    DSP.simulados.unshift({ campanha: id, quando: new Date(), enviados: n });
+    popup({ titulo: "Simulação de disparo", nome: `${n} e-mail${n === 1 ? "" : "s"} · ${camp.nome}`,
+      obs: "Em produção, o Radar atualizaria esses contatos no HubSpot e o Workflow da campanha faria o envio. Nada foi enviado.",
+      acoes: [{ rotulo: "Ver histórico", fazer: () => $("hist-disparos").scrollIntoView({ behavior: "smooth", block: "center" }) }] });
+    desenharDisparos();
+  }
+
+  function desenharHistorico() {
+    const nomes = Object.fromEntries(DADOS.campanhas.map((c) => [c.id, c.nome]));
+    const hoje = inicioDoDia(new Date());
+    const pct = (a, b) => b ? `${Math.round((a / b) * 100)}%` : "—";
+    const sim = DSP.simulados.map((h) => `<tr><td class="num">${h.quando.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" })} ${h.quando.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}</td>
+        <td><b>${esc(nomes[h.campanha])}</b><small>simulação · nada foi enviado</small></td><td class="num dir">${h.enviados}</td><td class="num dir">—</td><td class="num dir">—</td><td class="num dir">—</td></tr>`).join("");
+    const fict = (DADOS.historico_disparos || []).slice(0, 30).map((h) => {
+      const d = new Date(hoje); d.setDate(d.getDate() - h.dias_atras);
+      return `<tr><td class="num">${d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" })}</td><td><b>${esc(nomes[h.campanha] || h.campanha)}</b></td>
+        <td class="num dir">${h.enviados}</td><td class="num dir">${h.entregues}</td><td class="num dir">${pct(h.aberturas, h.entregues)}</td><td class="num dir">${pct(h.cliques, h.entregues)}</td></tr>`;
+    }).join("");
+    $("hist-disparos").innerHTML = sim + fict;
+  }
+
   // ---- Operação em tempo real (beta, simulação) ----
   const TR = (function () {
     const ATIVOS = [["WIN", 0.6], ["WDO", 0.3], ["BIT", 0.1]];
@@ -1563,16 +1833,17 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
       const antes = c.minicontratos_mes;
       c.minicontratos_mes += qtd;
       c["mini_30d_" + ativo.toLowerCase()] += qtd; c.mini_30d_total += qtd;
-      c.faltam_isencao = Math.max(0, DADOS.isencao.minimo - c.minicontratos_mes);
-      c.status_profit = c.minicontratos_mes >= DADOS.isencao.minimo ? "isento" : "abaixo";
-      const atingiu = antes < DADOS.isencao.minimo && c.minicontratos_mes >= DADOS.isencao.minimo;
+      const minimo = c.minimo_isencao || DADOS.isencao.minimo;
+      c.faltam_isencao = Math.max(0, minimo - c.minicontratos_mes);
+      c.status_profit = c.minicontratos_mes >= minimo ? "isento" : "abaixo";
+      const atingiu = antes < minimo && c.minicontratos_mes >= minimo;
       hoje[ativo] += qtd; hoje.clientes.add(c.cliente_id); if (atingiu) hoje.isencoes++;
       const momento = quando || new Date();
       feed.unshift({ quando: momento, c, ativo, qtd, lado, atingiu });
       EX.adicionar({ c: c.cliente_id, dia: inicioDoDia(momento), seg: momento.getHours() * 3600 + momento.getMinutes() * 60 + momento.getSeconds(),
         ativo, lado: lado === "Compra" ? 0 : 1, qtd, sim: true });
       if (feed.length > 40) feed.pop();
-      if (atingiu && !quando) popup({ titulo: "Isenção atingida", nome: c.cliente, obs: `Chegou a ${c.minicontratos_mes} minicontratos no mês. O ${DADOS.isencao.plataforma} fica isento.`,
+      if (atingiu && !quando) popup({ titulo: "Isenção atingida", nome: c.cliente, obs: `Chegou a ${c.minicontratos_mes} minicontratos no mês. O ${c.plataforma || DADOS.isencao.plataforma} fica isento.`,
         acoes: [{ rotulo: "Abrir cliente", fazer: () => abrir(c.cliente_id) }] });
       atualizarContadorIsencao();
     }
@@ -1802,7 +2073,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   // Clicar num item marca ele na hora e segura a marcação enquanto a página rola até lá.
   let travaAte = 0;
   function secaoAtual() {
-    if (Date.now() < travaAte) return;
+    if (Date.now() < travaAte || vistaAtual !== "painel") return;
     const linha = 140, ids = Object.keys(links);
     const cruza = ids.find((id) => { const r = $(id).getBoundingClientRect(); return r.top <= linha && r.bottom > linha; });
     const acima = ids.filter((id) => $(id).getBoundingClientRect().top <= linha).pop();

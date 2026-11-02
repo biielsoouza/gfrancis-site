@@ -11,6 +11,7 @@ acerta o que foi plantado.
 from __future__ import annotations
 
 import random
+import unicodedata
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 
@@ -237,6 +238,16 @@ def cpf_valido(cpf: str) -> bool:
     return n[9] == d1 and n[10] == d2
 
 
+DOMINIOS_FICTICIOS = ["example.com", "example.net", "example.org"]   # reservados: nunca são de ninguém
+
+
+def email_ficticio(nome: str, rng: random.Random) -> str:
+    """nome.sobrenome + número @ domínio reservado para exemplos (RFC 2606)."""
+    sem_acento = unicodedata.normalize("NFKD", nome).encode("ascii", "ignore").decode().lower()
+    partes = sem_acento.split()
+    return f"{partes[0]}.{partes[-1]}{rng.randint(10, 99)}@{rng.choice(DOMINIOS_FICTICIOS)}"
+
+
 def gerar_cadastros(contatos: pd.DataFrame, profit: pd.DataFrame | None = None,
                     hoje: date | None = None, semente: int = 41) -> pd.DataFrame:
     """
@@ -269,7 +280,9 @@ def gerar_cadastros(contatos: pd.DataFrame, profit: pd.DataFrame | None = None,
             "perfil_investidor": rng.choices(PERFIS_INVESTIDOR,
                                              weights=[1, 2, 5, 4] if st["tem_profit"] else [3, 4, 3, 1])[0],
             "cliente_desde": (hoje - timedelta(days=rng.randint(60, 2600))).isoformat(),
-            "plataforma": "Profit Ultra + Automação Premium 1.000" if st["tem_profit"] else None,
+            "email": email_ficticio(c.cliente, rng),
+            "plataforma": (rng.choices(["Profit Ultra + Automação Premium 1.000", "Profit Pro"], weights=[3, 2])[0]
+                           if st["tem_profit"] else None),
             "mini_30d_win": win, "mini_30d_wdo": wdo, "mini_30d_bit": bit,
         })
     return pd.DataFrame(linhas)
@@ -311,6 +324,31 @@ def gerar_execucoes(cadastros: pd.DataFrame, semente: int = 51) -> pd.DataFrame:
     return df.sort_values(["pregoes_atras", "segundo_do_dia"], ascending=[True, False]).reset_index(drop=True)
 
 
+def gerar_historico_disparos(semente: int = 61) -> list[dict]:
+    """
+    Histórico fictício de disparos dos últimos ~45 dias, com taxas plausíveis de
+    entrega, abertura e clique. `dias_atras` é contado a partir do dia em que o
+    painel é aberto.
+    """
+    rng = random.Random(semente)
+    agenda = [("cobranca_5du", [8, 39]), ("cobranca_vespera", [2, 33]), ("oferta_profit", [0, 31]),
+              ("aniversario", list(range(0, 15))), ("boas_vindas", list(range(0, 15, 2)))]
+    tamanho = {"cobranca_5du": (35, 60), "cobranca_vespera": (20, 40), "oferta_profit": (40, 70),
+               "aniversario": (1, 5), "boas_vindas": (2, 6)}
+    abertura = {"cobranca_5du": (0.38, 0.52), "cobranca_vespera": (0.42, 0.58), "oferta_profit": (0.22, 0.34),
+                "aniversario": (0.55, 0.75), "boas_vindas": (0.45, 0.65)}
+    historico = []
+    for campanha, dias in agenda:
+        for d in dias:
+            enviados = rng.randint(*tamanho[campanha])
+            entregues = enviados - (1 if enviados > 20 and rng.random() < 0.4 else 0)
+            abertos = round(entregues * rng.uniform(*abertura[campanha]))
+            cliques = round(abertos * rng.uniform(0.08, 0.22))
+            historico.append({"campanha": campanha, "dias_atras": d, "enviados": enviados,
+                              "entregues": entregues, "aberturas": abertos, "cliques": cliques})
+    return sorted(historico, key=lambda h: h["dias_atras"])
+
+
 ORIGENS_LEAD = ["Site", "Indicação", "Instagram", "Webinar de day trade", "Profit Summit", "Google"]
 INTERESSES_LEAD = ["day trade de WIN", "day trade de WDO", "automação de estratégias",
                    "começar na renda variável", "minicontratos de índice e dólar"]
@@ -331,6 +369,7 @@ def gerar_leads(qtd: int = 26, hoje: date | None = None, semente: int = 21) -> p
             "interesse": rng.choice(INTERESSES_LEAD),
             "entrou_em": entrou,
         })
+        linhas[-1]["email"] = email_ficticio(linhas[-1]["nome"], rng)
     return pd.DataFrame(linhas).sort_values("entrou_em").reset_index(drop=True)
 
 
