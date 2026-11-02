@@ -267,3 +267,45 @@ def test_patrimonio_ficticio(contatos):
     assert cad["patrimonio"].median() < cad["patrimonio"].mean()           # poucos clientes muito grandes
     painel = montar_painel(contatos, hoje=HOJE, cadastros=cad)
     assert all(c["patrimonio"] > 0 for c in painel["clientes"].values())
+
+
+# --- Equipe (visão do gestor) ----------------------------------------------- #
+def test_jornadas_fecham_o_expediente():
+    from radar.gerador import ASSESSORES, EXPEDIENTE_MIN, gerar_jornadas
+    j = gerar_jornadas(pregoes=21)
+    assert len(j) == len(ASSESSORES) * 21
+    total = j["online_min"] + j["atendimento_min"] + j["ausente_min"] + j["offline_min"]
+    assert (total == EXPEDIENTE_MIN).all()
+    assert (j[["online_min", "atendimento_min", "ausente_min", "offline_min"]] >= 0).all().all()
+    media = j.groupby("assessor")["offline_min"].mean()
+    assert media.max() - media.min() > 30          # assessores diferentes de verdade
+
+
+def test_pregoes_recentes_pula_fim_de_semana():
+    from radar.metricas import pregoes_recentes
+    dias = pregoes_recentes(date(2026, 11, 2), 3)     # segunda-feira
+    assert dias == [date(2026, 11, 2), date(2026, 10, 30), date(2026, 10, 29)]
+
+
+def test_metricas_da_equipe(contatos):
+    from radar.gerador import gerar_cadastros, gerar_execucoes, gerar_jornadas, gerar_status_profit
+    profit = gerar_status_profit(contatos, hoje=HOJE)
+    cad = gerar_cadastros(contatos, profit, hoje=HOJE)
+    ex = gerar_execucoes(cad)
+    painel = montar_painel(contatos, hoje=HOJE, profit=profit, cadastros=cad, execucoes=ex, jornadas=gerar_jornadas())
+    eq = painel["equipe"]
+    assert {a["nome"] for a in eq["assessores"]} == set(contatos["assessor"])
+    for a in eq["assessores"]:
+        for k in ("contatos", "respostas", "contratos", "online", "atendimento", "ausente", "offline"):
+            assert len(a[k]) == eq["pregoes"]
+        assert all(r <= c for r, c in zip(a["respostas"], a["contatos"]))
+    # Os contratos da equipe somam exatamente as execuções dos clientes.
+    assert sum(sum(a["contratos"]) for a in eq["assessores"]) == int(ex["quantidade"].sum())
+    assert sum(a["clientes"] for a in eq["assessores"]) == len(painel["clientes"])
+    assert sum(sum(a["contatos"]) for a in eq["assessores"]) > 0
+
+
+def test_rota_equipe():
+    from app import app
+    dados = app.test_client().get("/api/equipe").get_json()
+    assert dados["assessores"] and dados["pregoes"] == 21

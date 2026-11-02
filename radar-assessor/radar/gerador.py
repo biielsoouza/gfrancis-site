@@ -309,6 +309,35 @@ def _patrimonio_ficticio(rng: random.Random, tem_profit: bool) -> dict:
             **{f"patrimonio_{k}": v for k, v in zip(CLASSES_PATRIMONIO, partes)}}
 
 
+EXPEDIENTE_MIN = 9 * 60   # 9h às 18h
+
+
+def gerar_jornadas(assessores: list[str] | None = None, pregoes: int = 21, semente: int = 71) -> pd.DataFrame:
+    """
+    Tempo de cada assessor no sistema, por pregão (0 = hoje), dentro do expediente
+    de 9 horas (9h às 18h), em minutos:
+        online       logado e disponível
+        atendimento  logado e em atendimento (status "Em atendimento")
+        ausente      logado, mas marcado como ausente
+        offline      fora do sistema
+    Cada assessor tem um jeito próprio (mais ou menos tempo logado), para o ranking ter diferenças reais.
+    """
+    rng = random.Random(semente)
+    linhas = []
+    for a in assessores or ASSESSORES:
+        presenca = rng.uniform(0.72, 0.96)       # parte do expediente logado
+        foco = rng.uniform(0.35, 0.6)            # parte do tempo logado em atendimento
+        pausa = rng.uniform(0.04, 0.12)          # parte do tempo logado como ausente
+        for p in range(pregoes):
+            logado = round(EXPEDIENTE_MIN * min(max(rng.gauss(presenca, 0.06), 0.3), 1.0))
+            atendimento = round(logado * min(max(rng.gauss(foco, 0.08), 0.05), 0.9))
+            ausente = round(logado * min(max(rng.gauss(pausa, 0.03), 0.0), 0.3))
+            online = max(logado - atendimento - ausente, 0)
+            linhas.append({"assessor": a, "pregoes_atras": p, "online_min": online, "atendimento_min": atendimento,
+                           "ausente_min": ausente, "offline_min": EXPEDIENTE_MIN - online - atendimento - ausente})
+    return pd.DataFrame(linhas)
+
+
 ATIVOS_MINI = ["WIN", "WDO", "BIT"]
 
 

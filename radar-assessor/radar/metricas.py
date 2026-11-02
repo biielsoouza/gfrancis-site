@@ -16,7 +16,7 @@ Decisão importante — suavização (média bayesiana):
 
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 import numpy as np
 import pandas as pd
@@ -342,12 +342,72 @@ def compactar_execucoes(execucoes: pd.DataFrame | None) -> dict:
     return {"clientes": clientes, "ativos": ativos, "linhas": linhas}
 
 
+def pregoes_recentes(hoje: date, n: int = 21) -> list[date]:
+    """Os últimos n dias úteis até hoje (o mais recente primeiro)."""
+    dias, d = [], hoje
+    while len(dias) < n:
+        if d.weekday() < 5:
+            dias.append(d)
+        d -= timedelta(days=1)
+    return dias
+
+
+def metricas_equipe(df: pd.DataFrame, clientes: pd.DataFrame, hoje: date,
+                    jornadas: pd.DataFrame | None = None, execucoes: pd.DataFrame | None = None,
+                    followups: pd.DataFrame | None = None, leads: pd.DataFrame | None = None,
+                    pregoes: int = 21) -> dict:
+    """
+    Visão do gestor: por assessor, séries diárias (índice 0 = hoje) e números da carteira.
+    O painel soma as séries no período escolhido (hoje, 7, 15 ou 30 dias).
+    """
+    dias = pregoes_recentes(hoje, pregoes)
+    indice = {d: i for i, d in enumerate(dias)}
+    recentes = df[df["data_hora"].dt.date.isin(indice)].copy()
+    recentes["p"] = recentes["data_hora"].dt.date.map(indice)
+    dono = dict(zip(clientes["cliente_id"], clientes["assessor"]))
+    ex = None
+    if execucoes is not None and len(execucoes):
+        ex = execucoes[execucoes["pregoes_atras"] < pregoes].assign(assessor=lambda e: e["cliente_id"].map(dono))
+
+    def serie(dados: pd.DataFrame, coluna_p: str, valor=None) -> list[int]:
+        cont = (dados.groupby(coluna_p).size() if valor is None else dados.groupby(coluna_p)[valor].sum())
+        return [int(cont.get(i, 0)) for i in range(pregoes)]
+
+    saida = []
+    for a in sorted(clientes["assessor"].unique()):
+        c = clientes[clientes["assessor"] == a]
+        r = recentes[recentes["assessor"] == a]
+        item = {
+            "nome": a,
+            "clientes": int(len(c)),
+            "patrimonio": round(float(pd.to_numeric(c.get("patrimonio", pd.Series(dtype=float))).fillna(0).sum()), 2),
+            "com_profit": int(c["tem_profit"].astype(bool).sum()),
+            "isentos": int((c["status_profit"] == "isento").sum()),
+            "sem_isencao": int(c["status_profit"].isin(["sem_operar", "abaixo"]).sum()),
+            "esfriando": int(c["esfriando"].astype(bool).sum()) if "esfriando" in c else 0,
+            "followups": int((followups["assessor"] == a).sum()) if followups is not None and len(followups) else 0,
+            "leads": int((leads["assessor"] == a).sum()) if leads is not None and len(leads) else 0,
+            "contatos": serie(r, "p"),
+            "respostas": serie(r[r["sucesso"] == 1], "p"),
+            "contratos": serie(ex[ex["assessor"] == a], "pregoes_atras", "quantidade") if ex is not None else [0] * pregoes,
+        }
+        for k in ("online", "atendimento", "ausente", "offline"):
+            if jornadas is not None and len(jornadas):
+                j = jornadas[jornadas["assessor"] == a].set_index("pregoes_atras")[f"{k}_min"]
+                item[k] = [int(j.get(i, 0)) for i in range(pregoes)]
+            else:
+                item[k] = [0] * pregoes
+        saida.append(item)
+    return {"pregoes": pregoes, "expediente_min": 540, "assessores": saida}
+
+
 def montar_painel(df_bruto: pd.DataFrame, hoje: date | None = None, tamanho_lista: int = 15,
                   followups: pd.DataFrame | None = None, profit: pd.DataFrame | None = None,
                   leads: pd.DataFrame | None = None,
                   nascimentos: pd.DataFrame | None = None,
                   cadastros: pd.DataFrame | None = None,
-                  execucoes: pd.DataFrame | None = None) -> dict:
+                  execucoes: pd.DataFrame | None = None,
+                  jornadas: pd.DataFrame | None = None) -> dict:
     """
     Tudo o que o painel precisa, por assessor (e 'Todos').
     `followups`: clientes com status "followup" (cliente_id, followup_em, observacao).
@@ -356,6 +416,7 @@ def montar_painel(df_bruto: pd.DataFrame, hoje: date | None = None, tamanho_list
     `nascimentos`: data de nascimento por cliente.
     `cadastros`: ficha cadastral (cpf, codigo, telefone, perfil, operações 30 dias...).
     `execucoes`: ordens executadas nos últimos pregões (ver gerador.gerar_execucoes).
+    `jornadas`:  tempo online/em atendimento/ausente/offline de cada assessor por pregão (visão do gestor).
     """
     df = preparar(df_bruto)
     hoje = hoje or df["data_hora"].max().date()
@@ -454,6 +515,7 @@ def montar_painel(df_bruto: pd.DataFrame, hoje: date | None = None, tamanho_list
         "modelos_lead": sugerir_lead("{cliente}", "{assessor}"),
         "modelos_aniversario": sugerir_aniversario("{cliente}", "{assessor}"),
         "execucoes": compactar_execucoes(execucoes),
+        "equipe": metricas_equipe(df, clientes, hoje, jornadas, execucoes, followups, leads),
         "campanhas": campanhas_para_painel(),
         "empresa": EMPRESA,
         "historico_disparos": gerar_historico_disparos(),

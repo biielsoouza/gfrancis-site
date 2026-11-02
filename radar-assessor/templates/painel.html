@@ -350,6 +350,47 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 .kpi-claro b { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
 .kpi-claro small { font-size: 12px; color: var(--ink-3); }
 .alerta-suit.grave { background: var(--bad-wash); color: var(--bad); }
+.eq-assessores { display: flex; flex-wrap: wrap; gap: 8px; }
+.eq-assessores button { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: 6px 12px 6px 6px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.eq-assessores button.todos { padding-left: 12px; }
+.eq-assessores button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-wash); color: var(--ink); }
+.eq-assessores .av { width: 24px; height: 24px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--line); display: grid; place-items: center; font-size: 10.5px; font-weight: 800; color: var(--ink-2); }
+.eq-assessores button[aria-pressed="true"] .av { background: var(--blue); border-color: var(--blue); color: #FFFFFF; }
+.eq-podio { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 18px; }
+.eq-podio-tit { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.eq-podio-tit.bom { color: var(--good); } .eq-podio-tit.ruim { color: var(--bad); }
+.eq-top { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.eq-top li { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); min-width: 0; }
+.eq-top .pos { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 13px; flex: none; background: var(--line); color: var(--ink-2); }
+.eq-top.bom .pos { background: rgba(14,159,110,0.14); color: var(--good); }
+.eq-top.ruim .pos { background: var(--bad-wash); color: var(--bad); }
+.eq-top li:first-child .pos { box-shadow: 0 0 0 2px currentColor inset; }
+.eq-top .quem { flex: 1; min-width: 0; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.eq-top .val { font-weight: 800; white-space: nowrap; }
+.eq-rk { display: grid; gap: 8px; }
+.eq-rk-linha { display: grid; grid-template-columns: 28px minmax(90px, 160px) minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 13.5px; }
+.eq-rk-linha .n { color: var(--ink-3); font-weight: 700; text-align: right; }
+.eq-rk-linha .barra { height: 12px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.eq-rk-linha .barra i { display: block; height: 100%; border-radius: 999px; background: var(--s-win); }
+.eq-rk-linha.fora .barra i { background: var(--s-saldo); }
+.eq-rk-linha.fora { color: var(--ink-3); }
+.eq-rk-linha b { white-space: nowrap; }
+.eq-tempo { display: grid; gap: 12px; }
+.eq-tempo-linha { display: grid; gap: 5px; font-size: 13px; }
+.eq-tempo-linha .topo { display: flex; justify-content: space-between; gap: 8px; color: var(--ink-2); }
+.eq-tempo-linha .topo b { color: var(--ink); }
+.eq-tempo-barra { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; background: var(--surface-2); }
+.eq-tempo-barra i { display: block; height: 100%; }
+@media (max-width: 720px) { .eq-podio { grid-template-columns: minmax(0, 1fr); } .eq-rk-linha { grid-template-columns: 22px minmax(70px, 110px) minmax(0, 1fr) auto; } }
+.login-dica { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+.filtro-sel { display: grid; gap: 4px; font-size: 12px; font-weight: 600; color: var(--ink-3); min-width: 0; }
+.filtro-sel select { font: inherit; font-size: 14px; font-weight: 500; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; min-width: 0; width: 100%; cursor: pointer; }
+.filtro-sel select.ativo { border-color: var(--blue); background: var(--blue-wash); }
+.cli-filtros { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) auto; gap: 10px; align-items: end; margin-bottom: 14px; }
+.cli-filtros .limpar { border: 0; background: none; color: var(--blue); font-weight: 700; font-size: 13px; padding: 10px 4px; cursor: pointer; white-space: nowrap; }
+.cli-filtros .limpar:disabled { color: var(--ink-3); cursor: default; }
+@media (max-width: 960px) { .cli-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.cli-barra .spacer { flex: 1; }
 .cli-barra { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
 .busca { flex: 1 1 280px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--surface-2); border-radius: 12px; padding: 0 12px; color: var(--ink-3); }
 .busca input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--ink); font: inherit; padding: 11px 0; outline: none; }
@@ -558,6 +599,8 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     <a href="#tempo-real" data-vista="tempo-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Operação em tempo real<span class="pill-beta">Beta</span></a>
     <a href="#execucoes" data-vista="execucoes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="m8.5 14.5 2 2 4-4"/></svg>Execuções</a>
     <a href="#disparos" data-vista="disparos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Disparos de e-mail</a>
+    <div class="nav-tit" id="nav-gestao-tit" style="margin-top:14px" hidden>Gestão</div>
+    <a href="#equipe" data-vista="equipe" id="nav-equipe" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Equipe<span class="pill-beta" style="background:var(--blue-wash);color:var(--blue-soft,#7FB2FF)">Gestor</span></a>
   </div>
   <div class="perfil" id="perfil"></div>
   <span class="bytrops">By <b>trops</b></span>
@@ -671,11 +714,21 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
       </div>
       <div class="card">
         <div class="cli-barra">
+          <label class="filtro-sel" for="cli-campo">Buscar em
+            <select id="cli-campo">
+              <option value="tudo">Tudo</option><option value="nome">Nome</option><option value="cpf">CPF</option>
+              <option value="codigo">Código</option><option value="email">E-mail</option><option value="telefone">Telefone</option>
+            </select>
+          </label>
           <label class="busca" for="busca-cliente">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input id="busca-cliente" type="search" placeholder="Buscar por nome, e-mail, CPF ou código" autocomplete="off">
+            <input id="busca-cliente" type="search" placeholder="Buscar por nome, e-mail, CPF, código ou telefone" autocomplete="off">
           </label>
+        </div>
+        <div class="cli-filtros" id="cli-selects"></div>
+        <div class="cli-barra" style="margin-bottom:10px">
           <div class="subfiltro" id="cli-filtros" style="margin:0"></div>
+          <span class="spacer"></span>
           <span class="sub" id="cli-total"></span>
         </div>
         <div class="tabela-scroll">
@@ -766,6 +819,50 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
       </div>
     </section>
 
+    <section class="vista" id="v-equipe" hidden>
+      <div class="vista-head">
+        <div><div class="eyebrow-claro">Gestão · visível só para gestores</div><h2>Equipe</h2>
+          <p>Tempo online e offline, contatos, respostas e minicontratos operados pelos clientes de cada assessor. Escolha o período e os assessores que quer comparar.</p></div>
+      </div>
+      <div class="card ex-filtros">
+        <div class="ex-linha">
+          <div class="seg-periodo" role="group" aria-label="Período" id="eq-periodos"></div>
+          <span class="sub" id="eq-periodo-txt"></span>
+        </div>
+        <div class="eq-assessores" role="group" aria-label="Assessores" id="eq-assessores"></div>
+      </div>
+      <div class="kpis-claros seis" id="eq-kpis"></div>
+      <section class="card">
+        <div class="card-head"><h2>Ranking</h2><span class="sub" id="eq-rk-sub"></span></div>
+        <div class="subfiltro" id="eq-metricas"></div>
+        <div class="eq-podio">
+          <div><div class="eq-podio-tit bom">Melhores</div><ol class="eq-top" id="eq-melhores"></ol></div>
+          <div><div class="eq-podio-tit ruim">Piores</div><ol class="eq-top" id="eq-piores"></ol></div>
+        </div>
+        <div class="eq-rk" id="eq-ranking"></div>
+      </section>
+      <div class="grid-bottom">
+        <section class="card">
+          <div class="card-head"><h2>Evolução diária</h2><div class="subfiltro" id="eq-serie" style="margin:0"></div></div>
+          <div class="ex-grafico" id="eq-grafico"></div>
+        </section>
+        <section class="card">
+          <div class="card-head"><h2>Uso do tempo</h2><span class="sub">média por dia, expediente de 9h às 18h</span></div>
+          <div class="legenda-serie" id="eq-tempo-leg" style="margin-bottom:12px"></div>
+          <div class="eq-tempo" id="eq-tempo"></div>
+        </section>
+      </div>
+      <section class="card">
+        <div class="card-head"><h2>Comparativo da equipe</h2><span class="sub">toque num assessor para ver só ele</span></div>
+        <div class="tabela-scroll">
+          <table class="tabela">
+            <thead><tr><th>Assessor</th><th>Online/dia</th><th>Offline/dia</th><th>Contatos</th><th>Resposta</th><th>Contatos/h</th><th>Minicontratos</th><th>Clientes</th><th>Patrimônio</th><th>Sem isenção</th><th>Follow-ups</th></tr></thead>
+            <tbody id="eq-tabela"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
     <section class="vista" id="v-execucoes" hidden>
       <div class="vista-head">
         <div><div class="eyebrow-claro">Histórico · dados fictícios</div><h2>Execuções</h2>
@@ -838,6 +935,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
         <option>Inside Sales</option>
         <option>Gestor</option>
       </select>
+      <span class="login-dica">Entre como <b>Gestor</b> para ver as métricas da equipe.</span>
     </div>
     <div class="campo">
       <label for="login-senha">Senha</label>
@@ -968,6 +1066,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     if (typeof vistaAtual !== "undefined" && vistaAtual === "sem-isencao") desenharSemIsencao();
     if (typeof vistaAtual !== "undefined" && vistaAtual === "execucoes") desenharExecucoes();
     if (typeof vistaAtual !== "undefined" && vistaAtual === "disparos") desenharDisparos();
+    if (typeof vistaAtual !== "undefined" && vistaAtual === "equipe") desenharEquipe();
     desenharCalor(v.calor);
     desenharLinha(v.evolucao);
   }
@@ -1432,9 +1531,16 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   // Telas (Painel, Clientes, Plataformas sem isenção, Tempo real)
   // ------------------------------------------------------------------------
   const PAGINAS_PAINEL = ["visao-geral", "carteira-profit", "lista-do-dia", "sec-aniversarios", "analises"];
-  const VISTAS = [...PAGINAS_PAINEL, "clientes", "sem-isencao", "tempo-real", "execucoes", "disparos"];
+  const VISTAS = [...PAGINAS_PAINEL, "clientes", "sem-isencao", "tempo-real", "execucoes", "disparos", "equipe"];
   let vistaAtual = "visao-geral";
+  // A tela Equipe só existe para quem entrou como Gestor.
+  function ehGestor() { try { return !!(sessao && sessao.cargo === "Gestor"); } catch (e) { return false; } }
   function mostrarVista(nome) {
+    if (nome === "equipe" && !ehGestor()) {
+      nome = "visao-geral";
+      try { if (sessao) popup({ titulo: "Acesso restrito", nome: "A tela Equipe é só para gestores", obs: "Saia e entre de novo com a função Gestor para ver as métricas da equipe.", acoes: [{ rotulo: "Entendi", fazer: () => {} }] }); } catch (e) {}
+      if (location.hash === "#equipe") history.replaceState(null, "", "#visao-geral");
+    }
     vistaAtual = VISTAS.includes(nome) ? nome : "visao-geral";
     $("v-hero").hidden = vistaAtual !== "visao-geral";
     VISTAS.forEach((v) => { $("v-" + v).hidden = v !== vistaAtual; });
@@ -1443,6 +1549,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     if (vistaAtual === "sem-isencao") desenharSemIsencao();
     if (vistaAtual === "execucoes") desenharExecucoes();
     if (vistaAtual === "disparos") desenharDisparos();
+    if (vistaAtual === "equipe") desenharEquipe();
     TR.ativo(vistaAtual === "tempo-real");
   }
   function irPara(hash) {
@@ -1451,28 +1558,208 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   }
   window.addEventListener("hashchange", () => irPara(location.hash));
 
+  // ---- Equipe (gestor) ----
+  const EQ = { periodo: 21, sel: null, metrica: "contatos", serie: "contatos" };
+  const EQ_PERIODOS = [[1, "Hoje"], [5, "7 dias"], [10, "15 dias"], [21, "30 dias"]];
+  const somaN = (arr, n) => arr.slice(0, n).reduce((t, v) => t + v, 0);
+  const horas = (min) => { min = Math.round(min); const h = Math.floor(min / 60), m = min % 60; return h ? `${h}h${m ? " " + String(m).padStart(2, "0") + "min" : ""}` : `${m}min`; };
+  const pctBR = (v) => v == null || !isFinite(v) ? "—" : `${(v * 100).toLocaleString("pt-BR", { maximumFractionDigits: 0 })}%`;
+  const num1 = (v) => !isFinite(v) ? "—" : v.toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+  function metricasAssessor(a, n) {
+    const online = somaN(a.online, n), atend = somaN(a.atendimento, n), ausente = somaN(a.ausente, n), offline = somaN(a.offline, n);
+    const contatos = somaN(a.contatos, n), respostas = somaN(a.respostas, n), logado = online + atend;
+    return { nome: a.nome, contatos, respostas, taxa: contatos ? respostas / contatos : null, contratos: somaN(a.contratos, n),
+      online, atend, ausente, offline, logadoDia: logado / n, offlineDia: offline / n, ausenteDia: ausente / n,
+      porHora: logado ? contatos / (logado / 60) : 0, clientes: a.clientes, patrimonio: a.patrimonio,
+      sem_isencao: a.sem_isencao, followups: a.followups, leads: a.leads, isentos: a.isentos, com_profit: a.com_profit };
+  }
+  const EQ_METRICAS = {
+    contatos: { r: "Contatos", v: (m) => m.contatos, f: (v) => v.toLocaleString("pt-BR") },
+    taxa: { r: "Taxa de resposta", v: (m) => m.taxa ?? 0, f: pctBR },
+    contratos: { r: "Minicontratos", v: (m) => m.contratos, f: (v) => v.toLocaleString("pt-BR") },
+    logado: { r: "Tempo online", v: (m) => m.logadoDia, f: (v) => horas(v) + "/dia" },
+    offline: { r: "Tempo offline", v: (m) => m.offlineDia, f: (v) => horas(v) + "/dia", menorMelhor: true },
+    porHora: { r: "Contatos por hora", v: (m) => m.porHora, f: num1 },
+    patrimonio: { r: "Patrimônio", v: (m) => m.patrimonio, f: reaisCurto },
+  };
+  function desenharEquipe() {
+    const eq = DADOS.equipe;
+    if (!eq || !eq.assessores.length) return;
+    const nomes = eq.assessores.map((a) => a.nome);
+    if (!EQ.sel) EQ.sel = new Set(nomes);
+    const n = EQ.periodo;
+    const todas = eq.assessores.map((a) => metricasAssessor(a, n));
+    const sel = todas.filter((m) => EQ.sel.has(m.nome));
+    const todosSel = EQ.sel.size === nomes.length;
+
+    // Filtros
+    $("eq-periodos").innerHTML = EQ_PERIODOS.map(([v, r]) => `<button type="button" data-p="${v}" aria-pressed="${EQ.periodo === v}">${r}</button>`).join("");
+    $("eq-periodos").querySelectorAll("[data-p]").forEach((b) => b.addEventListener("click", () => { EQ.periodo = Number(b.dataset.p); desenharEquipe(); }));
+    const ini = EX.pregao(n - 1), fim = EX.pregao(0);
+    $("eq-periodo-txt").textContent = n === 1 ? `Pregão de ${dataCurta(fim)}` : `${n} pregões · ${dataCurta(ini)} a ${dataCurta(fim)}`;
+    $("eq-assessores").innerHTML = `<button type="button" class="todos" data-a="*" aria-pressed="${todosSel}">Todos os assessores</button>`
+      + nomes.map((nm) => `<button type="button" data-a="${esc(nm)}" aria-pressed="${!todosSel && EQ.sel.has(nm)}"><span class="av">${esc(iniciais(nm))}</span>${esc(nm)}</button>`).join("");
+    $("eq-assessores").querySelectorAll("[data-a]").forEach((b) => b.addEventListener("click", () => {
+      const a = b.dataset.a;
+      if (a === "*") EQ.sel = new Set(nomes);
+      else if (todosSel) EQ.sel = new Set([a]);            // de "todos" para um só
+      else { EQ.sel.has(a) ? EQ.sel.delete(a) : EQ.sel.add(a); if (!EQ.sel.size) EQ.sel = new Set(nomes); }
+      desenharEquipe();
+    }));
+
+    // KPIs do grupo selecionado
+    const soma = (k) => sel.reduce((t, m) => t + m[k], 0);
+    const q = sel.length, contatos = soma("contatos"), respostas = soma("respostas");
+    const quem = todosSel ? "equipe inteira" : q === 1 ? sel[0].nome : `${q} assessores`;
+    $("eq-kpis").innerHTML = [
+      ["Tempo online", horas((soma("online") + soma("atend")) / (n * q)), "média por assessor, por dia"],
+      ["Tempo offline", horas(soma("offline") / (n * q)), `+ ${horas(soma("ausente") / (n * q))} ausente por dia`],
+      ["Contatos realizados", contatos.toLocaleString("pt-BR"), `${num1(contatos / n)} por pregão`],
+      ["Taxa de resposta", pctBR(contatos ? respostas / contatos : null), `${respostas.toLocaleString("pt-BR")} responderam`],
+      ["Minicontratos", soma("contratos").toLocaleString("pt-BR"), "operados pelos clientes"],
+      ["Patrimônio", reaisCurto(soma("patrimonio")), `${soma("clientes")} clientes · ${quem}`],
+    ].map(([l, v, d]) => `<div class="kpi-claro"><span>${l}</span><b class="num">${v}</b><small>${esc(d)}</small></div>`).join("");
+
+    // Ranking: entre os selecionados; com um só selecionado, mostra a posição dele na equipe.
+    $("eq-metricas").innerHTML = Object.entries(EQ_METRICAS).map(([k, m]) => `<button type="button" data-m="${k}" aria-pressed="${EQ.metrica === k}">${m.r}</button>`).join("");
+    $("eq-metricas").querySelectorAll("[data-m]").forEach((b) => b.addEventListener("click", () => { EQ.metrica = b.dataset.m; desenharEquipe(); }));
+    const M = EQ_METRICAS[EQ.metrica];
+    const base = q >= 2 ? sel : todas;
+    const ordem = [...base].sort((a, b) => M.menorMelhor ? M.v(a) - M.v(b) : M.v(b) - M.v(a));
+    $("eq-rk-sub").textContent = q >= 2 ? `${M.r} · ${ordem.length} assessores` : `${M.r} · posição de ${sel[0].nome} na equipe`;
+    const k3 = Math.min(3, Math.floor(ordem.length / 2)) || 1;
+    const item = (m, pos) => `<li><span class="pos">${pos}º</span><span class="quem">${esc(m.nome)}</span><span class="val num">${M.f(M.v(m))}</span></li>`;
+    $("eq-melhores").className = "eq-top bom"; $("eq-piores").className = "eq-top ruim";
+    $("eq-melhores").innerHTML = ordem.slice(0, k3).map((m, i) => item(m, i + 1)).join("");
+    $("eq-piores").innerHTML = ordem.slice(-k3).reverse().map((m, i) => item(m, ordem.length - i)).join("");
+    const maior = Math.max(...ordem.map(M.v), 0.0001);
+    $("eq-ranking").innerHTML = ordem.map((m, i) => `<div class="eq-rk-linha ${q === 1 && !EQ.sel.has(m.nome) ? "fora" : ""}">
+        <span class="n">${i + 1}º</span><span>${esc(m.nome)}</span><span class="barra"><i style="width:${(M.v(m) / maior) * 100}%"></i></span><b class="num">${M.f(M.v(m))}</b></div>`).join("");
+
+    desenharSerieEquipe(eq, n);
+    desenharTempoEquipe(sel, n);
+
+    // Tabela
+    $("eq-tabela").innerHTML = [...todas].sort((a, b) => b.contatos - a.contatos).map((m) => `<tr tabindex="0" data-eqa="${esc(m.nome)}" style="${EQ.sel.has(m.nome) ? "" : "opacity:.55"}">
+        <td><b>${esc(m.nome)}</b></td><td class="num">${horas(m.logadoDia)}</td><td class="num">${horas(m.offlineDia)}</td>
+        <td class="num">${m.contatos}</td><td class="num">${pctBR(m.taxa)}</td><td class="num">${num1(m.porHora)}</td>
+        <td class="num">${m.contratos}</td><td class="num">${m.clientes}</td><td class="num">${reaisCurto(m.patrimonio)}</td>
+        <td class="num">${m.sem_isencao}</td><td class="num">${m.followups}</td></tr>`).join("");
+    $("eq-tabela").querySelectorAll("[data-eqa]").forEach((tr) => {
+      const so = () => { EQ.sel = new Set([tr.dataset.eqa]); desenharEquipe(); $("eq-assessores").scrollIntoView({ behavior: "smooth", block: "center" }); };
+      tr.addEventListener("click", so); tr.addEventListener("keydown", (e) => { if (e.key === "Enter") so(); });
+    });
+  }
+
+  function desenharSerieEquipe(eq, n) {
+    const SERIES = { contatos: ["Contatos", "contatos"], contratos: ["Minicontratos", "contratos"], online: ["Horas online", null] };
+    $("eq-serie").innerHTML = Object.entries(SERIES).map(([k, [r]]) => `<button type="button" data-s="${k}" aria-pressed="${EQ.serie === k}">${r}</button>`).join("");
+    $("eq-serie").querySelectorAll("[data-s]").forEach((b) => b.addEventListener("click", () => { EQ.serie = b.dataset.s; desenharEquipe(); }));
+    const dias = Math.max(n, 5);                       // "Hoje" mostra a última semana para dar contexto
+    const sel = eq.assessores.filter((a) => EQ.sel.has(a.nome));
+    const valor = (a, i) => EQ.serie === "online" ? (a.online[i] + a.atendimento[i]) / 60 : a[EQ.serie][i];
+    const pontos = [];
+    for (let i = dias - 1; i >= 0; i--) {
+      const v = sel.reduce((t, a) => t + valor(a, i), 0);
+      const extra = EQ.serie === "contatos" ? sel.reduce((t, a) => t + a.respostas[i], 0) : null;
+      pontos.push({ d: EX.pregao(i), v: EQ.serie === "online" ? v / sel.length : v, extra, hoje: i < n });
+    }
+    const W = 640, H = 220, pl = 36, pr = 8, pt = 12, pb = 28;
+    const bruto = Math.max(1, ...pontos.map((p) => p.v));
+    const passos = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500];
+    const passoY = passos.find((s) => bruto / s <= 5) || 1000;
+    const topo = Math.ceil(bruto / passoY) * passoY;
+    const y = (v) => pt + (1 - v / topo) * (H - pt - pb);
+    const larg = (W - pl - pr) / pontos.length, bw = Math.max(4, Math.min(34, larg * 0.62));
+    let g = "";
+    for (let v = 0; v <= topo; v += passoY) g += `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+    const passoX = Math.ceil(pontos.length / 8);
+    const cor = EQ.serie === "contratos" ? "var(--s-wdo)" : "var(--s-win)";
+    pontos.forEach((p, i) => {
+      const cx = pl + larg * i + larg / 2, h = Math.max(p.v ? 2 : 0, y(0) - y(p.v));
+      g += `<rect x="${cx - bw / 2}" y="${y(0) - h}" width="${bw}" height="${h}" rx="3" fill="${cor}" opacity="${p.hoje ? 1 : 0.35}"/>`;
+      if (p.extra != null && p.extra > 0) { const he = y(0) - y(p.extra); g += `<rect x="${cx - bw / 2 + 3}" y="${y(0) - he}" width="${Math.max(2, bw - 6)}" height="${he}" rx="2" fill="var(--hero)" opacity="${p.hoje ? 0.55 : 0.2}"/>`; }
+      g += `<rect class="alvo" data-i="${i}" x="${pl + larg * i}" y="${pt}" width="${larg}" height="${H - pt - pb}" fill="transparent"/>`;
+      if (i % passoX === 0 || i === pontos.length - 1) g += `<text x="${cx}" y="${H - 8}" text-anchor="middle">${dataCurta(p.d)}</text>`;
+    });
+    const box = $("eq-grafico");
+    const legenda = EQ.serie === "contatos" ? `<div class="legenda-serie" style="margin-top:8px"><span><i style="background:var(--s-win)"></i>Contatos</span><span><i style="background:var(--hero);opacity:.6"></i>Responderam</span></div>` : "";
+    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução diária">${g}</svg>${legenda}<div class="ex-tip" id="eq-tip" hidden></div>`;
+    const tip = $("eq-tip");
+    box.querySelectorAll(".alvo").forEach((a) => {
+      a.addEventListener("mouseenter", () => {
+        const p = pontos[Number(a.dataset.i)];
+        const sv = box.querySelector("svg").getBoundingClientRect(), bb = a.getBoundingClientRect();
+        const val = EQ.serie === "online" ? `${horas(p.v * 60)} online por assessor` : EQ.serie === "contatos" ? `${p.v} contatos · ${p.extra} responderam` : `${p.v} minicontratos`;
+        tip.innerHTML = `<b>${p.d.toLocaleDateString("pt-BR", { weekday: "short", day: "2-digit", month: "2-digit" })}</b><br>${val}`;
+        tip.style.left = `${bb.left - sv.left + bb.width / 2}px`; tip.style.top = `${bb.top - sv.top + 20}px`; tip.hidden = false;
+      });
+      a.addEventListener("mouseleave", () => { tip.hidden = true; });
+    });
+  }
+
+  function desenharTempoEquipe(sel, n) {
+    const PARTES = [["atend", "Em atendimento", "var(--s-win)"], ["online", "Online (disponível)", "var(--s-wdo)"], ["ausente", "Ausente", "var(--s-bit)"], ["offline", "Offline", "var(--s-saldo)"]];
+    $("eq-tempo-leg").innerHTML = PARTES.map(([, r, c]) => `<span><i style="background:${c}"></i>${r}</span>`).join("");
+    const exp = DADOS.equipe.expediente_min * n;
+    $("eq-tempo").innerHTML = [...sel].sort((a, b) => a.offline - b.offline).map((m) => `<div class="eq-tempo-linha">
+        <div class="topo"><b>${esc(m.nome)}</b><span>${horas((m.online + m.atend) / n)} online · ${horas(m.offline / n)} offline</span></div>
+        <div class="eq-tempo-barra" role="img" aria-label="Uso do tempo de ${esc(m.nome)}">${PARTES.map(([k, r, c]) => m[k] ? `<i style="width:${(m[k] / exp) * 100}%;background:${c}" title="${r}: ${horas(m[k] / n)} por dia"></i>` : "").join("")}</div></div>`).join("");
+  }
+
   // ---- Clientes ----
-  const CLI = { busca: "", filtro: "todos", ordem: "nome", limite: 40 };
+  const CLI = { busca: "", campo: "tudo", ordem: "nome", limite: 40,
+    f: { perfil: "", profit: "", plataforma: "", patrimonio: "", operou: "" } };
   const soDigitos = (t) => String(t || "").replace(/\D/g, "");
+  const FAIXAS_PAT = { ate100: [0, 1e5], "100a500": [1e5, 5e5], "500a1m": [5e5, 1e6], acima1m: [1e6, Infinity] };
+  const FILTROS_CLI = [
+    ["perfil", "Perfil", [["", "Todos"], ["Conservador", "Conservador"], ["Moderado", "Moderado"], ["Arrojado", "Arrojado"], ["Agressivo", "Agressivo"]]],
+    ["profit", "Profit", [["", "Todos"], ["com", "Com Profit"], ["sem_profit", "Sem Profit"], ["isento", "Isento no mês"], ["abaixo", "Abaixo da isenção"], ["sem_operar", "Falta operar"]]],
+    ["plataforma", "Plataforma", [["", "Todas"], ["Profit Ultra + Automação Premium 1.000", "Profit Ultra + Automação Premium 1.000"], ["Profit Pro", "Profit Pro"]]],
+    ["patrimonio", "Patrimônio", [["", "Qualquer valor"], ["ate100", "Até R$ 100 mil"], ["100a500", "R$ 100 mil a 500 mil"], ["500a1m", "R$ 500 mil a 1 mi"], ["acima1m", "Acima de R$ 1 mi"]]],
+    ["operou", "Minicontratos (30 dias)", [["", "Todos"], ["sim", "Operou"], ["nao", "Não operou"]]],
+  ];
+  function casaBusca(c, q, qd) {
+    if (!q) return true;
+    const campos = {
+      nome: () => c.cliente.toLowerCase().includes(q),
+      email: () => String(c.email || "").toLowerCase().includes(q),
+      cpf: () => qd.length > 0 && soDigitos(c.cpf).includes(qd),
+      codigo: () => qd.length > 0 && String(c.codigo || "").includes(qd),
+      telefone: () => qd.length > 0 && soDigitos(c.telefone).includes(qd),
+    };
+    if (CLI.campo !== "tudo") return campos[CLI.campo]();
+    return campos.nome() || campos.email() || (qd.length >= 3 && (campos.cpf() || campos.codigo() || campos.telefone()));
+  }
   function filtrarClientes() {
-    const q = CLI.busca.trim().toLowerCase(), qd = soDigitos(q);
+    const q = CLI.busca.trim().toLowerCase(), qd = soDigitos(q), f = CLI.f;
     return clientesDaCarteira()
-      .filter((c) => CLI.filtro === "todos" || (CLI.filtro === "com" ? c.tem_profit : !c.tem_profit))
-      .filter((c) => !q || c.cliente.toLowerCase().includes(q) || String(c.email || "").includes(q) || (qd.length >= 3 && (soDigitos(c.cpf).includes(qd) || String(c.codigo).includes(qd))))
+      .filter((c) => !f.perfil || c.perfil_investidor === f.perfil)
+      .filter((c) => !f.profit || (f.profit === "com" ? c.tem_profit : c.status_profit === f.profit))
+      .filter((c) => !f.plataforma || c.plataforma === f.plataforma)
+      .filter((c) => { if (!f.patrimonio) return true; const [de, ate] = FAIXAS_PAT[f.patrimonio]; return (c.patrimonio || 0) >= de && (c.patrimonio || 0) < ate; })
+      .filter((c) => !f.operou || (f.operou === "sim" ? (c.mini_30d_total || 0) > 0 : !(c.mini_30d_total > 0)))
+      .filter((c) => casaBusca(c, q, qd))
       .sort((a, b) => CLI.ordem === "patrimonio" ? (b.patrimonio || 0) - (a.patrimonio || 0) : a.cliente.localeCompare(b.cliente));
+  }
+  function desenharSelectsClientes() {
+    const algum = Object.values(CLI.f).some(Boolean);
+    $("cli-selects").innerHTML = FILTROS_CLI.map(([k, r, ops]) => `<label class="filtro-sel">${r}
+        <select data-fcli="${k}" class="${CLI.f[k] ? "ativo" : ""}">${ops.map(([v, t]) => `<option value="${esc(v)}" ${CLI.f[k] === v ? "selected" : ""}>${esc(t)}</option>`).join("")}</select></label>`).join("")
+      + `<button type="button" class="limpar" id="cli-limpar" ${algum ? "" : "disabled"}>Limpar filtros</button>`;
+    $("cli-selects").querySelectorAll("[data-fcli]").forEach((el) => el.addEventListener("change", () => { CLI.f[el.dataset.fcli] = el.value; CLI.limite = 40; desenharClientes(); }));
+    $("cli-limpar").addEventListener("click", () => { Object.keys(CLI.f).forEach((k) => (CLI.f[k] = "")); CLI.limite = 40; desenharClientes(); });
   }
   function desenharClientes() {
     const lista = filtrarClientes();
     const ids = lista.map((c) => c.cliente_id);
     const todos = clientesDaCarteira();
-    $("cli-filtros").innerHTML = [["todos", "Todos", todos.length], ["com", "Com Profit", todos.filter((c) => c.tem_profit).length], ["sem", "Sem Profit", todos.filter((c) => !c.tem_profit).length]]
-      .map(([id, r, n]) => `<button type="button" data-filtro="${id}" aria-pressed="${CLI.filtro === id}">${r} (${n})</button>`).join("")
-      + `<span style="margin-left:8px">Ordenar:</span>` + [["nome", "A–Z"], ["patrimonio", "Maior patrimônio"]]
-        .map(([id, r]) => `<button type="button" data-ordem="${id}" aria-pressed="${CLI.ordem === id}">${r}</button>`).join("");
-    $("cli-filtros").querySelectorAll("[data-filtro]").forEach((b) => b.addEventListener("click", () => { CLI.filtro = b.dataset.filtro; CLI.limite = 40; desenharClientes(); }));
+    desenharSelectsClientes();
+    $("cli-filtros").innerHTML = `<span>Ordenar:</span>` + [["nome", "A–Z"], ["patrimonio", "Maior patrimônio"]]
+      .map(([id, r]) => `<button type="button" data-ordem="${id}" aria-pressed="${CLI.ordem === id}">${r}</button>`).join("");
     $("cli-filtros").querySelectorAll("[data-ordem]").forEach((b) => b.addEventListener("click", () => { CLI.ordem = b.dataset.ordem; CLI.limite = 40; desenharClientes(); }));
     const somaPat = lista.reduce((t, c) => t + (c.patrimonio || 0), 0);
-    $("cli-total").textContent = `${lista.length} cliente${lista.length === 1 ? "" : "s"} · ${reaisCurto(somaPat)} em patrimônio`;
+    $("cli-total").textContent = `${lista.length} de ${todos.length} cliente${todos.length === 1 ? "" : "s"} · ${reaisCurto(somaPat)} em patrimônio`;
     const linhas = lista.slice(0, CLI.limite).map((c) => {
       const st = STATUS_PROFIT[c.status_profit];
       return `<tr tabindex="0" data-cli="${c.cliente_id}">
@@ -1486,7 +1773,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
         <td class="num">${c.mini_30d_total || 0}</td>
         <td><span class="chip ${st.classe}">${st.rotulo}</span></td></tr>`;
     }).join("");
-    $("cli-tabela").innerHTML = lista.length ? linhas : `<tr><td colspan="9" class="vazio">Nenhum cliente encontrado para “${esc(CLI.busca)}”.</td></tr>`;
+    $("cli-tabela").innerHTML = lista.length ? linhas : `<tr><td colspan="9" class="vazio">Nenhum cliente encontrado com essa busca e esses filtros.</td></tr>`;
     $("cli-tabela").querySelectorAll("[data-cli]").forEach((tr) => {
       const abre = () => abrir(tr.dataset.cli, "clientes", ids);
       tr.addEventListener("click", abre);
@@ -1496,6 +1783,9 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     $("cli-mais").textContent = `Mostrar mais (${lista.length - CLI.limite})`;
   }
   $("busca-cliente").addEventListener("input", (e) => { CLI.busca = e.target.value; CLI.limite = 40; desenharClientes(); });
+  const DICA_BUSCA = { tudo: "Buscar por nome, e-mail, CPF, código ou telefone", nome: "Nome do cliente", cpf: "CPF (só números ou com pontos)",
+    codigo: "Código do cliente (9 dígitos)", email: "E-mail do cliente", telefone: "Telefone, com ou sem DDD" };
+  $("cli-campo").addEventListener("change", (e) => { CLI.campo = e.target.value; $("busca-cliente").placeholder = DICA_BUSCA[CLI.campo]; CLI.limite = 40; desenharClientes(); $("busca-cliente").focus(); });
   $("cli-mais").addEventListener("click", () => { CLI.limite += 40; desenharClientes(); });
 
   // ---- Plataformas sem isenção ----
@@ -1577,6 +1867,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     return {
       todas: () => lista,
       maisAntiga: () => pregao[20],
+      pregao: (i) => pregao[i],
       adicionar(e) { lista.push(e); },
     };
   })();
@@ -2199,6 +2490,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   }
 
   function desenharPerfil() {
+    $("nav-equipe").hidden = $("nav-gestao-tit").hidden = !ehGestor();
     const st = STATUS.find((x) => x.id === sessao.status) || STATUS[0];
     const perfil = $("perfil");
     perfil.style.setProperty("--status", st.cor);
@@ -2229,6 +2521,8 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   }
   function sair() {
     sessao = null; salvarSessao();
+    $("nav-equipe").hidden = $("nav-gestao-tit").hidden = true;
+    if (vistaAtual === "equipe") { history.replaceState(null, "", "#visao-geral"); mostrarVista("visao-geral"); }
     fechar(); menuAberto(false);
     $("toasts").innerHTML = "";
     $("login-form").reset();

@@ -24,7 +24,7 @@ from pathlib import Path                     # noqa: E402
 
 from app import renderizar_painel            # noqa: E402
 from radar.gerador import (gerar_contatos, gerar_followups, gerar_leads,  # noqa: E402
-                           gerar_cadastros, gerar_execucoes, gerar_nascimentos, gerar_status_profit)
+                           gerar_cadastros, gerar_execucoes, gerar_jornadas, gerar_nascimentos, gerar_status_profit)
 from radar.metricas import montar_painel     # noqa: E402
 
 PASTA = Path(__file__).parent
@@ -51,7 +51,7 @@ if __name__ == "__main__":
                            profit=profit, leads=gerar_leads(),
                            nascimentos=gerar_nascimentos(contatos),
                            cadastros=(cad := gerar_cadastros(contatos, profit)),
-                           execucoes=gerar_execucoes(cad))
+                           execucoes=gerar_execucoes(cad), jornadas=gerar_jornadas())
     painel["followups_ancorados_em"] = agora.isoformat(timespec="seconds")
 
     radar = renderizar_painel(painel).replace(

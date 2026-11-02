@@ -10,6 +10,7 @@ Rotas:
     /api/aniversarios       aniversariantes de hoje e dos próximos 7 dias
     /api/sem-isencao        plataformas ainda não isentas no mês
     /api/execucoes          execuções dos últimos 30 dias (formato compacto)
+    /api/equipe             métricas da equipe por assessor (visão do gestor)
     /api/campanhas          campanhas de e-mail com HTML pronto para o HubSpot
     /api/hubspot/previa     prévia do que seria enviado ao HubSpot (simulação)
     /api/clientes/<id>      detalhe de um cliente em JSON
@@ -28,7 +29,7 @@ from threading import Timer
 
 from flask import Flask, Response, abort, jsonify
 
-from radar.gerador import gerar_contatos, gerar_followups, gerar_leads, gerar_cadastros, gerar_execucoes, gerar_nascimentos, gerar_status_profit
+from radar.gerador import gerar_contatos, gerar_followups, gerar_leads, gerar_cadastros, gerar_execucoes, gerar_jornadas, gerar_nascimentos, gerar_status_profit
 from radar.mensagens import sugerir_isencao, sugerir_mensagens, sugerir_ofertas
 from radar.metricas import montar_painel
 
@@ -78,13 +79,18 @@ def carregar_execucoes(cadastros):
     return gerar_execucoes(cadastros)
 
 
+def carregar_jornadas():
+    """Tempo online, em atendimento, ausente e offline de cada assessor por pregão. Hoje: fictício."""
+    return gerar_jornadas()
+
+
 _CONTATOS = carregar_contatos()
 _PROFIT = carregar_profit(_CONTATOS)
 _CADASTROS = carregar_cadastros(_CONTATOS, _PROFIT)
 PAINEL = montar_painel(_CONTATOS, followups=carregar_followups(_CONTATOS),
                        profit=_PROFIT, leads=carregar_leads(),
                        nascimentos=carregar_nascimentos(_CONTATOS),
-                       cadastros=_CADASTROS, execucoes=carregar_execucoes(_CADASTROS))
+                       cadastros=_CADASTROS, execucoes=carregar_execucoes(_CADASTROS), jornadas=carregar_jornadas())
 
 
 @app.get("/")
@@ -120,6 +126,12 @@ def api_sem_isencao():
     """Clientes com plataforma ainda não isenta no mês (sem operar ou abaixo do mínimo)."""
     lista = [c for c in PAINEL["clientes"].values() if c["status_profit"] in ("sem_operar", "abaixo")]
     return jsonify(sorted(lista, key=lambda c: c["faltam_isencao"]))
+
+
+@app.get("/api/equipe")
+def api_equipe():
+    """Métricas da equipe. Num sistema de verdade, esta rota exige login de gestor."""
+    return jsonify(PAINEL["equipe"])
 
 
 @app.get("/api/execucoes")
