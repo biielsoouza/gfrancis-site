@@ -21,6 +21,20 @@
 .mural-grupo { display: flex; gap: 8px; padding-right: 8px; }
 .mural-anda:hover .mural-trilho, .mural-anda:focus-within .mural-trilho { animation-play-state: paused; }
 @keyframes mural-rola { to { transform: translateX(-50%); } }
+/* Variante "topo": letreiro fixo no alto da página, sobre fundo escuro. */
+[data-variante="topo"] { --m-alta: #34D399; --m-baixa: #F87171; --m-alta-bg: transparent; --m-baixa-bg: transparent; }
+.mural-topo { display: flex; align-items: center; gap: 10px; min-height: 36px; color: #FFFFFF; font-size: 13px; }
+.mural-topo .mural-anda { flex: 1; min-width: 0; padding: 0; }
+.mural-topo .mural-grupo { gap: 0; padding-right: 0; }
+.mural-topo .mural-chip { background: transparent; border: 0; border-radius: 0; padding: 0 16px; border-right: 1px solid rgba(255,255,255,0.12); font-size: 13px; gap: 7px; }
+.mural-topo .mural-chip .p { color: rgba(255,255,255,0.78); }
+.mural-topo .mural-var { padding: 0; font-size: 12.5px; }
+.mural-topo .mural-var.zero { background: transparent; color: rgba(255,255,255,0.55); }
+.mural-selo { flex: none; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(255,255,255,0.6); cursor: help; white-space: nowrap; }
+.mural-selo i { width: 7px; height: 7px; border-radius: 50%; background: #34D399; box-shadow: 0 0 0 3px rgba(52,211,153,0.2); }
+.mural-selo.fechado i { background: rgba(255,255,255,0.45); box-shadow: none; }
+.mural-topo .mural-esq { background: rgba(255,255,255,0.1); min-height: 16px; width: 120px; border-radius: 6px; }
+@media (max-width: 560px) { .mural-selo span { display: none; } }
 @media (prefers-reduced-motion: reduce) {
   .mural-anda { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
   .mural-trilho { animation: none; }
@@ -57,7 +71,16 @@
     return `Cotações com atraso de ${esc(d.atraso)}${fut ? " · minicontratos: ajuste do último pregão" : ""} · fontes: brapi.dev${d.itens.some((i) => i.tipo === "moeda") ? " e AwesomeAPI" : ""} · atualizado às ${hora(d.atualizado_em)}${d.em_pregao ? "" : " · mercado fechado"}. Não é recomendação de investimento.`;
   }
   function desenhar(caixa, d) {
-    const faixa = caixa.dataset.variante === "faixa";
+    const faixa = caixa.dataset.variante === "faixa", topo = caixa.dataset.variante === "topo";
+    if (topo) {
+      if (!d || !d.itens || !d.itens.length) { caixa.innerHTML = `<div class="mural-topo"><span class="mural-selo fechado"><i></i><span>Cotações indisponíveis</span></span></div>`; return; }
+      const chips = d.itens.map((i) => `<span class="mural-chip" role="listitem"><b>${esc(i.simbolo)}</b><span class="p">${preco(i)}</span>${variacao(i.variacao)}</span>`).join("");
+      caixa.innerHTML = `<div class="mural-topo">
+          <span class="mural-selo ${d.em_pregao ? "" : "fechado"}" title="${esc(nota(d).replace(/<[^>]+>/g, ""))}" tabindex="0"><i></i><span>${d.em_pregao ? "Mercado · atraso 30 min" : "Mercado fechado"}</span></span>
+          <div class="mural-anda" style="--mural-dur:${Math.max(30, d.itens.length * 4)}s">
+            <div class="mural-trilho"><div class="mural-grupo" role="list" aria-label="Cotações">${chips}</div><div class="mural-grupo" aria-hidden="true">${chips}</div></div></div></div>`;
+      return;
+    }
     if (!d || !d.itens || !d.itens.length) {
       caixa.innerHTML = `<p class="mural-nota" style="margin:0">Cotações indisponíveis no momento.</p>`;
       return;
@@ -79,9 +102,10 @@
     }
   }
   function esqueleto(caixa) {
-    const faixa = caixa.dataset.variante === "faixa";
-    const itens = Array.from({ length: faixa ? 8 : 6 }, () => '<div class="mural-esq"></div>').join("");
-    caixa.innerHTML = faixa ? `<div class="mural-faixa">${itens}</div>` : `<div class="mural-grade">${itens}</div>`;
+    const v = caixa.dataset.variante;
+    const itens = Array.from({ length: v === "cards" || !v ? 6 : 8 }, () => '<div class="mural-esq"></div>').join("");
+    caixa.innerHTML = v === "topo" ? `<div class="mural-topo"><div class="mural-faixa" style="padding:0;overflow:hidden">${itens}</div></div>`
+      : v === "faixa" ? `<div class="mural-faixa">${itens}</div>` : `<div class="mural-grade">${itens}</div>`;
   }
   async function atualizar(primeira) {
     if (primeira) caixas.forEach(esqueleto);

@@ -36,6 +36,7 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.03em; text-wrap: balance; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 3px; }
 
+.faixa-cotacoes { position: sticky; top: 0; z-index: 10; background: #050C1F; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .hero { background: var(--hero); color: #FFFFFF; position: relative; overflow: hidden; }
 .hero::after { content: ""; position: absolute; width: 760px; height: 460px; right: -200px; top: -160px; background: radial-gradient(closest-side, rgba(0,102,240,0.55), transparent); pointer-events: none; }
 .hero .wrap { position: relative; z-index: 1; padding-block: 28px 72px; display: grid; gap: 56px; }
@@ -70,6 +71,7 @@ footer .wrap { padding-block: 0 36px; display: flex; justify-content: space-betw
 </style>
 </head>
 <body>
+<div class="faixa-cotacoes"><div class="wrap"><div data-mural data-variante="topo"></div></div></div>
 <header class="hero">
   <div class="wrap">
     <div class="topo">
