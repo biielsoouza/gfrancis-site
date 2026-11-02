@@ -43,7 +43,7 @@
   const hora = (iso) => new Date(iso).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   function nota(d) {
     const fut = d.itens.some((i) => i.tipo === "futuro");
-    return `Cotações com atraso de ${esc(d.atraso)}${fut ? " · minicontratos: ajuste do último pregão" : ""} · fonte: brapi.dev · atualizado às ${hora(d.atualizado_em)}${d.em_pregao ? "" : " · mercado fechado"}. Não é recomendação de investimento.`;
+    return `Cotações com atraso de ${esc(d.atraso)}${fut ? " · minicontratos: ajuste do último pregão" : ""} · fontes: brapi.dev${d.itens.some((i) => i.tipo === "moeda") ? " e AwesomeAPI" : ""} · atualizado às ${hora(d.atualizado_em)}${d.em_pregao ? "" : " · mercado fechado"}. Não é recomendação de investimento.`;
   }
   function desenhar(caixa, d) {
     const faixa = caixa.dataset.variante === "faixa";
