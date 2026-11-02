@@ -1,5 +1,9 @@
 """
-Monta a pasta do site gfrancis.com.br, pronta para arrastar no Netlify.
+Monta a pasta do site gfrancis.com.br.
+
+A Netlify roda este arquivo sozinha a cada envio para o GitHub (veja o
+netlify.toml na raiz do repositório), depois de passar nos testes. Para
+gerar o site no seu computador, rode: python publicar_site.py
 
     site/
     ├── index.html          página inicial (portfólio)
