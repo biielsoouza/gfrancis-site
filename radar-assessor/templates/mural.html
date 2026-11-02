@@ -76,6 +76,18 @@
       const r = await fetch("/api/cotacoes", { headers: { Accept: "application/json" } });
       if (r.ok) d = await r.json();
     } catch (e) {}
+    if (d && d.itens && !d.itens.some((i) => i.tipo === "moeda")) {
+      // Dólar comercial: buscado pelo navegador na AwesomeAPI (gratuita, sem chave).
+      try {
+        const r = await fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL");
+        const c = r.ok ? (await r.json()).USDBRL : null;
+        if (c) {
+          const usd = { simbolo: "USD", nome: "Dólar comercial", tipo: "moeda", preco: Number(c.bid), variacao: Number(c.pctChange) };
+          const pos = d.itens.findIndex((i) => i.tipo === "futuro");
+          d.itens.splice(pos < 0 ? d.itens.length : pos, 0, usd);
+        }
+      } catch (e) {}
+    }
     if (d || primeira) caixas.forEach((c) => desenhar(c, d));
   }
   atualizar(true);

@@ -11,7 +11,8 @@
  *   - fora do pregão: 4 horas.
  * Não importa quantas pessoas abram o site: a brapi só é chamada quando o cache vence.
  *
- * O dólar vem da brapi ou, se o plano não incluir moedas, da AwesomeAPI (gratuita).
+ * O dólar comercial não vem daqui: o plano gratuito da brapi não inclui moedas e a AwesomeAPI
+ * bloqueia servidores compartilhados. O próprio navegador de quem visita busca o dólar na AwesomeAPI.
  * As cotações do plano gratuito têm atraso de cerca de 30 minutos. Os minicontratos
  * (WIN e WDO) vêm do fechamento (ajuste) do último pregão.
  */
@@ -85,24 +86,6 @@ async function acao(simbolo, nome, token) {
   };
 }
 
-async function dolar(token) {
-  // 1ª tentativa: brapi. Se o plano não incluir moedas, usa a AwesomeAPI (gratuita, sem chave).
-  try {
-    const json = await pegarJson(`${BASE}/v2/currency?currency=USD-BRL${token ? `&token=${token}` : ""}`);
-    const c = (json.currency || [])[0];
-    if (c && c.bidPrice) {
-      return { simbolo: "USD", nome: "Dólar comercial", tipo: "moeda", preco: Number(c.bidPrice),
-               variacao: c.percentageChange != null ? Number(c.percentageChange) : null, quando: c.updatedAtDate || null };
-    }
-  } catch (e) { console.log("cotacoes: dólar na brapi falhou, usando AwesomeAPI", String(e.message || e)); }
-  const json = await pegarJson("https://economia.awesomeapi.com.br/json/last/USD-BRL")
-    .catch((e) => { throw new Error(`AwesomeAPI: ${e.message || e}`); });
-  const c = json.USDBRL;
-  if (!c) throw new Error("sem cotação do dólar");
-  return { simbolo: "USD", nome: "Dólar comercial", tipo: "moeda", preco: Number(c.bid),
-           variacao: c.pctChange != null ? Number(c.pctChange) : null, quando: c.create_date || null };
-}
-
 async function futuros() {
   // Sem token, a brapi libera a cotação de WIN e WDO (fechamento do último pregão).
   const simbolos = contratosVigentes();
@@ -121,7 +104,6 @@ export default async () => {
   for (const [s, n] of ACOES) {
     try { itens.push(await acao(s, n, token)); } catch (e) { erros.push(String(e.message || e)); }
   }
-  try { itens.push(await dolar(token)); } catch (e) { erros.push(String(e.message || e)); }
   try { itens.push(...(await futuros())); } catch (e) { erros.push(String(e.message || e)); }
 
   const pregao = emPregao();
