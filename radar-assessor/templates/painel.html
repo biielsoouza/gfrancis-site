@@ -328,7 +328,12 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 .saudacao { font-size: 14px; color: var(--hero-ink-2); font-weight: 500; }
 .saudacao b { color: #FFFFFF; }
 .scrim-menu { position: fixed; inset: 0; background: rgba(7,18,43,0.5); z-index: 14; }
-#visao-geral, #carteira-profit, #lista-do-dia, #sec-aniversarios, #analises { scroll-margin-top: 80px; }
+.atalhos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.atalhos a { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; display: grid; gap: 4px; text-decoration: none; color: var(--ink); transition: border-color .15s, transform .15s; }
+.atalhos a:hover { border-color: var(--blue); transform: translateY(-1px); }
+.atalhos b { font-size: 15px; } .atalhos span { font-size: 13px; color: var(--ink-3); }
+@media (max-width: 960px) { .atalhos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .atalhos { grid-template-columns: minmax(0, 1fr); } }
 .pilha { display: grid; gap: 20px; min-width: 0; }
 .pill-beta { margin-left: auto; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #FBBF24; border: 1px solid rgba(251,191,36,0.45); border-radius: 999px; padding: 1px 7px; }
 
@@ -531,12 +536,12 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   <span class="chip-ficticio">Dados fictícios</span>
   <div class="nav">
     <div class="nav-tit">Painel</div>
-    <a href="#visao-geral" data-nav="visao-geral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Visão geral</a>
-    <a href="#carteira-profit" data-nav="carteira-profit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Carteira Profit</a>
-    <a href="#lista-do-dia" data-nav="lista-do-dia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3 6 1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/></svg>Lista do dia</a>
+    <a href="#visao-geral" data-vista="visao-geral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Visão geral</a>
+    <a href="#carteira-profit" data-vista="carteira-profit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Carteira Profit</a>
+    <a href="#lista-do-dia" data-vista="lista-do-dia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3 6 1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/></svg>Lista do dia</a>
     <button type="button" id="nav-followups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Follow-ups<b class="cont-nav" id="nav-badge" hidden>0</b></button>
-    <a href="#sec-aniversarios" data-nav="sec-aniversarios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 0 2 1.5 4 1.5s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/><path d="M12 11V8"/></svg>Aniversariantes</a>
-    <a href="#analises" data-nav="analises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Horários e análises</a>
+    <a href="#sec-aniversarios" data-vista="sec-aniversarios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 0 2 1.5 4 1.5s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/><path d="M12 11V8"/></svg>Aniversariantes</a>
+    <a href="#analises" data-vista="analises"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Horários e análises</a>
     <div class="nav-tit" style="margin-top:14px">Ferramentas</div>
     <a href="#clientes" data-vista="clientes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.6.8 2.6 2.6 3 5.2"/></svg>Clientes</a>
     <a href="#sem-isencao" data-vista="sem-isencao"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="m9.5 8 5 5M14.5 8l-5 5"/></svg>Plataformas sem isenção<b class="cont-nav calmo" id="nav-isencao" hidden>0</b></a>
@@ -574,12 +579,12 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   </div>
 </header>
 
-<section class="hero" id="visao-geral">
+<section class="hero" id="v-hero">
   <div class="wrap">
     <div>
       <div class="eyebrow" id="data-hoje"></div>
       <h1 id="manchete"></h1>
-      <p>Clientes ordenados por urgência, cada um com o canal e o horário em que mais costuma responder.</p>
+      <p>O resumo da sua carteira hoje. Use o menu ao lado para abrir cada parte do painel.</p>
     </div>
     <div class="kpis" id="kpis"></div>
   </div>
@@ -587,29 +592,9 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 
 <main>
   <div class="wrap">
-    <div class="pilha" id="v-painel">
-    <section class="card" id="carteira-profit">
-      <div class="card-head">
-        <h2>Carteira Profit</h2>
-        <span class="sub" id="seg-sub"></span>
-      </div>
-      <div class="abas" role="tablist" id="abas"></div>
-      <div id="seg-conteudo"></div>
-    </section>
-
-    <div class="grid-top">
-      <section class="card" id="lista-do-dia">
-        <div class="card-head">
-          <h2>Lista do dia</h2>
-          <span class="sub">Toque num cliente para ver o detalhe</span>
-        </div>
-        <div class="lista" id="lista"></div>
-      </section>
-      <div class="side">
-        <section class="card" id="sec-aniversarios">
-          <div class="card-head"><h2>Aniversariantes</h2><span class="sub">hoje e próximos 7 dias</span></div>
-          <div class="aniv-lista" id="aniversarios"></div>
-        </section>
+    <!-- Cada item do menu "Painel" é uma página própria. -->
+    <section class="vista" id="v-visao-geral">
+      <div class="grid-bottom">
         <section class="card">
           <div class="card-head"><h2>O que os dados dizem</h2></div>
           <ul class="insights" id="insights"></ul>
@@ -619,20 +604,55 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
           <div class="barras" id="canais"></div>
         </section>
       </div>
-    </div>
+      <div class="atalhos" id="atalhos">
+        <a href="#lista-do-dia"><b>Lista do dia</b><span>Quem contatar agora, por urgência</span></a>
+        <a href="#carteira-profit"><b>Carteira Profit</b><span>Isenção, quem falta operar e quem não tem</span></a>
+        <a href="#sec-aniversarios"><b>Aniversariantes</b><span>Hoje e próximos 7 dias</span></a>
+        <a href="#analises"><b>Horários e análises</b><span>Quando os clientes mais respondem</span></a>
+      </div>
+    </section>
 
-    <div class="grid-bottom" id="analises">
-      <section class="card">
-        <div class="card-head"><h2>Quando os clientes respondem</h2><span class="sub">taxa de resposta por dia e horário</span></div>
-        <div class="heat-scroll"><div class="heat" id="calor"></div></div>
-        <div class="legenda"><span>menos</span><span class="grad" id="legenda-grad"></span><span>mais</span></div>
+    <section class="vista" id="v-carteira-profit" hidden>
+      <div class="vista-head"><div><div class="eyebrow-claro">Painel</div><h2>Carteira Profit</h2>
+        <p>Clientes separados por situação da plataforma: quem não tem Profit, quem ainda não operou no mês e quem está abaixo do mínimo de isenção.</p></div></div>
+      <section class="card" id="carteira-profit">
+        <div class="card-head"><span class="sub" id="seg-sub"></span></div>
+        <div class="abas" role="tablist" id="abas"></div>
+        <div id="seg-conteudo"></div>
       </section>
-      <section class="card linha">
-        <div class="card-head"><h2>Evolução semanal</h2><span class="sub">taxa de resposta</span></div>
-        <div id="evolucao"></div>
+    </section>
+
+    <section class="vista" id="v-lista-do-dia" hidden>
+      <div class="vista-head"><div><div class="eyebrow-claro">Painel</div><h2>Lista do dia</h2>
+        <p>Clientes ordenados por urgência, com o canal e o horário em que cada um mais costuma responder. Toque num cliente para ver o detalhe.</p></div></div>
+      <section class="card" id="lista-do-dia">
+        <div class="lista" id="lista"></div>
       </section>
-    </div>
-    </div>
+    </section>
+
+    <section class="vista" id="v-sec-aniversarios" hidden>
+      <div class="vista-head"><div><div class="eyebrow-claro">Painel</div><h2>Aniversariantes</h2>
+        <p>Quem faz aniversário hoje e nos próximos 7 dias. Abra o cliente para mandar os parabéns.</p></div></div>
+      <section class="card" id="sec-aniversarios">
+        <div class="aniv-lista" id="aniversarios"></div>
+      </section>
+    </section>
+
+    <section class="vista" id="v-analises" hidden>
+      <div class="vista-head"><div><div class="eyebrow-claro">Painel</div><h2>Horários e análises</h2>
+        <p>Em que dias e horários a carteira mais responde, e como a taxa de resposta evoluiu semana a semana.</p></div></div>
+      <div class="grid-bottom" id="analises">
+        <section class="card">
+          <div class="card-head"><h2>Quando os clientes respondem</h2><span class="sub">taxa de resposta por dia e horário</span></div>
+          <div class="heat-scroll"><div class="heat" id="calor"></div></div>
+          <div class="legenda"><span>menos</span><span class="grad" id="legenda-grad"></span><span>mais</span></div>
+        </section>
+        <section class="card linha">
+          <div class="card-head"><h2>Evolução semanal</h2><span class="sub">taxa de resposta</span></div>
+          <div id="evolucao"></div>
+        </section>
+      </div>
+    </section>
 
     <section class="vista" id="v-clientes" hidden>
       <div class="vista-head">
@@ -1317,7 +1337,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
       titulo: "Aniversariantes de hoje",
       nome: hoje.length === 1 ? hoje[0].cliente : `${hoje.length} clientes fazem aniversário`,
       obs: hoje.length === 1 ? `Faz ${hoje[0].idade_no_aniversario} anos.` : hoje.slice(0, 3).map((c) => c.cliente).join(", ") + (hoje.length > 3 ? "…" : ""),
-      acoes: [{ rotulo: hoje.length === 1 ? "Mandar parabéns" : "Ver lista", fazer: () => { if (hoje.length === 1) return abrir(hoje[0].cliente_id); document.getElementById("aniversarios").scrollIntoView({ behavior: "smooth", block: "center" }); } }],
+      acoes: [{ rotulo: hoje.length === 1 ? "Mandar parabéns" : "Ver lista", fazer: () => { if (hoje.length === 1) return abrir(hoje[0].cliente_id); location.hash = "#sec-aniversarios"; } }],
     });
   }
 
@@ -1383,15 +1403,14 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   // ------------------------------------------------------------------------
   // Telas (Painel, Clientes, Plataformas sem isenção, Tempo real)
   // ------------------------------------------------------------------------
-  const VISTAS = ["clientes", "sem-isencao", "tempo-real", "execucoes", "disparos"];
-  let vistaAtual = "painel";
+  const PAGINAS_PAINEL = ["visao-geral", "carteira-profit", "lista-do-dia", "sec-aniversarios", "analises"];
+  const VISTAS = [...PAGINAS_PAINEL, "clientes", "sem-isencao", "tempo-real", "execucoes", "disparos"];
+  let vistaAtual = "visao-geral";
   function mostrarVista(nome) {
-    vistaAtual = VISTAS.includes(nome) ? nome : "painel";
-    $("visao-geral").hidden = vistaAtual !== "painel";
-    $("v-painel").hidden = vistaAtual !== "painel";
+    vistaAtual = VISTAS.includes(nome) ? nome : "visao-geral";
+    $("v-hero").hidden = vistaAtual !== "visao-geral";
     VISTAS.forEach((v) => { $("v-" + v).hidden = v !== vistaAtual; });
     document.querySelectorAll("[data-vista]").forEach((a) => a.classList.toggle("ativo", a.dataset.vista === vistaAtual));
-    if (vistaAtual !== "painel") Object.values(links).forEach((a) => a.classList.remove("ativo"));
     if (vistaAtual === "clientes") desenharClientes();
     if (vistaAtual === "sem-isencao") desenharSemIsencao();
     if (vistaAtual === "execucoes") desenharExecucoes();
@@ -1399,12 +1418,8 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     TR.ativo(vistaAtual === "tempo-real");
   }
   function irPara(hash) {
-    const alvo = hash.replace("#", "");
-    if (VISTAS.includes(alvo)) { mostrarVista(alvo); window.scrollTo(0, 0); return; }
-    if (vistaAtual !== "painel") { mostrarVista("painel"); render(); }
-    const el = alvo && $(alvo);
-    if (el) el.scrollIntoView();
-    secaoAtual();
+    mostrarVista(hash.replace("#", ""));
+    window.scrollTo(0, 0);
   }
   window.addEventListener("hashchange", () => irPara(location.hash));
 
@@ -2131,23 +2146,6 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   document.querySelectorAll(".nav a").forEach((a) => a.addEventListener("click", () => menuAberto(false)));
   $("nav-followups").addEventListener("click", () => { menuAberto(false); abrirFollowups(); });
 
-  // Destaca no menu a seção que está na tela.
-  const links = {};
-  document.querySelectorAll("[data-nav]").forEach((a) => { links[a.dataset.nav] = a; });
-  const marcar = (id) => Object.entries(links).forEach(([k, a]) => a.classList.toggle("ativo", k === id));
-  // Seção ativa = a primeira (na ordem do menu) que cruza a linha logo abaixo da barra do topo.
-  // Clicar num item marca ele na hora e segura a marcação enquanto a página rola até lá.
-  let travaAte = 0;
-  function secaoAtual() {
-    if (Date.now() < travaAte || vistaAtual !== "painel") return;
-    const linha = 140, ids = Object.keys(links);
-    const cruza = ids.find((id) => { const r = $(id).getBoundingClientRect(); return r.top <= linha && r.bottom > linha; });
-    const acima = ids.filter((id) => $(id).getBoundingClientRect().top <= linha).pop();
-    marcar(cruza || acima || ids[0]);
-  }
-  Object.entries(links).forEach(([id, a]) => a.addEventListener("click", () => { marcar(id); travaAte = Date.now() + 900; }));
-  window.addEventListener("scroll", secaoAtual, { passive: true });
-  secaoAtual();
 
   // ------------------------------------------------------------------------
   // Login (demonstração): sem servidor, a "sessão" fica só neste navegador.
