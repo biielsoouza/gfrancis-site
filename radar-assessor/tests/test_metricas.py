@@ -254,3 +254,16 @@ def test_rota_execucoes():
     from app import app
     dados = app.test_client().get("/api/execucoes").get_json()
     assert dados["ativos"] == ["WIN", "WDO", "BIT"] and dados["linhas"]
+
+
+# --- Patrimônio ------------------------------------------------------------- #
+def test_patrimonio_ficticio(contatos):
+    from radar.gerador import CLASSES_PATRIMONIO, gerar_cadastros, gerar_status_profit
+    cad = gerar_cadastros(contatos, gerar_status_profit(contatos, hoje=HOJE), hoje=HOJE)
+    assert cad["patrimonio"].between(5_000, 8_000_000).all()
+    soma = sum(cad[f"patrimonio_{k}"] for k in CLASSES_PATRIMONIO)
+    assert (abs(soma - cad["patrimonio"]) < 0.011).all()                 # as classes fecham o total
+    assert all((cad[f"patrimonio_{k}"] >= 0).all() for k in CLASSES_PATRIMONIO)
+    assert cad["patrimonio"].median() < cad["patrimonio"].mean()           # poucos clientes muito grandes
+    painel = montar_painel(contatos, hoje=HOJE, cadastros=cad)
+    assert all(c["patrimonio"] > 0 for c in painel["clientes"].values())

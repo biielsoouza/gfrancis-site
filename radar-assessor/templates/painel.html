@@ -29,7 +29,7 @@
   --warn-wash: rgba(217, 119, 6, 0.10);
   --shadow: 0 24px 48px -24px rgba(11, 18, 32, 0.18);
   --heat-0: #EEF4FF;
-  --s-win: #0066F0; --s-wdo: #0E9F6E; --s-bit: #D97706;
+  --s-win: #0066F0; --s-wdo: #0E9F6E; --s-bit: #D97706; --s-prev: #7C3AED; --s-saldo: #94A3B8;
   --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
@@ -42,7 +42,7 @@
     --hero-ink-2: rgba(255,255,255,0.7); --good: #34D399; --warn: #FBBF24; --bad: #F87171;
     --bad-wash: rgba(248,113,113,0.12); --warn-wash: rgba(251,191,36,0.12);
     --shadow: 0 24px 48px -24px rgba(0,0,0,0.6); --heat-0: #13203F; color-scheme: dark;
-    --s-win: #3B8BFF; --s-wdo: #24A076; --s-bit: #C27A1A;
+    --s-win: #3B8BFF; --s-wdo: #24A076; --s-bit: #C27A1A; --s-prev: #9B6BF2; --s-saldo: #64748B;
   }
 }
 :root[data-theme="dark"] {
@@ -53,7 +53,7 @@
   --hero-ink-2: rgba(255,255,255,0.7); --good: #34D399; --warn: #FBBF24; --bad: #F87171;
   --bad-wash: rgba(248,113,113,0.12); --warn-wash: rgba(251,191,36,0.12);
   --shadow: 0 24px 48px -24px rgba(0,0,0,0.6); --heat-0: #13203F; color-scheme: dark;
-  --s-win: #3B8BFF; --s-wdo: #24A076; --s-bit: #C27A1A;
+  --s-win: #3B8BFF; --s-wdo: #24A076; --s-bit: #C27A1A; --s-prev: #9B6BF2; --s-saldo: #64748B;
 }
 
 * { box-sizing: border-box; }
@@ -485,6 +485,16 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 .ficha-grid dt { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3); }
 .ficha-grid dd { margin: 2px 0 0; font-weight: 600; font-size: 14.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .mini-bt { border: 1px solid var(--line); background: var(--surface-2); color: var(--blue); border-radius: 999px; padding: 1px 9px; font-size: 11.5px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.pat { display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 12px; }
+.pat-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 14px; color: var(--ink-2); }
+.pat-top b { color: var(--ink); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+.pat-barra { display: flex; height: 12px; border-radius: 999px; overflow: hidden; gap: 2px; background: var(--line); }
+.pat-barra i { display: block; height: 100%; min-width: 2px; }
+.pat-leg { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 13px; }
+.pat-leg li { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.pat-leg i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.pat-leg span { color: var(--ink-2); flex: 1; min-width: 0; }
+.pat-leg b { font-weight: 700; white-space: nowrap; } .pat-leg small { color: var(--ink-3); margin-left: 4px; }
 .ops { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px; }
 .ops-top { font-size: 14px; color: var(--ink-2); }
 .ops-top b { color: var(--ink); font-size: 17px; }
@@ -670,7 +680,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
         </div>
         <div class="tabela-scroll">
           <table class="tabela">
-            <thead><tr><th>Cliente</th><th>Código</th><th>CPF</th><th>Telefone</th><th>E-mail</th><th>Perfil</th><th>Mini 30 dias</th><th>Profit</th></tr></thead>
+            <thead><tr><th>Cliente</th><th>Código</th><th>CPF</th><th>Telefone</th><th>E-mail</th><th>Perfil</th><th>Patrimônio</th><th>Mini 30 dias</th><th>Profit</th></tr></thead>
             <tbody id="cli-tabela"></tbody>
           </table>
         </div>
@@ -1346,6 +1356,23 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   // Ficha cadastral
   // ------------------------------------------------------------------------
   const mascararCpf = (cpf) => cpf ? cpf.slice(0, 3) + ".***.***-" + cpf.slice(-2) : "—";
+  const _brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+  const reais = (v) => (v == null ? "—" : _brl.format(v));
+  // Valor resumido: R$ 1,2 mi · R$ 245 mil
+  const reaisCurto = (v) => v == null ? "—" : v >= 1e6 ? `R$ ${(v / 1e6).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mi`
+    : v >= 1e3 ? `R$ ${Math.round(v / 1e3).toLocaleString("pt-BR")} mil` : reais(v);
+  const CLASSES_PAT = [["renda_fixa", "Renda fixa", "var(--s-win)"], ["renda_variavel", "Renda variável", "var(--s-wdo)"],
+    ["fundos", "Fundos", "var(--s-bit)"], ["previdencia", "Previdência", "var(--s-prev)"], ["saldo", "Saldo em conta", "var(--s-saldo)"]];
+  function blocoPatrimonio(c) {
+    if (!c.patrimonio) return "";
+    const partes = CLASSES_PAT.map(([k, r, cor]) => ({ r, cor, v: c["patrimonio_" + k] || 0 }));
+    const pct = (v) => (v / c.patrimonio) * 100;
+    return `<div class="pat">
+      <div class="pat-top"><span>Patrimônio na corretora</span><b class="num">${reais(c.patrimonio)}</b></div>
+      <div class="pat-barra" role="img" aria-label="Divisão do patrimônio por classe">${partes.filter((p) => p.v > 0).map((p) => `<i style="width:${pct(p.v)}%;background:${p.cor}" title="${p.r}: ${reais(p.v)}"></i>`).join("")}</div>
+      <ul class="pat-leg">${partes.map((p) => `<li><i style="background:${p.cor}"></i><span>${p.r}</span><b class="num">${reais(p.v)}</b><small class="num">${pct(p.v).toLocaleString("pt-BR", { maximumFractionDigits: 0 })}%</small></li>`).join("")}</ul>
+    </div>`;
+  }
   const dataBR = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("-"); return `${d}/${m}/${y}`; };
   function fichaCadastro(c) {
     const total = c.mini_30d_total || 0;
@@ -1367,6 +1394,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
         <div><dt>Cliente desde</dt><dd class="num">${dataBR(c.cliente_desde)}</dd></div>
         <div class="largo"><dt>Plataforma</dt><dd>${esc(c.plataforma || "Não tem Profit")}</dd></div>
       </dl>
+      ${blocoPatrimonio(c)}
       <div class="ops">
         <div class="ops-top"><span>Operou <b class="num">${total}</b> minicontrato${total === 1 ? "" : "s"} nos últimos 30 dias</span></div>
         ${total ? barra("WIN", c.mini_30d_win, "var(--blue)") + barra("WDO", c.mini_30d_wdo, "var(--good)") + barra("BIT", c.mini_30d_bit, "var(--warn)")
@@ -1424,23 +1452,27 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   window.addEventListener("hashchange", () => irPara(location.hash));
 
   // ---- Clientes ----
-  const CLI = { busca: "", filtro: "todos", limite: 40 };
+  const CLI = { busca: "", filtro: "todos", ordem: "nome", limite: 40 };
   const soDigitos = (t) => String(t || "").replace(/\D/g, "");
   function filtrarClientes() {
     const q = CLI.busca.trim().toLowerCase(), qd = soDigitos(q);
     return clientesDaCarteira()
       .filter((c) => CLI.filtro === "todos" || (CLI.filtro === "com" ? c.tem_profit : !c.tem_profit))
       .filter((c) => !q || c.cliente.toLowerCase().includes(q) || String(c.email || "").includes(q) || (qd.length >= 3 && (soDigitos(c.cpf).includes(qd) || String(c.codigo).includes(qd))))
-      .sort((a, b) => a.cliente.localeCompare(b.cliente));
+      .sort((a, b) => CLI.ordem === "patrimonio" ? (b.patrimonio || 0) - (a.patrimonio || 0) : a.cliente.localeCompare(b.cliente));
   }
   function desenharClientes() {
     const lista = filtrarClientes();
     const ids = lista.map((c) => c.cliente_id);
     const todos = clientesDaCarteira();
     $("cli-filtros").innerHTML = [["todos", "Todos", todos.length], ["com", "Com Profit", todos.filter((c) => c.tem_profit).length], ["sem", "Sem Profit", todos.filter((c) => !c.tem_profit).length]]
-      .map(([id, r, n]) => `<button type="button" data-filtro="${id}" aria-pressed="${CLI.filtro === id}">${r} (${n})</button>`).join("");
+      .map(([id, r, n]) => `<button type="button" data-filtro="${id}" aria-pressed="${CLI.filtro === id}">${r} (${n})</button>`).join("")
+      + `<span style="margin-left:8px">Ordenar:</span>` + [["nome", "A–Z"], ["patrimonio", "Maior patrimônio"]]
+        .map(([id, r]) => `<button type="button" data-ordem="${id}" aria-pressed="${CLI.ordem === id}">${r}</button>`).join("");
     $("cli-filtros").querySelectorAll("[data-filtro]").forEach((b) => b.addEventListener("click", () => { CLI.filtro = b.dataset.filtro; CLI.limite = 40; desenharClientes(); }));
-    $("cli-total").textContent = `${lista.length} cliente${lista.length === 1 ? "" : "s"}`;
+    $("cli-filtros").querySelectorAll("[data-ordem]").forEach((b) => b.addEventListener("click", () => { CLI.ordem = b.dataset.ordem; CLI.limite = 40; desenharClientes(); }));
+    const somaPat = lista.reduce((t, c) => t + (c.patrimonio || 0), 0);
+    $("cli-total").textContent = `${lista.length} cliente${lista.length === 1 ? "" : "s"} · ${reaisCurto(somaPat)} em patrimônio`;
     const linhas = lista.slice(0, CLI.limite).map((c) => {
       const st = STATUS_PROFIT[c.status_profit];
       return `<tr tabindex="0" data-cli="${c.cliente_id}">
@@ -1450,10 +1482,11 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
         <td class="num">${esc(c.telefone || "—")}</td>
         <td>${esc(c.email || "—")}</td>
         <td>${esc(c.perfil_investidor || "—")}</td>
+        <td class="num" style="white-space:nowrap">${reais(c.patrimonio)}</td>
         <td class="num">${c.mini_30d_total || 0}</td>
         <td><span class="chip ${st.classe}">${st.rotulo}</span></td></tr>`;
     }).join("");
-    $("cli-tabela").innerHTML = lista.length ? linhas : `<tr><td colspan="8" class="vazio">Nenhum cliente encontrado para “${esc(CLI.busca)}”.</td></tr>`;
+    $("cli-tabela").innerHTML = lista.length ? linhas : `<tr><td colspan="9" class="vazio">Nenhum cliente encontrado para “${esc(CLI.busca)}”.</td></tr>`;
     $("cli-tabela").querySelectorAll("[data-cli]").forEach((tr) => {
       const abre = () => abrir(tr.dataset.cli, "clientes", ids);
       tr.addEventListener("click", abre);

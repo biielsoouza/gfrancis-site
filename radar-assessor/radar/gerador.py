@@ -260,6 +260,7 @@ def gerar_cadastros(contatos: pd.DataFrame, profit: pd.DataFrame | None = None,
     hoje = hoje or date.today()
     status = {} if profit is None else profit.set_index("cliente_id").to_dict("index")
     codigos = rng.sample(range(100_000_000, 999_999_999), contatos["cliente_id"].nunique())
+    rng_pat = random.Random(semente + 1000)   # gerador separado: não muda os outros dados fictícios
     linhas = []
     for i, c in enumerate(contatos.drop_duplicates("cliente_id").itertuples()):
         st = status.get(c.cliente_id, {"tem_profit": False, "minicontratos_mes": 0})
@@ -284,8 +285,28 @@ def gerar_cadastros(contatos: pd.DataFrame, profit: pd.DataFrame | None = None,
             "plataforma": (rng.choices(["Profit Ultra + Automação Premium 1.000", "Profit Pro"], weights=[3, 2])[0]
                            if st["tem_profit"] else None),
             "mini_30d_win": win, "mini_30d_wdo": wdo, "mini_30d_bit": bit,
+            **_patrimonio_ficticio(rng_pat, st["tem_profit"]),
         })
     return pd.DataFrame(linhas)
+
+
+CLASSES_PATRIMONIO = ["renda_fixa", "renda_variavel", "fundos", "previdencia", "saldo"]
+
+
+def _patrimonio_ficticio(rng: random.Random, tem_profit: bool) -> dict:
+    """
+    Patrimônio fictício na corretora e como ele se divide por classe.
+    Distribuição log-normal (muitos clientes médios, poucos muito grandes),
+    entre R$ 5 mil e R$ 8 milhões. Quem opera Profit tende a ter mais em renda variável.
+    """
+    total = min(max(rng.lognormvariate(12.2, 1.1), 5_000), 8_000_000)
+    pesos = [rng.uniform(3, 6), rng.uniform(2, 5) if tem_profit else rng.uniform(0.3, 2),
+             rng.uniform(1, 3), rng.uniform(0, 2.5), rng.uniform(0.2, 0.8)]
+    soma = sum(pesos)
+    partes = [round(total * w / soma, 2) for w in pesos]
+    partes[0] = round(round(total, 2) - sum(partes[1:]), 2)    # fecha a conta no centavo
+    return {"patrimonio": round(sum(partes), 2),
+            **{f"patrimonio_{k}": v for k, v in zip(CLASSES_PATRIMONIO, partes)}}
 
 
 ATIVOS_MINI = ["WIN", "WDO", "BIT"]
