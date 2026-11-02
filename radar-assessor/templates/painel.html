@@ -1108,8 +1108,13 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 
   // Preenche os modelos com o primeiro nome do cliente e do assessor.
   const primeiro = (n) => String(n).trim().split(/\s+/)[0];
+  // Quem assina as mensagens e os e-mails é o assessor que está online (login).
+  function assessorOnline(reserva) {
+    try { if (sessao && sessao.nome) return sessao.nome; } catch (e) {}
+    return reserva || "Assessor";
+  }
   function preencher(modelos, c) {
-    const valores = { cliente: primeiro(c.cliente), nome: primeiro(c.cliente), assessor: primeiro(c.assessor),
+    const valores = { cliente: primeiro(c.cliente), nome: primeiro(c.cliente), assessor: primeiro(assessorOnline(c.assessor)),
       operados: c.minicontratos_mes, faltam: c.faltam_isencao, interesse: c.interesse,
       plataforma: c.plataforma || DADOS.isencao.plataforma, minimo: c.minimo_isencao || DADOS.isencao.minimo,
       data_cobranca: dataCobranca().toLocaleDateString("pt-BR") };
@@ -1767,7 +1772,8 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     const tokens = { nome: "{{ contact.firstname }}", assessor: "{{ contact.radar_assessor }}", plataforma: "{{ contact.radar_plataforma }}", minimo: "{{ contact.radar_minimo_isencao }}",
       operados: "{{ contact.radar_minicontratos_mes }}", faltam: "{{ contact.radar_faltam_isencao }}", data_cobranca: "{{ contact.radar_data_cobranca }}", interesse: "{{ contact.radar_interesse }}" };
     const exemplo = dest || { cliente: "Cliente", assessor: "Assessor" };
-    const valores = { nome: primeiro(exemplo.cliente), assessor: exemplo.assessor, plataforma: exemplo.plataforma || DADOS.isencao.plataforma,
+    const quemAssina = assessorOnline(exemplo.assessor);
+    const valores = { nome: primeiro(exemplo.cliente), assessor: quemAssina, plataforma: exemplo.plataforma || DADOS.isencao.plataforma,
       minimo: exemplo.minimo_isencao || DADOS.isencao.minimo, operados: exemplo.minicontratos_mes ?? 0, faltam: exemplo.faltam_isencao ?? 0,
       data_cobranca: dataCobranca().toLocaleDateString("pt-BR"), interesse: exemplo.interesse || "investimentos" };
     const txt = (t) => esc(t).replace(/\{(\w+)\}/g, (m, k) => DSP.modo === "hubspot" ? `<span class="token">${esc(tokens[k] || m)}</span>` : esc(String(valores[k] ?? m)));
@@ -1780,7 +1786,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     }).join("");
     const rodape = esc(camp.rodape).replace("{{ unsubscribe_link }}", DSP.modo === "hubspot" ? '<span class="token">{{ unsubscribe_link }}</span>' : "<u>descadastrar</u>");
     $("pv-email").innerHTML = `<div class="em-cab">
-        <span>De: <b>${esc(primeiro(exemplo.assessor))} · ${esc(DADOS.empresa || "")}</b></span>
+        <span>De: <b>${esc(quemAssina)} · ${esc(DADOS.empresa || "")}</b></span>
         <span>Para: <b>${DSP.modo === "hubspot" ? '<span class="token">{{ contact.email }}</span>' : esc(exemplo.email || "—")}</b></span>
         <span class="em-assunto">${txt(camp.assunto)}</span>
         <span>${txt(camp.preheader)}</span></div>
