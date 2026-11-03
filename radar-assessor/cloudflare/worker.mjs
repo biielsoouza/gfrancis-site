@@ -41,7 +41,7 @@ export default {
         return await comCache(`${url.origin}/api/ativos`, ctx, async () => ({ corpo: await ativos(token), ttl: 24 * 3600 }));
       }
       if (url.pathname === "/api/historico") {
-        const ativo = (url.searchParams.get("ativo") || "IBOV").toUpperCase().slice(0, 12);
+        const ativo = (url.searchParams.get("ativo") || "IBOV").toUpperCase().replace(/[^A-Z0-9^.]/g, "").slice(0, 12);
         const periodo = PERIODOS[url.searchParams.get("periodo")] ? url.searchParams.get("periodo") : "1mo";
         if (url.searchParams.get("bruto") === "1") {
           // Diagnóstico: a resposta original da brapi (sem cache, sem o token).

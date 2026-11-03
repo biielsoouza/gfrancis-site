@@ -60,14 +60,14 @@ const paraData = (v) => (typeof v === "number" ? new Date(v * 1000) : new Date(S
 
 /** Resolve o que a pessoa digitou: "win" → WINZ26, "^BVSP"/"IBOV" → índice, o resto como ação. */
 export function resolverAtivo(entrada) {
-  const a = String(entrada || "").trim().toUpperCase().replace(/[^A-Z0-9^]/g, "");
+  const a = String(entrada || "").trim().toUpperCase().replace(/[^A-Z0-9^.]/g, "");
   if (!a) return null;
   const [win, wdo] = contratosVigentes();
   if (a === "WIN") return { pedido: a, codigo: win, tipo: "futuro" };
   if (a === "WDO") return { pedido: a, codigo: wdo, tipo: "futuro" };
   if (/^(WIN|WDO|IND|DOL)[FGHJKMNQUVXZ]\d{2}$/.test(a)) return { pedido: a, codigo: a, tipo: "futuro" };
   if (a === "IBOV" || a === "^BVSP") return { pedido: "IBOV", codigo: "^BVSP", tipo: "indice" };
-  return { pedido: a, codigo: a, tipo: "acao" };
+  return { pedido: a, codigo: a, tipo: a.includes(".") || a.startsWith("^") ? "indice" : "acao" };
 }
 
 export async function historico(entrada, periodo = "1mo", token = "") {
