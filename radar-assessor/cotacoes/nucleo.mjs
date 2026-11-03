@@ -114,6 +114,8 @@ export async function buscarCotacoes(token = "") {
   if (erros.length) console.log("cotacoes: falhas", erros);
   if (itens.length) ultimaBoa = corpo;
   else if (ultimaBoa) corpo = { ...ultimaBoa, de_reserva: true };
-  const ttl = !itens.length ? 60 : pregao ? 900 : 4 * 3600;
+  // Resposta incompleta (ex.: token ausente ou brapi instável) fica pouco tempo em cache,
+  // para o mural se corrigir sozinho assim que o problema for resolvido.
+  const ttl = !itens.length ? 60 : erros.length ? 300 : pregao ? 900 : 4 * 3600;
   return { corpo, ttl, status: corpo.itens.length ? 200 : 503 };
 }
