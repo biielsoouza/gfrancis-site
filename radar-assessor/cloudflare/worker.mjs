@@ -9,13 +9,16 @@
  */
 import { buscarCotacoes } from "../cotacoes/nucleo.mjs";
 
+const VERSAO_CACHE = "2";
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (url.pathname !== "/api/cotacoes") return new Response("Não encontrado", { status: 404 });
 
     const cache = caches.default;
-    const chave = new Request(`${url.origin}/api/cotacoes`, { method: "GET" });
+    // Mudar VERSAO_CACHE faz o Worker ignorar respostas antigas guardadas no cache.
+    const chave = new Request(`${url.origin}/api/cotacoes?cache=${VERSAO_CACHE}`, { method: "GET" });
     const guardada = await cache.match(chave);
     if (guardada) return guardada;
 
