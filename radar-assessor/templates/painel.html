@@ -352,6 +352,46 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
 .kpi-claro b { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
 .kpi-claro small { font-size: 12px; color: var(--ink-3); }
 .alerta-suit.grave { background: var(--bad-wash); color: var(--bad); }
+.gr-card { display: grid; gap: 12px; }
+.gr-topo { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.gr-ativo { display: flex; align-items: baseline; gap: 10px; border: 1px solid transparent; background: none; border-radius: 14px; padding: 6px 10px; margin: -6px -10px; cursor: pointer; font: inherit; color: var(--ink); text-align: left; min-width: 0; }
+.gr-ativo:hover, .gr-ativo:focus-visible { border-color: var(--line); background: var(--surface-2); }
+.gr-cod { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.gr-nome { font-size: 14px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 260px; }
+.gr-lupa { color: var(--ink-3); align-self: center; }
+.gr-preco { display: flex; align-items: baseline; gap: 8px; }
+.gr-preco b { font-size: 22px; font-weight: 800; }
+.gr-up { color: var(--good); font-weight: 800; } .gr-down { color: var(--bad); font-weight: 800; } .gr-zero { color: var(--ink-3); font-weight: 800; }
+.gr-controles { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+.gr-recentes { display: flex; gap: 6px; flex-wrap: wrap; min-height: 0; }
+.gr-recentes button { border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: 3px 10px; font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+.gr-recentes button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-wash); color: var(--ink); }
+.gr-area { position: relative; border-radius: 16px; cursor: text; outline: none; min-height: 260px; }
+.gr-area:focus-visible { box-shadow: 0 0 0 2px var(--blue); }
+.gr-grafico svg { width: 100%; height: auto; display: block; touch-action: pan-y; }
+.gr-grafico text { fill: var(--ink-3); font-size: 11px; font-family: var(--font); }
+.gr-vazio { display: grid; place-items: center; min-height: 260px; color: var(--ink-3); text-align: center; padding: 20px; }
+.gr-tip { position: absolute; pointer-events: none; background: var(--hero); color: #FFFFFF; border-radius: 10px; padding: 8px 10px; font-size: 12.5px; line-height: 1.5; box-shadow: 0 10px 24px rgba(0,0,0,0.25); white-space: nowrap; z-index: 3; }
+.gr-tip b { font-family: var(--mono); }
+.gr-busca { position: absolute; inset: 0; background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(3px); border-radius: 16px; display: grid; place-items: start center; padding: 18px 12px; z-index: 4; cursor: default; }
+.gr-busca-caixa { width: min(460px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow, 0 20px 40px rgba(0,0,0,0.18)); padding: 12px; display: grid; gap: 8px; }
+.gr-busca-caixa .busca { flex: none; }
+.gr-busca-caixa input { font-size: 16px; text-transform: uppercase; }
+.gr-busca-caixa input::placeholder { text-transform: none; }
+.gr-sugestoes { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: 300px; overflow-y: auto; }
+.gr-sugestoes li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; cursor: pointer; min-width: 0; }
+.gr-sugestoes li[aria-selected="true"], .gr-sugestoes li:hover { background: var(--blue-wash); }
+.gr-sugestoes b { font-weight: 800; min-width: 64px; }
+.gr-sugestoes b mark { background: none; color: var(--blue); }
+.gr-sugestoes span { color: var(--ink-3); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; }
+.gr-sugestoes small { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-3); }
+.gr-busca-dica { font-size: 11.5px; color: var(--ink-3); text-align: center; }
+.gr-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.gr-stats div { background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; display: grid; gap: 2px; }
+.gr-stats span { font-size: 12px; color: var(--ink-3); font-weight: 600; }
+.gr-stats b { font-size: 16px; font-weight: 800; }
+.gr-nota { margin: 0; font-size: 12.5px; color: var(--ink-3); }
+@media (max-width: 720px) { .gr-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .gr-controles { margin-left: 0; } .gr-cod { font-size: 22px; } }
 .eq-assessores { display: flex; flex-wrap: wrap; gap: 8px; }
 .eq-assessores button { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: 6px 12px 6px 6px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
 .eq-assessores button.todos { padding-left: 12px; }
@@ -601,6 +641,8 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     <a href="#tempo-real" data-vista="tempo-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Operação em tempo real<span class="pill-beta">Beta</span></a>
     <a href="#execucoes" data-vista="execucoes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="m8.5 14.5 2 2 4-4"/></svg>Execuções</a>
     <a href="#disparos" data-vista="disparos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Disparos de e-mail</a>
+    <div class="nav-tit" style="margin-top:14px">Mercado</div>
+    <a href="#graficos" data-vista="graficos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v3M7 17v3M17 3v4M17 15v5"/><rect x="5" y="7" width="4" height="10" rx="1"/><rect x="15" y="7" width="4" height="8" rx="1"/></svg>Gráficos</a>
     <div class="nav-tit" id="nav-gestao-tit" style="margin-top:14px" hidden>Gestão</div>
     <a href="#equipe" data-vista="equipe" id="nav-equipe" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Equipe<span class="pill-beta" style="background:var(--blue-wash);color:var(--blue-soft,#7FB2FF)">Gestor</span></a>
   </div>
@@ -819,6 +861,44 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
             <tbody id="hist-disparos"></tbody>
           </table>
         </div>
+      </div>
+    </section>
+
+    <section class="vista" id="v-graficos" hidden>
+      <div class="vista-head">
+        <div><div class="eyebrow-claro">Mercado · dados reais com atraso</div><h2>Gráficos</h2>
+          <p>Clique no gráfico ou no nome do ativo e digite o código. Ao digitar <b>W</b>, por exemplo, aparecem WIN, WDO, WEGE3 e os outros que começam com W.</p></div>
+      </div>
+      <div class="card gr-card" id="gr-card">
+        <div class="gr-topo">
+          <button type="button" class="gr-ativo" id="gr-ativo" aria-haspopup="listbox" title="Trocar ativo">
+            <span class="gr-cod" id="gr-cod">—</span>
+            <span class="gr-nome" id="gr-nome">Carregando…</span>
+            <svg class="gr-lupa" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </button>
+          <div class="gr-preco"><b class="num" id="gr-ultimo">—</b><span id="gr-var"></span></div>
+          <div class="gr-controles">
+            <div class="seg-periodo" role="group" aria-label="Período" id="gr-periodos"></div>
+            <div class="seg-periodo" role="group" aria-label="Tipo de gráfico" id="gr-tipos"></div>
+          </div>
+        </div>
+        <div class="gr-recentes" id="gr-recentes"></div>
+        <div class="gr-area" id="gr-area" tabindex="0" aria-label="Gráfico. Clique para trocar o ativo.">
+          <div class="gr-grafico" id="gr-grafico"></div>
+          <div class="gr-tip" id="gr-tip" hidden></div>
+          <div class="gr-busca" id="gr-busca" hidden>
+            <div class="gr-busca-caixa" role="dialog" aria-label="Trocar ativo">
+              <label class="busca" for="gr-entrada">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input id="gr-entrada" type="text" autocomplete="off" spellcheck="false" placeholder="Digite o ativo: WIN, PETR4, VALE3…" role="combobox" aria-controls="gr-sugestoes" aria-expanded="true">
+              </label>
+              <ul class="gr-sugestoes" id="gr-sugestoes" role="listbox"></ul>
+              <div class="gr-busca-dica">↑ ↓ para escolher · Enter para abrir · Esc para fechar</div>
+            </div>
+          </div>
+        </div>
+        <div class="gr-stats" id="gr-stats"></div>
+        <p class="gr-nota" id="gr-nota"></p>
       </div>
     </section>
 
@@ -1534,7 +1614,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
   // Telas (Painel, Clientes, Plataformas sem isenção, Tempo real)
   // ------------------------------------------------------------------------
   const PAGINAS_PAINEL = ["visao-geral", "carteira-profit", "lista-do-dia", "sec-aniversarios", "analises"];
-  const VISTAS = [...PAGINAS_PAINEL, "clientes", "sem-isencao", "tempo-real", "execucoes", "disparos", "equipe"];
+  const VISTAS = [...PAGINAS_PAINEL, "clientes", "sem-isencao", "tempo-real", "execucoes", "disparos", "equipe", "graficos"];
   let vistaAtual = "visao-geral";
   // A tela Equipe só existe para quem entrou como Gestor.
   function ehGestor() { try { return !!(sessao && sessao.cargo === "Gestor"); } catch (e) { return false; } }
@@ -1553,6 +1633,7 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     if (vistaAtual === "execucoes") desenharExecucoes();
     if (vistaAtual === "disparos") desenharDisparos();
     if (vistaAtual === "equipe") desenharEquipe();
+    if (vistaAtual === "graficos") GR.abrirTela();
     TR.ativo(vistaAtual === "tempo-real");
   }
   function irPara(hash) {
@@ -1560,6 +1641,228 @@ footer .wrap { padding-block: 8px 36px; display: flex; justify-content: space-be
     window.scrollTo(0, 0);
   }
   window.addEventListener("hashchange", () => irPara(location.hash));
+
+  // ---- Gráficos (dados reais da brapi, via /api/historico e /api/ativos) ----
+  const GR = (function () {
+    const EST = { ativo: null, periodo: "1mo", tipo: "candles", dados: null, lista: null, sel: 0, sugestoes: [], carregando: false };
+    const ler = (k, padrao) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : padrao; } catch (e) { return padrao; } };
+    const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+    EST.ativo = ler("radar-graf-ativo", "IBOV");
+    EST.tipo = ler("radar-graf-tipo", "candles");
+    EST.periodo = ler("radar-graf-periodo", "1mo");
+    let recentes = ler("radar-graf-recentes", ["IBOV", "WIN", "WDO", "PETR4", "VALE3"]);
+    const PERIODOS = [["5d", "5 dias"], ["1mo", "1 mês"], ["3mo", "3 meses"]];
+    const TIPOS = [["candles", "Candles"], ["linha", "Linha"]];
+    const semAcento = (t) => String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase();
+    const ehPontos = (a) => a === "IBOV" || /^WIN/.test(a);
+    function fmt(v, a) {
+      if (v == null || !isFinite(v)) return "—";
+      if (ehPontos(a)) return v.toLocaleString("pt-BR", { maximumFractionDigits: 0 }) + " pts";
+      if (/^WDO/.test(a)) return v.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      return "R$ " + v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    const fmtEixo = (v, a) => ehPontos(a) || v >= 1000 ? Math.round(v).toLocaleString("pt-BR") : v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const dia = (t) => new Date(t).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+
+    function controles() {
+      $("gr-periodos").innerHTML = PERIODOS.map(([v, r]) => `<button type="button" data-p="${v}" aria-pressed="${EST.periodo === v}">${r}</button>`).join("");
+      $("gr-periodos").querySelectorAll("[data-p]").forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); EST.periodo = b.dataset.p; gravar("radar-graf-periodo", EST.periodo); carregar(); }));
+      $("gr-tipos").innerHTML = TIPOS.map(([v, r]) => `<button type="button" data-t="${v}" aria-pressed="${EST.tipo === v}">${r}</button>`).join("");
+      $("gr-tipos").querySelectorAll("[data-t]").forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); EST.tipo = b.dataset.t; gravar("radar-graf-tipo", EST.tipo); controles(); desenhar(); }));
+      $("gr-recentes").innerHTML = recentes.map((a) => `<button type="button" data-r="${esc(a)}" aria-pressed="${a === EST.ativo}">${esc(a)}</button>`).join("");
+      $("gr-recentes").querySelectorAll("[data-r]").forEach((b) => b.addEventListener("click", () => escolher(b.dataset.r)));
+    }
+
+    async function carregar() {
+      controles();
+      $("gr-cod").textContent = EST.ativo;
+      $("gr-nome").textContent = "Carregando…";
+      $("gr-ultimo").textContent = "—"; $("gr-var").innerHTML = "";
+      $("gr-grafico").innerHTML = '<div class="gr-vazio">Carregando o gráfico…</div>';
+      $("gr-stats").innerHTML = ""; $("gr-nota").textContent = "";
+      const pedido = EST.ativo + EST.periodo;
+      try {
+        const r = await fetch(`/api/historico?ativo=${encodeURIComponent(EST.ativo)}&periodo=${EST.periodo}`, { headers: { Accept: "application/json" } });
+        const d = await r.json().catch(() => null);
+        if (pedido !== EST.ativo + EST.periodo) return;          // a pessoa já trocou de ativo
+        if (!r.ok || !d || !d.candles) throw new Error((d && d.erro) || "indisponível");
+        EST.dados = d;
+      } catch (e) {
+        if (pedido !== EST.ativo + EST.periodo) return;
+        EST.dados = null;
+        const local = location.protocol === "file:" || /localhost|127\.0\.0\.1/.test(location.hostname);
+        $("gr-nome").textContent = "";
+        $("gr-grafico").innerHTML = `<div class="gr-vazio"><div><b>Não encontrei dados para ${esc(EST.ativo)}.</b><br>${local
+          ? "Os gráficos usam dados reais e só funcionam no site publicado (gfrancis.com.br)."
+          : "Confira o código (ex.: PETR4, VALE3, WIN, WDO) ou tente outro período."}<br><br>Clique aqui para escolher outro ativo.</div></div>`;
+        return;
+      }
+      desenhar();
+    }
+
+    function desenhar() {
+      const d = EST.dados;
+      if (!d) return;
+      const k = d.candles, a = d.ativo, primeiro = k[0], ultimo = k[k.length - 1];
+      $("gr-cod").textContent = d.pedido && d.pedido !== d.ativo && d.tipo === "futuro" ? `${d.pedido} · ${d.ativo}` : a;
+      $("gr-nome").textContent = d.nome || "";
+      const base = k.length > 1 ? (primeiro.o || primeiro.c) : ultimo.o;
+      const varP = base ? ((ultimo.c - base) / base) * 100 : 0;
+      $("gr-ultimo").textContent = fmt(ultimo.c, a);
+      $("gr-var").className = varP > 0.004 ? "gr-up" : varP < -0.004 ? "gr-down" : "gr-zero";
+      $("gr-var").textContent = `${varP > 0 ? "▲" : varP < 0 ? "▼" : ""} ${Math.abs(varP).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}% no período`;
+      const max = Math.max(...k.map((x) => x.h)), min = Math.min(...k.map((x) => x.l));
+      const volMed = k.reduce((t, x) => t + (x.v || 0), 0) / k.length;
+      $("gr-stats").innerHTML = [["Abertura do período", fmt(base, a)], ["Máxima", fmt(max, a)], ["Mínima", fmt(min, a)],
+        ["Volume médio/dia", volMed ? Math.round(volMed).toLocaleString("pt-BR") : "—"]]
+        .map(([l, v]) => `<div><span>${l}</span><b class="num">${v}</b></div>`).join("");
+      $("gr-nota").textContent = `${d.aviso} Fonte: brapi.dev. Não é recomendação de investimento.`;
+
+      // ---- SVG ----
+      // Desenha no tamanho real da tela, para os textos ficarem legíveis também no celular.
+      const W = Math.max(320, Math.round($("gr-area").clientWidth) || 960), H = W < 600 ? 280 : 380, pl = 6, pr = W < 600 ? 62 : 74, pt = 14, pb = 30;
+      const folga = (max - min) * 0.08 || max * 0.01 || 1;
+      const ymax = max + folga, ymin = min - folga;
+      const y = (v) => pt + (1 - (v - ymin) / (ymax - ymin)) * (H - pt - pb);
+      const larg = (W - pl - pr) / k.length, cx = (i) => pl + larg * i + larg / 2;
+      const bw = Math.max(2, Math.min(18, larg * 0.62));
+      let g = "";
+      const passos = 5;
+      for (let i = 0; i <= passos; i++) {
+        const v = ymin + ((ymax - ymin) * i) / passos;
+        g += `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${W - pr + 8}" y="${y(v) + 4}">${fmtEixo(v, a)}</text>`;
+      }
+      const passoX = Math.max(1, Math.ceil(k.length / (W < 600 ? 4 : 8)));
+      k.forEach((c, i) => { if (i % passoX === 0 || i === k.length - 1) g += `<text x="${cx(i)}" y="${H - 8}" text-anchor="middle">${dia(c.t)}</text>`; });
+      if (EST.tipo === "linha") {
+        const pts = k.map((c, i) => `${cx(i)},${y(c.c)}`).join(" ");
+        const cor = varP >= 0 ? "var(--good)" : "var(--bad)";
+        g += `<defs><linearGradient id="gr-grad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${cor}" stop-opacity="0.22"/><stop offset="1" stop-color="${cor}" stop-opacity="0"/></linearGradient></defs>`;
+        g += `<polygon points="${cx(0)},${H - pb} ${pts} ${cx(k.length - 1)},${H - pb}" fill="url(#gr-grad)"/>`;
+        g += `<polyline points="${pts}" fill="none" stroke="${cor}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+      } else {
+        k.forEach((c, i) => {
+          const alta = c.c >= c.o, cor = alta ? "var(--good)" : "var(--bad)";
+          const topo = y(Math.max(c.o, c.c)), alt = Math.max(1.5, Math.abs(y(c.o) - y(c.c)));
+          g += `<line x1="${cx(i)}" x2="${cx(i)}" y1="${y(c.h)}" y2="${y(c.l)}" stroke="${cor}" stroke-width="1.2"/>`;
+          g += `<rect x="${cx(i) - bw / 2}" y="${topo}" width="${bw}" height="${alt}" rx="1.5" fill="${cor}"/>`;
+        });
+      }
+      // último preço
+      g += `<line x1="${pl}" x2="${W - pr}" y1="${y(ultimo.c)}" y2="${y(ultimo.c)}" stroke="var(--ink-3)" stroke-dasharray="3 4"/>`;
+      g += `<rect x="${W - pr + 2}" y="${y(ultimo.c) - 10}" width="${pr - 4}" height="20" rx="6" fill="var(--hero)"/><text x="${W - pr + 8}" y="${y(ultimo.c) + 4}" style="fill:#FFFFFF;font-weight:700">${fmtEixo(ultimo.c, a)}</text>`;
+      g += `<line id="gr-mira" x1="0" x2="0" y1="${pt}" y2="${H - pb}" stroke="var(--ink-3)" stroke-width="1" visibility="hidden"/>`;
+      g += `<rect id="gr-alvo" x="${pl}" y="${pt}" width="${W - pl - pr}" height="${H - pt - pb}" fill="transparent"/>`;
+      $("gr-grafico").innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de ${esc(a)}, ${k.length} pregões">${g}</svg>`;
+
+      const svg = $("gr-grafico").querySelector("svg"), mira = svg.querySelector("#gr-mira"), tip = $("gr-tip");
+      const mover = (ev) => {
+        const r = svg.getBoundingClientRect(), x = ((ev.clientX - r.left) / r.width) * W;
+        const i = Math.max(0, Math.min(k.length - 1, Math.floor((x - pl) / larg)));
+        const c = k[i], ant = i > 0 ? k[i - 1].c : c.o, vd = ant ? ((c.c - ant) / ant) * 100 : 0;
+        mira.setAttribute("x1", cx(i)); mira.setAttribute("x2", cx(i)); mira.setAttribute("visibility", "visible");
+        tip.innerHTML = `<b>${new Date(c.t).toLocaleDateString("pt-BR", { weekday: "short", day: "2-digit", month: "2-digit", year: "2-digit" })}</b><br>`
+          + `Abertura ${fmt(c.o, a)} · Fechamento ${fmt(c.c, a)}<br>Máxima ${fmt(c.h, a)} · Mínima ${fmt(c.l, a)}<br>`
+          + `<span class="${vd >= 0 ? "gr-up" : "gr-down"}" style="color:${vd >= 0 ? "#34D399" : "#F87171"}">${vd >= 0 ? "▲" : "▼"} ${Math.abs(vd).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}% no dia</span>`;
+        const area = $("gr-area").getBoundingClientRect(), px = (cx(i) / W) * r.width + (r.left - area.left);
+        tip.hidden = false;
+        const tw = tip.offsetWidth;
+        tip.style.left = `${Math.max(4, Math.min(area.width - tw - 4, px - tw / 2))}px`;
+        tip.style.top = "8px";
+      };
+      const sair = () => { mira.setAttribute("visibility", "hidden"); tip.hidden = true; };
+      svg.addEventListener("pointermove", mover);
+      svg.addEventListener("pointerleave", sair);
+    }
+
+    // ---- Busca de ativo ----
+    async function lista() {
+      if (EST.lista) return EST.lista;
+      try {
+        const r = await fetch("/api/ativos", { headers: { Accept: "application/json" } });
+        const d = r.ok ? await r.json() : null;
+        if (d && d.ativos && d.ativos.length) EST.lista = d.ativos;
+      } catch (e) {}
+      if (!EST.lista) EST.lista = [["WIN", "Mini Ibovespa", "futuro"], ["WDO", "Mini dólar", "futuro"], ["IBOV", "Ibovespa", "indice"],
+        ["PETR4", "Petrobras PN"], ["VALE3", "Vale ON"], ["ITUB4", "Itaú Unibanco PN"], ["BBDC4", "Bradesco PN"], ["BBAS3", "Banco do Brasil ON"],
+        ["B3SA3", "B3 ON"], ["WEGE3", "WEG ON"], ["ABEV3", "Ambev ON"], ["MGLU3", "Magazine Luiza ON"]].map(([codigo, nome, tipo]) => ({ codigo, nome, tipo: tipo || "acao" }));
+      return EST.lista;
+    }
+    const ROTULO_TIPO = { futuro: "futuro", indice: "índice", fund: "FII", bdr: "BDR", etf: "ETF" };
+    function filtrar(q) {
+      const L = EST.lista || [];
+      q = semAcento(q).replace(/\s+/g, "");
+      if (!q) return [...recentes.map((c) => L.find((x) => x.codigo === c) || { codigo: c, nome: "", tipo: "" }), ...L.filter((x) => !recentes.includes(x.codigo)).slice(0, 4)].slice(0, 8);
+      const comeca = L.filter((x) => x.codigo.toUpperCase().startsWith(q));
+      const nome = L.filter((x) => !x.codigo.toUpperCase().startsWith(q) && semAcento(x.nome).replace(/\s+/g, "").includes(q));
+      return [...comeca, ...nome].slice(0, 8);
+    }
+    function desenharSugestoes() {
+      const q = $("gr-entrada").value.trim().toUpperCase();
+      EST.sugestoes = filtrar(q);
+      if (EST.sel >= EST.sugestoes.length) EST.sel = 0;
+      const marca = (cod) => q && cod.toUpperCase().startsWith(q) ? `<mark>${esc(cod.slice(0, q.length))}</mark>${esc(cod.slice(q.length))}` : esc(cod);
+      $("gr-sugestoes").innerHTML = EST.sugestoes.length ? EST.sugestoes.map((x, i) => `<li role="option" data-i="${i}" aria-selected="${i === EST.sel}">
+          <b>${marca(x.codigo)}</b><span>${esc(x.nome || "")}</span>${ROTULO_TIPO[x.tipo] ? `<small>${ROTULO_TIPO[x.tipo]}</small>` : ""}</li>`).join("")
+        : `<li aria-disabled="true"><span>Nenhum ativo com “${esc(q)}”. Aperte Enter para tentar mesmo assim.</span></li>`;
+      $("gr-sugestoes").querySelectorAll("[data-i]").forEach((li) => {
+        li.addEventListener("mousedown", (e) => { e.preventDefault(); escolher(EST.sugestoes[Number(li.dataset.i)].codigo); });
+      });
+      const ativo = $("gr-sugestoes").querySelector('[aria-selected="true"]');
+      if (ativo) ativo.scrollIntoView({ block: "nearest" });
+    }
+    async function abrirBusca(texto) {
+      $("gr-busca").hidden = false;
+      $("gr-tip").hidden = true;
+      const ent = $("gr-entrada");
+      ent.value = texto || "";
+      EST.sel = 0;
+      ent.focus();
+      desenharSugestoes();
+      await lista();
+      if (!$("gr-busca").hidden) desenharSugestoes();
+    }
+    function fecharBusca() { $("gr-busca").hidden = true; $("gr-area").focus({ preventScroll: true }); }
+    function escolher(codigo) {
+      codigo = String(codigo || "").trim().toUpperCase();
+      if (!codigo) return;
+      EST.ativo = codigo;
+      gravar("radar-graf-ativo", codigo);
+      recentes = [codigo, ...recentes.filter((x) => x !== codigo)].slice(0, 8);
+      gravar("radar-graf-recentes", recentes);
+      $("gr-busca").hidden = true;
+      carregar();
+    }
+
+    $("gr-ativo").addEventListener("click", (e) => { e.stopPropagation(); abrirBusca(""); });
+    $("gr-area").addEventListener("click", (e) => { if ($("gr-busca").contains(e.target)) return; abrirBusca(""); });
+    $("gr-busca").addEventListener("click", (e) => { if (e.target === $("gr-busca")) fecharBusca(); });
+    // Começar a digitar com o gráfico em foco já abre a busca com a letra digitada.
+    $("gr-area").addEventListener("keydown", (e) => {
+      if (!$("gr-busca").hidden || $("gr-busca").contains(e.target)) return;
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); abrirBusca(""); }
+      else if (/^[a-z0-9]$/i.test(e.key) && !e.ctrlKey && !e.metaKey) { e.preventDefault(); abrirBusca(e.key.toUpperCase()); }
+    });
+    $("gr-entrada").addEventListener("input", () => { EST.sel = 0; desenharSugestoes(); });
+    $("gr-entrada").addEventListener("keydown", (e) => {
+      e.stopPropagation();
+      if (e.key === "ArrowDown") { e.preventDefault(); EST.sel = Math.min(EST.sel + 1, EST.sugestoes.length - 1); desenharSugestoes(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); EST.sel = Math.max(EST.sel - 1, 0); desenharSugestoes(); }
+      else if (e.key === "Enter") { e.preventDefault(); const s = EST.sugestoes[EST.sel]; escolher(s ? s.codigo : $("gr-entrada").value); }
+      else if (e.key === "Escape") { e.preventDefault(); fecharBusca(); }
+    });
+    // Atalho: tecla "/" na tela de gráficos abre a busca.
+    document.addEventListener("keydown", (e) => {
+      if (vistaAtual !== "graficos" || e.key !== "/" || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+      e.preventDefault(); abrirBusca("");
+    });
+
+    let jaAbriu = false, espera;
+    window.addEventListener("resize", () => { clearTimeout(espera); espera = setTimeout(() => { if (vistaAtual === "graficos") desenhar(); }, 150); });
+    return {
+      abrirTela() { if (!jaAbriu || !EST.dados) { jaAbriu = true; carregar(); } else { controles(); desenhar(); } },
+    };
+  })();
 
   // ---- Equipe (gestor) ----
   const EQ = { periodo: 21, sel: null, metrica: "contatos", serie: "contatos" };

@@ -29,7 +29,7 @@ const ACOES = [
   ["WEGE3", "WEG"],
   ["ABEV3", "Ambev"],
 ];
-const BASE = "https://brapi.dev/api";
+export const BASE = "https://brapi.dev/api";
 const LETRAS = "FGHJKMNQUVXZ";
 
 // Guarda a última resposta boa enquanto a função estiver "quente": se a brapi falhar, o mural não some.
@@ -43,7 +43,7 @@ function agoraEmBrasilia() {
   return { ano: +p.year, mes: +p.month, dia: +p.day, hora: +p.hour % 24, minuto: +p.minute, semana: p.weekday };
 }
 
-function emPregao() {
+export function emPregao() {
   const a = agoraEmBrasilia();
   if (a.semana === "Sat" || a.semana === "Sun") return false;
   const min = a.hora * 60 + a.minuto;
@@ -57,7 +57,7 @@ function quartaMaisProxima15(ano, mes) {
   const dif = (3 - d.getUTCDay() + 7) % 7;
   return dif <= 3 ? 15 + dif : 15 + dif - 7;
 }
-function contratosVigentes() {
+export function contratosVigentes() {
   const { ano, mes, dia } = agoraEmBrasilia();
   let mWin = mes % 2 === 0 ? mes : mes + 1, aWin = ano;
   if (mWin === mes && dia >= quartaMaisProxima15(ano, mes)) mWin += 2;
@@ -68,7 +68,7 @@ function contratosVigentes() {
   return [cod("WIN", mWin, aWin), cod("WDO", mWdo, aWdo)];
 }
 
-async function pegarJson(url, token) {
+export async function pegarJson(url, token) {
   const resp = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
   if (!resp.ok) throw new Error(`${resp.status} em ${url.replace(/token=[^&]+/, "token=***")}`);
   return resp.json();
