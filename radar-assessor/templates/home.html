@@ -3,101 +3,163 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gabriel Francis</title>
-<meta name="description" content="Gabriel Francis: sistemas para times comerciais e de operações no mercado financeiro. Radar do Assessor, Controle de Gastos, Kanban do Time e automações de back-office.">
+<title>Gabriel Francisco de Souza · Mercado financeiro e tecnologia</title>
+<meta name="description" content="Gabriel Francisco de Souza: operador de mesa de renda variável, formado em Ciência da Computação. Construo sistemas e automações para times comerciais e de operações no mercado financeiro.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
-/* Layout: abertura escura com o nome, mercado, um "case" por projeto com galeria de telas, contato. */
+/* Visual claro: fundo branco/azulado, um acento azul, cartões com borda leve. */
 :root {
-  --bg: #F5F8FF;
+  --bg: #F6F8FC;
   --surface: #FFFFFF;
   --ink: #0B1220;
-  --ink-2: rgba(11, 18, 32, 0.70);
-  --ink-3: rgba(11, 18, 32, 0.52);
-  --line: #E5E7EB;
-  --blue: #0066F0;
-  --blue-soft: #3B9BFF;
-  --blue-wash: rgba(0, 102, 240, 0.08);
-  --hero: #07122B;
-  --shadow: 0 24px 48px -24px rgba(11, 18, 32, 0.18);
-  --shadow-lg: 0 40px 80px -32px rgba(11, 18, 32, 0.35);
+  --ink-2: #3D4757;
+  --ink-3: #5F6B7D;
+  --line: #E3E8F0;
+  --blue: #0057D9;
+  --blue-soft: #2F7BF0;
+  --blue-wash: #EAF2FF;
+  --shadow: 0 1px 2px rgba(11,18,32,0.04), 0 12px 32px -16px rgba(11,18,32,0.14);
+  --shadow-lg: 0 2px 4px rgba(11,18,32,0.04), 0 32px 64px -32px rgba(11,18,32,0.28);
   --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root { --bg: #070D1C; --surface: #0E1730; --ink: #EAF0FF; --ink-2: rgba(234,240,255,0.72);
-    --ink-3: rgba(234,240,255,0.55); --line: rgba(255,255,255,0.09); --blue: #3B8BFF; --blue-soft: #6CB4FF;
-    --blue-wash: rgba(59,139,255,0.14); --hero: #0A1A3F; --shadow: 0 24px 48px -24px rgba(0,0,0,0.6);
-    --shadow-lg: 0 40px 80px -32px rgba(0,0,0,0.7); color-scheme: dark; }
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; }
 .wrap { max-width: 1160px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-h1, h2, h3 { margin: 0; letter-spacing: -0.03em; text-wrap: balance; }
+h1, h2, h3 { margin: 0; letter-spacing: -0.025em; text-wrap: balance; }
+p { margin: 0; }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 img { display: block; max-width: 100%; height: auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.faixa-cotacoes { position: sticky; top: 0; z-index: 10; background: #050C1F; border-bottom: 1px solid rgba(255,255,255,0.08); }
+/* Faixa de cotações (clara) */
+.faixa-cotacoes { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.faixa-cotacoes .mural-topo { color: var(--ink); }
+.faixa-cotacoes .mural-topo .mural-chip { border-right-color: var(--line); }
+.faixa-cotacoes .mural-topo .mural-chip .p { color: var(--ink-2); }
+.faixa-cotacoes .mural-topo .mural-selo { color: var(--ink-3); }
+.faixa-cotacoes .mural-topo .mural-selo.fechado i { background: #A9B3C2; }
+.faixa-cotacoes .mural-topo .mural-var.zero { color: var(--ink-3); }
+.faixa-cotacoes .mural-topo .mural-esq { background: var(--line); }
+.faixa-cotacoes [data-variante="topo"] { --m-alta: #0E7A46; --m-baixa: #C0352B; }
+
+/* Cabeçalho */
+.topo { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 22px; }
+.marca { font-weight: 800; letter-spacing: -0.02em; font-size: 18px; text-decoration: none; }
+.marca span { color: var(--blue); }
+.topo nav { display: flex; gap: 26px; font-size: 14.5px; font-weight: 600; }
+.topo nav a { text-decoration: none; color: var(--ink-2); }
+.topo nav a:hover { color: var(--blue); }
 
 /* Abertura */
-.hero { background: var(--hero); color: #FFFFFF; position: relative; overflow: hidden; }
-.hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse at 70% 10%, #000 20%, transparent 70%); pointer-events: none; }
-.hero::after { content: ""; position: absolute; width: 860px; height: 520px; right: -220px; top: -180px; background: radial-gradient(closest-side, rgba(0,102,240,0.55), transparent); pointer-events: none; }
-.hero .wrap { position: relative; z-index: 1; padding-block: 28px 80px; display: grid; gap: 64px; }
-.topo { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-.marca { font-weight: 800; letter-spacing: -0.02em; font-size: 17px; text-decoration: none; }
-.marca span { color: var(--blue-soft); }
-.topo nav { display: flex; gap: 22px; font-size: 14.5px; font-weight: 600; }
-.topo nav a { text-decoration: none; color: rgba(255,255,255,0.78); }
-.topo nav a:hover { color: #FFFFFF; }
-.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-soft); }
-.hero h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 800; line-height: 1; margin-top: 12px; }
-.hero h1 em { font-style: normal; color: var(--blue-soft); }
-.hero p { margin: 20px 0 0; max-width: 60ch; color: rgba(255,255,255,0.74); font-size: 18px; }
-.acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.bt { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; transition: transform .15s, background .15s; }
+.hero { position: relative; overflow: hidden; background: linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%); border-bottom: 1px solid var(--line); }
+.hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(0,87,217,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,87,217,0.05) 1px, transparent 1px); background-size: 44px 44px; mask-image: radial-gradient(ellipse at 75% 20%, #000 10%, transparent 65%); pointer-events: none; }
+.hero::after { content: ""; position: absolute; width: 640px; height: 640px; right: -180px; top: -260px; background: radial-gradient(closest-side, rgba(47,123,240,0.16), transparent); pointer-events: none; }
+.hero .wrap { position: relative; z-index: 1; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 56px; align-items: center; padding-block: 40px 72px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); background: var(--blue-wash); border-radius: 999px; padding: 6px 12px; }
+.eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: #12A35E; box-shadow: 0 0 0 3px rgba(18,163,94,0.18); }
+.hero h1 { font-size: clamp(38px, 6vw, 64px); font-weight: 800; line-height: 1.04; margin-top: 18px; }
+.hero h1 span { color: var(--blue); }
+.hero .lead { margin-top: 18px; max-width: 58ch; color: var(--ink-2); font-size: 18px; }
+.acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.bt { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border-radius: 12px; font-weight: 700; font-size: 15px; text-decoration: none; transition: transform .15s, box-shadow .15s, background .15s, border-color .15s; }
+.bt svg { width: 18px; height: 18px; flex: none; }
 .bt:hover { transform: translateY(-1px); }
-.bt.pri { background: var(--blue); color: #FFFFFF; box-shadow: 0 12px 32px -12px rgba(0,102,240,0.8); }
-.bt.sec { background: rgba(255,255,255,0.08); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.18); }
-.bt.sec:hover { background: rgba(255,255,255,0.14); }
-.numeros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden; max-width: 720px; }
-.numeros div { background: rgba(7,18,43,0.85); padding: 18px 22px; }
-.numeros b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -0.03em; }
-.numeros span { font-size: 13.5px; color: rgba(255,255,255,0.66); }
+.bt.pri { background: var(--blue); color: #FFFFFF; box-shadow: 0 10px 24px -12px rgba(0,87,217,0.7); }
+.bt.pri:hover { background: #004BC0; }
+.bt.sec { background: var(--surface); color: var(--ink); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.bt.sec:hover { border-color: var(--blue); color: var(--blue); }
+
+.perfil { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-lg); padding: 26px; display: grid; gap: 18px; }
+.perfil-topo { display: flex; align-items: center; gap: 16px; }
+.mono { width: 64px; height: 64px; flex: none; border-radius: 18px; background: linear-gradient(135deg, var(--blue) 0%, #4C93FF 100%); color: #FFFFFF; display: grid; place-items: center; font-weight: 800; font-size: 24px; letter-spacing: -0.02em; }
+.perfil-topo b { display: block; font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+.perfil-topo span { font-size: 14px; color: var(--ink-3); }
+.perfil-topo .mono { color: #FFFFFF; font-size: 24px; }
+.fatos { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.fatos li { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.fatos li:first-child { border-top: 0; }
+.fatos svg { width: 36px; height: 36px; padding: 8px; border-radius: 10px; background: var(--blue-wash); color: var(--blue); }
+.fatos small { display: block; font-size: 12px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; }
+.fatos b { font-size: 14.5px; font-weight: 700; }
+
+.numeros { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); margin-top: -36px; position: relative; z-index: 2; }
+.numeros div { padding: 20px 24px; border-left: 1px solid var(--line); }
+.numeros div:first-child { border-left: 0; }
+.numeros b { display: block; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: var(--blue); }
+.numeros span { font-size: 14px; color: var(--ink-3); }
 
 /* Seções */
-main .wrap { padding-block: 56px 24px; display: grid; gap: 24px; }
-.secao-tit { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.secao-tit h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 800; }
-.secao-tit span { color: var(--ink-3); font-size: 14.5px; }
-.mercado { margin-bottom: 40px; }
+main .wrap { padding-block: 24px; display: grid; gap: 24px; }
+.secao { padding-block: 56px 8px; display: grid; gap: 28px; scroll-margin-top: 56px; }
+.secao-tit { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; }
+.secao-tit small { display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); margin-bottom: 6px; }
+.secao-tit h2 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 800; }
+.secao-tit > span { color: var(--ink-3); font-size: 15px; }
+
+.sobre { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.sobre-txt { display: grid; gap: 16px; font-size: 17px; color: var(--ink-2); }
+.sobre-txt b { color: var(--ink); }
+.cartao { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 24px; }
+.cartao h3 { font-size: 15px; font-weight: 800; margin-bottom: 14px; }
+.chips-grupo { display: grid; gap: 16px; }
+.chips-grupo small { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 13px; font-weight: 600; padding: 5px 11px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); color: var(--ink-2); }
+
+.faco { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.faco article { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 24px; display: grid; gap: 12px; align-content: start; }
+.faco .ic { width: 46px; height: 46px; border-radius: 14px; background: var(--blue-wash); color: var(--blue); display: grid; place-items: center; }
+.faco .ic svg { width: 24px; height: 24px; }
+.faco h3 { font-size: 19px; font-weight: 800; }
+.faco p { color: var(--ink-2); font-size: 15.5px; }
+
+.linha { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; position: relative; }
+.linha::before { content: ""; position: absolute; left: 11px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
+.linha > li { position: relative; display: grid; grid-template-columns: 24px 170px minmax(0, 1fr); gap: 20px; padding-bottom: 28px; }
+.linha > li:last-child { padding-bottom: 0; }
+.linha .ponto { width: 24px; height: 24px; border-radius: 50%; background: var(--surface); border: 2px solid var(--blue); display: grid; place-items: center; z-index: 1; margin-top: 2px; }
+.linha .ponto::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+.linha .ponto.form { border-color: #12A35E; }
+.linha .ponto.form::after { background: #12A35E; }
+.linha .quando { font-size: 14px; font-weight: 700; color: var(--ink-3); padding-top: 3px; }
+.linha .item { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 20px 22px; display: grid; gap: 8px; }
+.linha .item h3 { font-size: 18px; font-weight: 800; }
+.linha .item .onde { font-size: 14.5px; font-weight: 600; color: var(--blue); }
+.linha .item ul { margin: 4px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 15px; display: grid; gap: 4px; }
+.selo-atual { display: inline-block; font-size: 11.5px; font-weight: 700; color: #0E7A46; background: #E6F6EE; border-radius: 999px; padding: 2px 9px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.02em; }
+
+/* Mercado */
+.mercado { display: grid; gap: 16px; }
 
 /* Case de projeto */
-.case { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr); gap: 48px; align-items: start; padding-block: 48px; border-top: 1px solid var(--line); }
+.case { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr); gap: 48px; align-items: start; padding-block: 44px; border-top: 1px solid var(--line); }
 .case:nth-of-type(even) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.9fr); }
 .case:nth-of-type(even) .case-txt { order: 2; }
 .case-txt { display: grid; gap: 16px; position: sticky; top: 96px; }
 .case-num { font-size: 13px; font-weight: 800; letter-spacing: 0.08em; color: var(--blue); }
-.case h3 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; line-height: 1.05; }
-.case-txt > p { margin: 0; color: var(--ink-2); font-size: 16.5px; }
+.case h3 { font-size: clamp(26px, 3.2vw, 36px); font-weight: 800; line-height: 1.08; }
+.case-txt > p { color: var(--ink-2); font-size: 16.5px; }
 .feitos { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; }
 .feitos li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15px; color: var(--ink-2); }
-.feitos li::before { content: ""; width: 22px; height: 22px; border-radius: 7px; background: var(--blue-wash) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230066F0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 14px no-repeat; }
+.feitos li::before { content: ""; width: 22px; height: 22px; border-radius: 7px; background: var(--blue-wash) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230057D9' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 14px no-repeat; }
 .feitos b { color: var(--ink); font-weight: 700; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { font-size: 12.5px; font-weight: 600; padding: 4px 11px; border-radius: 999px; background: var(--blue-wash); color: var(--ink-2); }
+.tag { font-size: 12.5px; font-weight: 600; padding: 4px 11px; border-radius: 999px; background: var(--blue-wash); color: var(--blue); }
 .case-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 4px; }
 .case-cta .bt.pri { min-height: 44px; }
 .privado { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--ink-3); }
 
 /* Galeria */
 .galeria { display: grid; gap: 14px; min-width: 0; }
-.janela { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow-lg); overflow: hidden; }
-.janela-barra { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; background: color-mix(in srgb, var(--surface) 92%, var(--ink)); border-bottom: 1px solid var(--line); }
-.janela-barra i { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 18%, transparent); }
+.janela { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow-lg); overflow: hidden; }
+.janela-barra { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; background: #F3F5F9; border-bottom: 1px solid var(--line); }
+.janela-barra i { width: 10px; height: 10px; border-radius: 50%; background: #D3D9E3; }
 .janela-barra span { margin-left: 10px; font-size: 12px; font-weight: 600; color: var(--ink-3); }
 .palco { display: block; width: 100%; border: 0; padding: 0; background: none; cursor: zoom-in; }
 .palco img.livre { aspect-ratio: auto; object-fit: contain; }
@@ -105,24 +167,20 @@ main .wrap { padding-block: 56px 24px; display: grid; gap: 24px; }
 .legenda { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--ink-2); min-height: 22px; }
 .legenda b { color: var(--ink); font-weight: 700; }
 .miniaturas { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
-.miniaturas button { padding: 0; border: 2px solid transparent; border-radius: 10px; overflow: hidden; background: var(--surface); cursor: pointer; box-shadow: var(--shadow); opacity: .72; transition: opacity .15s, border-color .15s, transform .15s; }
+.miniaturas button { padding: 0; border: 2px solid transparent; border-radius: 10px; overflow: hidden; background: var(--surface); cursor: pointer; box-shadow: var(--shadow); opacity: .75; transition: opacity .15s, border-color .15s, transform .15s; }
 .miniaturas button:hover { opacity: 1; transform: translateY(-1px); }
 .miniaturas button[aria-pressed="true"] { border-color: var(--blue); opacity: 1; }
 .miniaturas img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
-.celular { position: absolute; right: -18px; bottom: -26px; width: 22%; min-width: 120px; border-radius: 26px; border: 6px solid #0B1220; background: #0B1220; box-shadow: var(--shadow-lg); overflow: hidden; }
 .com-celular { padding: 0 26px 30px 0; }
+.celular { position: absolute; right: -18px; bottom: -26px; width: 22%; min-width: 120px; border-radius: 26px; border: 6px solid #1B2433; background: #1B2433; box-shadow: var(--shadow-lg); overflow: hidden; }
 .celular img { width: 100%; aspect-ratio: 390 / 760; object-fit: cover; object-position: top; border-radius: 19px; }
 
-.breve { border: 1px dashed var(--line); border-radius: 24px; padding: 28px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; color: var(--ink-3); margin-top: 8px; }
-.breve h3 { font-size: 20px; font-weight: 800; color: var(--ink-2); }
-.breve p { margin: 4px 0 0; }
-
 /* Contato */
-.contato { background: var(--hero); color: #FFFFFF; border-radius: 28px; padding: clamp(28px, 5vw, 56px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; position: relative; overflow: hidden; margin-block: 48px 40px; }
-.contato::after { content: ""; position: absolute; width: 520px; height: 360px; right: -160px; bottom: -200px; background: radial-gradient(closest-side, rgba(0,102,240,0.5), transparent); pointer-events: none; }
+.contato { background: var(--surface); border: 1px solid var(--line); border-radius: 26px; box-shadow: var(--shadow-lg); padding: clamp(28px, 5vw, 52px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; position: relative; overflow: hidden; margin-block: 56px 40px; }
+.contato::after { content: ""; position: absolute; width: 480px; height: 360px; right: -140px; bottom: -220px; background: radial-gradient(closest-side, rgba(47,123,240,0.18), transparent); pointer-events: none; }
 .contato > * { position: relative; z-index: 1; }
-.contato h2 { font-size: clamp(26px, 3.6vw, 38px); font-weight: 800; }
-.contato p { margin: 8px 0 0; color: rgba(255,255,255,0.72); max-width: 48ch; }
+.contato h2 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 800; }
+.contato p { margin-top: 8px; color: var(--ink-2); max-width: 50ch; }
 
 footer .wrap { padding-block: 0 36px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-3); }
 .bytrops { font-weight: 700; color: var(--ink-2); }
@@ -130,20 +188,27 @@ footer .wrap { padding-block: 0 36px; display: flex; justify-content: space-betw
 
 /* Tela cheia */
 dialog.zoom { border: 0; padding: 0; background: transparent; max-width: min(1600px, 96vw); max-height: 94vh; }
-dialog.zoom::backdrop { background: rgba(3, 8, 20, 0.86); }
+dialog.zoom::backdrop { background: rgba(11, 18, 32, 0.78); }
 dialog.zoom img { max-height: 88vh; width: auto; border-radius: 12px; }
-dialog.zoom .fechar { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.14); color: #FFFFFF; font-size: 24px; cursor: pointer; }
-dialog.zoom p { color: rgba(255,255,255,0.8); text-align: center; margin: 12px 0 0; font-size: 14px; }
+dialog.zoom .fechar { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.9); color: var(--ink); font-size: 24px; cursor: pointer; }
+dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 0 0; font-size: 14px; }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
+  .hero-grid, .sobre { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .faco { grid-template-columns: minmax(0, 1fr); }
+  .numeros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .numeros div:nth-child(3) { border-left: 0; }
+  .numeros div:nth-child(n+3) { border-top: 1px solid var(--line); }
   .case, .case:nth-of-type(even) { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 36px; }
   .case:nth-of-type(even) .case-txt { order: 0; }
   .case-txt { position: static; }
   .miniaturas { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .topo nav { display: none; }
+  .linha > li { grid-template-columns: 24px minmax(0, 1fr); }
+  .linha .quando { grid-column: 2; padding-top: 2px; }
+  .linha .item { grid-column: 2; }
 }
 @media (max-width: 560px) {
-  .numeros { grid-template-columns: 1fr; }
   .celular { display: none; }
   .com-celular { padding: 0; }
 }
@@ -152,47 +217,136 @@ dialog.zoom p { color: rgba(255,255,255,0.8); text-align: center; margin: 12px 0
 </head>
 <body>
 <div class="faixa-cotacoes"><div class="wrap"><div data-mural data-variante="topo"></div></div></div>
+
 <header class="hero">
   <div class="wrap">
     <div class="topo">
       <a class="marca" href="/">gfrancis<span>.</span></a>
       <nav aria-label="Seções">
+        <a href="#sobre">Sobre</a>
+        <a href="#trajetoria">Trajetória</a>
         <a href="#projetos">Projetos</a>
-        <a href="#mercado">Mercado</a>
         <a href="#contato">Contato</a>
       </nav>
     </div>
-    <div>
-      <div class="eyebrow">Portfólio</div>
-      <h1>Gabriel Francisco de Souza</h1>
-      <p>Construo sistemas que facilitam o dia a dia de times comerciais e de operações no mercado financeiro: menos planilha, mais tempo com o cliente. Do desenho das telas ao site no ar.</p>
-      <div class="acoes">
-        <a class="bt pri" href="#projetos">Ver projetos</a>
-        <a class="bt sec" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow"><i aria-hidden="true"></i>Mercado financeiro + tecnologia</span>
+        <h1>Gabriel Francisco<br>de Souza</h1>
+        <p class="lead">Operador de mesa de renda variável e formado em Ciência da Computação. Uno o dia a dia da mesa com programação para construir <b>sistemas e automações</b> que tiram o time da planilha e dão mais tempo para o cliente.</p>
+        <div class="acoes">
+          <a class="bt pri" href="#projetos">Ver projetos</a>
+          <a class="bt sec" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.83v1.54h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13V21h-4v-5.07c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68V21h-4z"/></svg>LinkedIn</a>
+          <a class="bt sec" href="mailto:gabriel@gfrancis.com.br"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>E-mail</a>
+        </div>
       </div>
-    </div>
-    <div class="numeros" aria-label="Resumo">
-      <div><b>4</b><span>sistemas construídos</span></div>
-      <div><b>25+</b><span>telas construídas</span></div>
-      <div><b>3</b><span>no ar na web</span></div>
+      <aside class="perfil" aria-label="Resumo">
+        <div class="perfil-topo">
+          <span class="mono" aria-hidden="true">GF</span>
+          <div><b>Gabriel Francis</b><span>Mercado financeiro · Brasil</span></div>
+        </div>
+        <ul class="fatos">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg><span><small>Hoje</small><b>Operador de mesa de renda variável</b></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span><small>Formação</small><b>Ciência da Computação</b></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg><span><small>Constrói</small><b>Sistemas web e automações em Python</b></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span><small>Idiomas</small><b>Português · Inglês intermediário</b></span></li>
+        </ul>
+      </aside>
     </div>
   </div>
 </header>
 
 <main>
   <div class="wrap">
-    <section class="mercado" id="mercado" aria-labelledby="tit-mercado">
-      <div class="secao-tit">
-        <h2 id="tit-mercado">Mercado</h2>
-        <span>Ações, Ibovespa, dólar e minicontratos</span>
+    <div class="numeros" aria-label="Em números">
+      <div><b>4</b><span>sistemas construídos</span></div>
+      <div><b>25+</b><span>telas desenhadas e programadas</span></div>
+      <div><b>3</b><span>no ar na web</span></div>
+      <div><b>2020</b><span>formado em Computação</span></div>
+    </div>
+
+    <section class="secao" id="sobre" aria-labelledby="tit-sobre">
+      <div class="secao-tit"><div><small>Sobre mim</small><h2 id="tit-sobre">Quem eu sou</h2></div></div>
+      <div class="sobre">
+        <div class="sobre-txt">
+          <p>Sou <b>operador de mesa de renda variável</b> e trabalho no relacionamento com clientes que operam na bolsa, principalmente <b>minicontratos de índice e de dólar</b> (WIN e WDO).</p>
+          <p>Antes da mesa, atuei no <b>middle office</b> de uma corretora, cuidando de rotinas de back-office como conciliação de corretagem e cobrança. Foi ali que comecei a transformar tarefas repetitivas de planilha em <b>programas e automações</b>.</p>
+          <p>Sou formado em <b>Ciência da Computação</b> e uso essa base para entender o problema do time de perto e entregar a ferramenta pronta: do desenho das telas ao sistema publicado na internet.</p>
+        </div>
+        <div class="cartao">
+          <h3>Competências</h3>
+          <div class="chips-grupo">
+            <div><small>Mercado financeiro</small><div class="chips"><span class="chip">Renda variável</span><span class="chip">Minicontratos WIN e WDO</span><span class="chip">Corretagem e custos</span><span class="chip">Back-office</span><span class="chip">Relacionamento com clientes</span></div></div>
+            <div><small>Dados e automação</small><div class="chips"><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">openpyxl</span><span class="chip">Excel avançado</span><span class="chip">VBA</span></div></div>
+            <div><small>Desenvolvimento web</small><div class="chips"><span class="chip">JavaScript</span><span class="chip">HTML e CSS</span><span class="chip">Flask</span><span class="chip">Cloudflare Workers e D1</span><span class="chip">Supabase</span><span class="chip">Git e GitHub</span></div></div>
+          </div>
+        </div>
       </div>
-      <div data-mural data-variante="cards"></div>
     </section>
 
-    <div class="secao-tit" id="projetos">
-      <h2>Projetos</h2>
-      <span>Telas reais dos sistemas, com dados fictícios</span>
-    </div>
+    <section class="secao" aria-labelledby="tit-faco">
+      <div class="secao-tit"><div><small>O que eu faço</small><h2 id="tit-faco">Onde eu ajudo um time</h2></div></div>
+      <div class="faco">
+        <article>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+          <h3>Mesa e clientes</h3>
+          <p>Acompanhamento da carteira, contato com clientes e operação em renda variável, com foco em minicontratos.</p>
+        </article>
+        <article>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M4.2 6.2l2.1 2.1M17.7 15.7l2.1 2.1M3 12h3M18 12h3M4.2 17.8l2.1-2.1M17.7 8.3l2.1-2.1"/><circle cx="12" cy="12" r="3.5"/></svg></span>
+          <h3>Automação de processos</h3>
+          <p>Programas em Python que leem planilhas, conferem valores e geram relatórios prontos, como conciliação de corretagem e cobrança.</p>
+        </article>
+        <article>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></span>
+          <h3>Sistemas web</h3>
+          <p>Painéis, quadros de tarefas e controles com login e permissões por perfil, publicados e funcionando no computador e no celular.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="secao" id="trajetoria" aria-labelledby="tit-traj">
+      <div class="secao-tit"><div><small>Trajetória</small><h2 id="tit-traj">Experiência e formação</h2></div></div>
+      <ol class="linha">
+        <li>
+          <span class="ponto" aria-hidden="true"></span>
+          <span class="quando">Out/2026 – hoje</span>
+          <div class="item">
+            <h3>Operador de mesa de renda variável <span class="selo-atual">Atual</span></h3>
+            <span class="onde">Corretora de investimentos</span>
+            <ul>
+              <li>Relacionamento com clientes que operam na bolsa, com foco em minicontratos WIN e WDO.</li>
+              <li>Ferramentas para organizar o trabalho da mesa, como o quadro de tarefas compartilhado do time.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <span class="ponto" aria-hidden="true"></span>
+          <span class="quando">Até 2026</span>
+          <div class="item">
+            <h3>Middle Office</h3>
+            <span class="onde">Corretora de investimentos</span>
+            <ul>
+              <li>Rotinas de back-office e operações, como conciliação diária de corretagem e cobrança de mesas proprietárias.</li>
+              <li>Automação dessas rotinas com programas em Python que geram os relatórios prontos.</li>
+              <li>Ferramentas para o time comercial: acompanhamento de follow-ups e portal interno com taxas e links.</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <span class="ponto form" aria-hidden="true"></span>
+          <span class="quando">2017 – 2020</span>
+          <div class="item">
+            <h3>Bacharelado em Ciência da Computação</h3>
+            <span class="onde">UniDrummond</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="secao" id="projetos" aria-labelledby="tit-proj">
+      <div class="secao-tit"><div><small>Projetos</small><h2 id="tit-proj">O que eu construí</h2></div><span>Telas reais dos sistemas, com dados fictícios</span></div>
+    </section>
 
     <!-- Projeto 1: Radar do Assessor -->
     <article class="case" aria-labelledby="tit-radar">
@@ -314,14 +468,16 @@ dialog.zoom p { color: rgba(255,255,255,0.8); text-align: center; margin: 12px 0
       </div>
     </article>
 
-    <div class="breve">
-      <div><h3>Próximo projeto</h3><p>Em construção.</p></div>
-    </div>
+
+    <section class="secao mercado" id="mercado" aria-labelledby="tit-mercado">
+      <div class="secao-tit"><div><small>Mercado</small><h2 id="tit-mercado">Cotações do dia</h2></div><span>Ações, Ibovespa, dólar e minicontratos</span></div>
+      <div data-mural data-variante="cards"></div>
+    </section>
 
     <section class="contato" id="contato" aria-labelledby="tit-contato">
       <div>
         <h2 id="tit-contato">Vamos conversar?</h2>
-        <p>Quer ver uma demonstração ou construir uma ferramenta para o seu time? Me chama.</p>
+        <p>Quer ver uma demonstração, trocar uma ideia sobre uma vaga ou construir uma ferramenta para o seu time? Me chama.</p>
       </div>
       <div class="acoes" style="margin-top: 0">
         <a class="bt pri" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener">Falar no LinkedIn</a>
@@ -343,7 +499,6 @@ dialog.zoom p { color: rgba(255,255,255,0.8); text-align: center; margin: 12px 0
   <img alt="">
   <p></p>
 </dialog>
-<style>.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
 <!--MURAL-->
 <script>
 document.getElementById("ano").textContent = new Date().getFullYear();
