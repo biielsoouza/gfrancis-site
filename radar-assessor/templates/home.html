@@ -387,8 +387,9 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
         <h3 id="tit-gastos">Controle de Gastos</h3>
         <p>Controle financeiro completo, com login próprio para cada pessoa: quanto sobra no mês, o que vence, onde o dinheiro está indo e quem te deve.</p>
         <ul class="feitos">
-          <li><span><b>Início:</b> sobra do mês, entradas, saídas, contas a pagar e gráfico por dia, trimestre ou 12 meses.</span></li>
+          <li><span><b>Início:</b> sobra do mês, entradas, saídas, contas a pagar e as faturas de cada cartão de crédito.</span></li>
           <li><span><b>Lançamentos</b> com busca e filtros, gastos fixos e parcelados, comprovantes anexados e importação de planilha.</span></li>
+          <li><span><b>Investimentos</b> por banco e corretora: patrimônio, rendimento, onde está o dinheiro e o que dá para resgatar hoje.</span></li>
           <li><span><b>Orçamento por categoria</b> com alerta a partir de 80% e sugestão de limites pela média.</span></li>
           <li><span><b>A receber e compartilhados:</b> quem te deve, pagamentos em partes e divisão de gastos entre duas contas por convite.</span></li>
         </ul>
@@ -399,14 +400,15 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
         <div class="com-celular" style="position: relative">
           <div class="janela">
             <div class="janela-barra" aria-hidden="true"><i></i><i></i><i></i><span>Controle de Gastos</span></div>
-            <button class="palco" type="button" aria-label="Ver tela em tamanho grande"><img src="/portfolio/gastos-inicio.webp" width="1600" height="1000" alt="Visão do mês com sobra, entradas, saídas e contas a pagar" loading="lazy"></button>
+            <button class="palco" type="button" aria-label="Ver tela em tamanho grande"><img src="/portfolio/gastos-inicio.webp" width="1600" height="1000" alt="Visão do mês com sobra, entradas, saídas e cartões" loading="lazy"></button>
           </div>
           <div class="celular"><img src="/portfolio/gastos-celular.webp" width="780" height="1688" alt="Visão do mês no celular" loading="lazy"></div>
         </div>
-        <div class="legenda" aria-live="polite"><span><b>Início</b> · o mês em um olhar</span></div>
+        <div class="legenda" aria-live="polite"><span><b>Início</b> · o mês e os cartões em um olhar</span></div>
         <div class="miniaturas" role="group" aria-label="Telas do Controle de Gastos">
-          <button type="button" aria-pressed="true" data-src="/portfolio/gastos-inicio.webp" data-tit="Início" data-txt="o mês em um olhar" data-alt="Visão do mês com sobra, entradas, saídas e contas a pagar"><img src="/portfolio/gastos-inicio.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Início</span></button>
+          <button type="button" aria-pressed="true" data-src="/portfolio/gastos-inicio.webp" data-tit="Início" data-txt="o mês e os cartões em um olhar" data-alt="Visão do mês com sobra, entradas, saídas e cartões"><img src="/portfolio/gastos-inicio.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Início</span></button>
           <button type="button" aria-pressed="false" data-src="/portfolio/gastos-lancamentos.webp" data-tit="Lançamentos" data-txt="busca, filtros e status de pagamento" data-alt="Lista de lançamentos do mês"><img src="/portfolio/gastos-lancamentos.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Lançamentos</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/gastos-investimentos.webp" data-tit="Investimentos" data-txt="patrimônio por banco e corretora" data-alt="Investimentos com patrimônio e distribuição por classe"><img src="/portfolio/gastos-investimentos.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Investimentos</span></button>
           <button type="button" aria-pressed="false" data-src="/portfolio/gastos-orcamento.webp" data-tit="Orçamento" data-txt="limite por categoria" data-alt="Orçamento mensal por categoria"><img src="/portfolio/gastos-orcamento.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Orçamento</span></button>
           <button type="button" aria-pressed="false" data-src="/portfolio/gastos-relatorios.webp" data-tit="Relatórios" data-txt="12 meses e gastos por categoria" data-alt="Relatórios com gráfico de 12 meses e categorias"><img src="/portfolio/gastos-relatorios.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Relatórios</span></button>
           <button type="button" aria-pressed="false" data-src="/portfolio/gastos-receber.webp" data-tit="A receber" data-txt="quem te deve e quanto" data-alt="Valores a receber de outras pessoas"><img src="/portfolio/gastos-receber.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">A receber</span></button>
