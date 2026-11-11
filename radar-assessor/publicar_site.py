@@ -7,6 +7,7 @@ gerar o site no seu computador, rode: python publicar_site.py
 
     site/
     ├── index.html          página inicial (portfólio + mural de cotações)
+    ├── portfolio/          prints dos projetos mostrados na página inicial
     └── radar/index.html    demonstração do Radar do Assessor
 
 O mural de cotações chama /api/cotacoes, uma função da Netlify
@@ -63,4 +64,5 @@ if __name__ == "__main__":
     (SAIDA / "radar" / "index.html").write_text(pagina_completa(radar, "Radar do Assessor"), encoding="utf-8")
     home = incluir_mural((PASTA / "templates" / "home.html").read_text(encoding="utf-8"))
     (SAIDA / "index.html").write_text(home, encoding="utf-8")
+    shutil.copytree(PASTA / "portfolio", SAIDA / "portfolio")
     print(f"Site pronto em {SAIDA.resolve()}")

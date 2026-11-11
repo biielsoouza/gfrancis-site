@@ -4,70 +4,149 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Gabriel Francis</title>
-<meta name="description" content="Gabriel Francis: ferramentas para times comerciais e de operações no mercado financeiro.">
+<meta name="description" content="Gabriel Francis: sistemas para times comerciais e de operações no mercado financeiro. CRM de mesa de operações e Radar do Assessor.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
-/* Layout: abertura escura com o nome, depois a grade de projetos em cartões brancos. */
+/* Layout: abertura escura com o nome, mercado, um "case" por projeto com galeria de telas, contato. */
 :root {
   --bg: #F5F8FF;
   --surface: #FFFFFF;
   --ink: #0B1220;
-  --ink-2: rgba(11, 18, 32, 0.68);
-  --ink-3: rgba(11, 18, 32, 0.45);
+  --ink-2: rgba(11, 18, 32, 0.70);
+  --ink-3: rgba(11, 18, 32, 0.52);
   --line: #E5E7EB;
   --blue: #0066F0;
   --blue-soft: #3B9BFF;
   --blue-wash: rgba(0, 102, 240, 0.08);
   --hero: #07122B;
   --shadow: 0 24px 48px -24px rgba(11, 18, 32, 0.18);
+  --shadow-lg: 0 40px 80px -32px rgba(11, 18, 32, 0.35);
   --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #070D1C; --surface: #0E1730; --ink: #EAF0FF; --ink-2: rgba(234,240,255,0.7);
-    --ink-3: rgba(234,240,255,0.45); --line: rgba(255,255,255,0.09); --blue: #3B8BFF; --blue-soft: #6CB4FF;
-    --blue-wash: rgba(59,139,255,0.14); --hero: #0A1A3F; --shadow: 0 24px 48px -24px rgba(0,0,0,0.6); color-scheme: dark; }
+  :root { --bg: #070D1C; --surface: #0E1730; --ink: #EAF0FF; --ink-2: rgba(234,240,255,0.72);
+    --ink-3: rgba(234,240,255,0.55); --line: rgba(255,255,255,0.09); --blue: #3B8BFF; --blue-soft: #6CB4FF;
+    --blue-wash: rgba(59,139,255,0.14); --hero: #0A1A3F; --shadow: 0 24px 48px -24px rgba(0,0,0,0.6);
+    --shadow-lg: 0 40px 80px -32px rgba(0,0,0,0.7); color-scheme: dark; }
 }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font); -webkit-font-smoothing: antialiased; }
-.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
 h1, h2, h3 { margin: 0; letter-spacing: -0.03em; text-wrap: balance; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 3px; }
+img { display: block; max-width: 100%; height: auto; }
 
 .faixa-cotacoes { position: sticky; top: 0; z-index: 10; background: #050C1F; border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+/* Abertura */
 .hero { background: var(--hero); color: #FFFFFF; position: relative; overflow: hidden; }
-.hero::after { content: ""; position: absolute; width: 760px; height: 460px; right: -200px; top: -160px; background: radial-gradient(closest-side, rgba(0,102,240,0.55), transparent); pointer-events: none; }
-.hero .wrap { position: relative; z-index: 1; padding-block: 28px 72px; display: grid; gap: 56px; }
+.hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse at 70% 10%, #000 20%, transparent 70%); pointer-events: none; }
+.hero::after { content: ""; position: absolute; width: 860px; height: 520px; right: -220px; top: -180px; background: radial-gradient(closest-side, rgba(0,102,240,0.55), transparent); pointer-events: none; }
+.hero .wrap { position: relative; z-index: 1; padding-block: 28px 80px; display: grid; gap: 64px; }
 .topo { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .marca { font-weight: 800; letter-spacing: -0.02em; font-size: 17px; text-decoration: none; }
 .marca span { color: var(--blue-soft); }
+.topo nav { display: flex; gap: 22px; font-size: 14.5px; font-weight: 600; }
+.topo nav a { text-decoration: none; color: rgba(255,255,255,0.78); }
+.topo nav a:hover { color: #FFFFFF; }
 .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-soft); }
-.hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 800; line-height: 1; margin-top: 12px; }
-.hero p { margin: 18px 0 0; max-width: 56ch; color: rgba(255,255,255,0.72); font-size: 18px; }
+.hero h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 800; line-height: 1; margin-top: 12px; }
+.hero h1 em { font-style: normal; color: var(--blue-soft); }
+.hero p { margin: 20px 0 0; max-width: 60ch; color: rgba(255,255,255,0.74); font-size: 18px; }
+.acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.bt { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; transition: transform .15s, background .15s; }
+.bt:hover { transform: translateY(-1px); }
+.bt.pri { background: var(--blue); color: #FFFFFF; box-shadow: 0 12px 32px -12px rgba(0,102,240,0.8); }
+.bt.sec { background: rgba(255,255,255,0.08); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.18); }
+.bt.sec:hover { background: rgba(255,255,255,0.14); }
+.numeros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; overflow: hidden; max-width: 720px; }
+.numeros div { background: rgba(7,18,43,0.85); padding: 18px 22px; }
+.numeros b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -0.03em; }
+.numeros span { font-size: 13.5px; color: rgba(255,255,255,0.66); }
 
-main .wrap { padding-block: 48px 56px; display: grid; gap: 20px; }
+/* Seções */
+main .wrap { padding-block: 56px 24px; display: grid; gap: 24px; }
 .secao-tit { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.secao-tit h2 { font-size: 26px; font-weight: 800; }
-.secao-tit span { color: var(--ink-3); font-size: 14px; }
-.projetos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
-.projeto { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 24px; box-shadow: var(--shadow); display: grid; gap: 14px; align-content: start; text-decoration: none; transition: border-color .15s, transform .15s; }
-a.projeto:hover { border-color: var(--blue); transform: translateY(-2px); }
-.icone { width: 44px; height: 44px; border-radius: 12px; background: var(--blue); display: grid; place-items: center; box-shadow: 0 0 24px rgba(0,102,240,0.45); }
-.projeto h3 { font-size: 21px; font-weight: 800; }
-.projeto p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.secao-tit h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 800; }
+.secao-tit span { color: var(--ink-3); font-size: 14.5px; }
+.mercado { margin-bottom: 40px; }
+
+/* Case de projeto */
+.case { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr); gap: 48px; align-items: start; padding-block: 48px; border-top: 1px solid var(--line); }
+.case:nth-of-type(even) { grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.9fr); }
+.case:nth-of-type(even) .case-txt { order: 2; }
+.case-txt { display: grid; gap: 16px; position: sticky; top: 96px; }
+.case-num { font-size: 13px; font-weight: 800; letter-spacing: 0.08em; color: var(--blue); }
+.case h3 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; line-height: 1.05; }
+.case-txt > p { margin: 0; color: var(--ink-2); font-size: 16.5px; }
+.feitos { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 10px; }
+.feitos li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15px; color: var(--ink-2); }
+.feitos li::before { content: ""; width: 22px; height: 22px; border-radius: 7px; background: var(--blue-wash) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230066F0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 14px no-repeat; }
+.feitos b { color: var(--ink); font-weight: 700; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { font-size: 12.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--blue-wash); color: var(--ink-2); }
-.abrir { font-weight: 700; color: var(--blue); font-size: 14.5px; }
-.projeto.breve { box-shadow: none; background: transparent; border-style: dashed; }
-.projeto.breve h3 { color: var(--ink-3); }
+.tag { font-size: 12.5px; font-weight: 600; padding: 4px 11px; border-radius: 999px; background: var(--blue-wash); color: var(--ink-2); }
+.case-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 4px; }
+.case-cta .bt.pri { min-height: 44px; }
+.privado { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--ink-3); }
+
+/* Galeria */
+.galeria { display: grid; gap: 14px; min-width: 0; }
+.janela { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow-lg); overflow: hidden; }
+.janela-barra { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 14px; background: color-mix(in srgb, var(--surface) 92%, var(--ink)); border-bottom: 1px solid var(--line); }
+.janela-barra i { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 18%, transparent); }
+.janela-barra span { margin-left: 10px; font-size: 12px; font-weight: 600; color: var(--ink-3); }
+.palco { display: block; width: 100%; border: 0; padding: 0; background: none; cursor: zoom-in; }
+.palco img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; transition: opacity .2s; }
+.legenda { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--ink-2); min-height: 22px; }
+.legenda b { color: var(--ink); font-weight: 700; }
+.miniaturas { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+.miniaturas button { padding: 0; border: 2px solid transparent; border-radius: 10px; overflow: hidden; background: var(--surface); cursor: pointer; box-shadow: var(--shadow); opacity: .72; transition: opacity .15s, border-color .15s, transform .15s; }
+.miniaturas button:hover { opacity: 1; transform: translateY(-1px); }
+.miniaturas button[aria-pressed="true"] { border-color: var(--blue); opacity: 1; }
+.miniaturas img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
+.celular { position: absolute; right: -18px; bottom: -26px; width: 22%; min-width: 120px; border-radius: 26px; border: 6px solid #0B1220; background: #0B1220; box-shadow: var(--shadow-lg); overflow: hidden; }
+.com-celular { padding: 0 26px 30px 0; }
+.celular img { width: 100%; aspect-ratio: 390 / 760; object-fit: cover; object-position: top; border-radius: 19px; }
+
+.breve { border: 1px dashed var(--line); border-radius: 24px; padding: 28px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; color: var(--ink-3); margin-top: 8px; }
+.breve h3 { font-size: 20px; font-weight: 800; color: var(--ink-2); }
+.breve p { margin: 4px 0 0; }
+
+/* Contato */
+.contato { background: var(--hero); color: #FFFFFF; border-radius: 28px; padding: clamp(28px, 5vw, 56px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; position: relative; overflow: hidden; margin-block: 48px 40px; }
+.contato::after { content: ""; position: absolute; width: 520px; height: 360px; right: -160px; bottom: -200px; background: radial-gradient(closest-side, rgba(0,102,240,0.5), transparent); pointer-events: none; }
+.contato > * { position: relative; z-index: 1; }
+.contato h2 { font-size: clamp(26px, 3.6vw, 38px); font-weight: 800; }
+.contato p { margin: 8px 0 0; color: rgba(255,255,255,0.72); max-width: 48ch; }
 
 footer .wrap { padding-block: 0 36px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13.5px; color: var(--ink-3); }
 .bytrops { font-weight: 700; color: var(--ink-2); }
 .bytrops b { color: var(--blue); font-weight: 800; }
-.mercado { margin-bottom: 44px; }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Tela cheia */
+dialog.zoom { border: 0; padding: 0; background: transparent; max-width: min(1600px, 96vw); max-height: 94vh; }
+dialog.zoom::backdrop { background: rgba(3, 8, 20, 0.86); }
+dialog.zoom img { max-height: 88vh; width: auto; border-radius: 12px; }
+dialog.zoom .fechar { position: fixed; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.14); color: #FFFFFF; font-size: 24px; cursor: pointer; }
+dialog.zoom p { color: rgba(255,255,255,0.8); text-align: center; margin: 12px 0 0; font-size: 14px; }
+
+@media (max-width: 900px) {
+  .case, .case:nth-of-type(even) { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 36px; }
+  .case:nth-of-type(even) .case-txt { order: 0; }
+  .case-txt { position: static; }
+  .miniaturas { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .topo nav { display: none; }
+}
+@media (max-width: 560px) {
+  .numeros { grid-template-columns: 1fr; }
+  .celular { display: none; }
+  .com-celular { padding: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
@@ -76,18 +155,32 @@ footer .wrap { padding-block: 0 36px; display: flex; justify-content: space-betw
   <div class="wrap">
     <div class="topo">
       <a class="marca" href="/">gfrancis<span>.</span></a>
+      <nav aria-label="Seções">
+        <a href="#projetos">Projetos</a>
+        <a href="#mercado">Mercado</a>
+        <a href="#contato">Contato</a>
+      </nav>
     </div>
     <div>
-      <div class="eyebrow">Projetos</div>
+      <div class="eyebrow">Portfólio</div>
       <h1>Gabriel Francisco de Souza</h1>
-      <p>Construo ferramentas que facilitam o dia a dia de times comerciais e de operações no mercado financeiro: menos planilha, mais tempo com o cliente.</p>
+      <p>Construo sistemas que facilitam o dia a dia de times comerciais e de operações no mercado financeiro: menos planilha, mais tempo com o cliente. Do desenho das telas ao site no ar.</p>
+      <div class="acoes">
+        <a class="bt pri" href="#projetos">Ver projetos</a>
+        <a class="bt sec" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="numeros" aria-label="Resumo">
+      <div><b>2</b><span>sistemas completos</span></div>
+      <div><b>25+</b><span>telas construídas</span></div>
+      <div><b>100%</b><span>publicados na web</span></div>
     </div>
   </div>
 </header>
 
 <main>
   <div class="wrap">
-    <section class="mercado" aria-labelledby="tit-mercado">
+    <section class="mercado" id="mercado" aria-labelledby="tit-mercado">
       <div class="secao-tit">
         <h2 id="tit-mercado">Mercado</h2>
         <span>Ações, Ibovespa, dólar e minicontratos</span>
@@ -95,25 +188,92 @@ footer .wrap { padding-block: 0 36px; display: flex; justify-content: space-betw
       <div data-mural data-variante="cards"></div>
     </section>
 
-    <div class="secao-tit">
+    <div class="secao-tit" id="projetos">
       <h2>Projetos</h2>
-      <span>Demonstrações com dados fictícios</span>
+      <span>Telas reais dos sistemas, com dados fictícios</span>
     </div>
-    <div class="projetos">
-      <a class="projeto" href="/radar/">
-        <span class="icone" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity=".45"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12 19 6"/></svg>
-        </span>
-        <h3>Radar do Assessor</h3>
-        <p>Lê o histórico de contatos do CRM e diz quem chamar hoje, por qual canal, em que horário e com qual mensagem. Inclui ficha de cadastro dos clientes, alertas de follow-up, plataformas sem isenção, operação em tempo real, histórico de execuções, disparos de e-mail, aniversariantes e uma tela de métricas da equipe para gestores.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">pandas</span><span class="tag">68 testes</span></div>
-        <span class="abrir">Abrir demonstração →</span>
-      </a>
-      <div class="projeto breve">
-        <h3>Próximo projeto</h3>
-        <p>Em construção.</p>
+
+    <!-- Projeto 1: CRM -->
+    <article class="case" aria-labelledby="tit-crm">
+      <div class="case-txt">
+        <div class="case-num">01 · CRM</div>
+        <h3 id="tit-crm">CRM para mesa de operações</h3>
+        <p>Sistema completo para uma mesa de renda variável acompanhar a carteira de cada assessor: quem chamar hoje, o que foi conversado e como está a operação de cada cliente.</p>
+        <ul class="feitos">
+          <li><span><b>Atividades e ficha do cliente</b> com histórico de contatos, comentários em thread e próximos passos.</span></li>
+          <li><span><b>Dashboard por perfil:</b> o assessor vê a própria carteira; o gestor vê a mesa toda, com contratos, corretagem e saúde da base.</span></li>
+          <li><span><b>Distribuição de carteira</b> com simulação de contratos e regras de negócio editáveis pelo gestor.</span></li>
+          <li><span><b>Operação ao vivo,</b> performance com ranking, leads e uso no celular.</span></li>
+        </ul>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML e CSS</span><span class="tag">Cloudflare Workers</span><span class="tag">Login por perfil</span><span class="tag">Acessível</span></div>
+        <div class="case-cta"><span class="privado"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Projeto privado · demonstração sob pedido</span></div>
       </div>
+      <div class="galeria" data-galeria>
+        <div class="com-celular" style="position: relative">
+          <div class="janela">
+            <div class="janela-barra" aria-hidden="true"><i></i><i></i><i></i><span>CRM · mesa de operações</span></div>
+            <button class="palco" type="button" aria-label="Ver tela em tamanho grande"><img src="/portfolio/crm-dashboard.webp" width="1600" height="1000" alt="Dashboard do gestor com o resumo do mês da mesa"></button>
+          </div>
+          <div class="celular"><img src="/portfolio/crm-celular.webp" width="780" height="1688" alt="Tela de atividades no celular" loading="lazy"></div>
+        </div>
+        <div class="legenda" aria-live="polite"><span><b>Dashboard</b> · resumo do mês da mesa</span></div>
+        <div class="miniaturas" role="group" aria-label="Telas do CRM">
+          <button type="button" aria-pressed="true" data-src="/portfolio/crm-dashboard.webp" data-tit="Dashboard" data-txt="resumo do mês da mesa" data-alt="Dashboard do gestor com o resumo do mês da mesa"><img src="/portfolio/crm-dashboard.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Dashboard</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/crm-atividades.webp" data-tit="Atividades" data-txt="quem chamar hoje, por critério" data-alt="Lista de atividades do dia"><img src="/portfolio/crm-atividades.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Atividades</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/crm-ficha.webp" data-tit="Ficha do cliente" data-txt="histórico, operação e comentários" data-alt="Ficha do cliente com histórico de contatos"><img src="/portfolio/crm-ficha.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Ficha do cliente</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/crm-carteira.webp" data-tit="Distribuição de carteira" data-txt="saúde da base e quem recebe" data-alt="Distribuição de carteira com saúde da base por assessor"><img src="/portfolio/crm-carteira.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Distribuição de carteira</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/crm-performance.webp" data-tit="Performance" data-txt="ranking e metas da equipe" data-alt="Performance da equipe com ranking"><img src="/portfolio/crm-performance.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Performance</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/crm-ao-vivo.webp" data-tit="Ao vivo" data-txt="posição e ordens do dia" data-alt="Operação ao vivo da carteira"><img src="/portfolio/crm-ao-vivo.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Ao vivo</span></button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Projeto 2: Radar do Assessor -->
+    <article class="case" aria-labelledby="tit-radar">
+      <div class="case-txt">
+        <div class="case-num">02 · Inteligência comercial</div>
+        <h3 id="tit-radar">Radar do Assessor</h3>
+        <p>Lê o histórico de contatos e diz quem chamar hoje, por qual canal, em que horário e com qual mensagem.</p>
+        <ul class="feitos">
+          <li><span><b>Lista do dia</b> ordenada por urgência, com o melhor canal e horário de cada cliente.</span></li>
+          <li><span><b>Horários e análises:</b> quando a carteira mais responde e como a taxa de resposta evolui.</span></li>
+          <li><span><b>Equipe para gestores:</b> tempo online, contatos, respostas e ranking.</span></li>
+          <li><span><b>Operação em tempo real,</b> cadastro de clientes, follow-ups, aniversariantes e disparos de e-mail.</span></li>
+        </ul>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">pandas</span><span class="tag">68 testes</span></div>
+        <div class="case-cta"><a class="bt pri" href="/radar/">Abrir demonstração →</a></div>
+      </div>
+      <div class="galeria" data-galeria>
+        <div class="janela">
+          <div class="janela-barra" aria-hidden="true"><i></i><i></i><i></i><span>Radar do Assessor</span></div>
+          <button class="palco" type="button" aria-label="Ver tela em tamanho grande"><img src="/portfolio/radar-visao-geral.webp" width="1600" height="1000" alt="Visão geral do Radar do Assessor" loading="lazy"></button>
+        </div>
+        <div class="legenda" aria-live="polite"><span><b>Visão geral</b> · o resumo da carteira hoje</span></div>
+        <div class="miniaturas" role="group" aria-label="Telas do Radar do Assessor">
+          <button type="button" aria-pressed="true" data-src="/portfolio/radar-visao-geral.webp" data-tit="Visão geral" data-txt="o resumo da carteira hoje" data-alt="Visão geral do Radar do Assessor"><img src="/portfolio/radar-visao-geral.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Visão geral</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/radar-lista-do-dia.webp" data-tit="Lista do dia" data-txt="quem chamar, por urgência" data-alt="Lista do dia ordenada por urgência"><img src="/portfolio/radar-lista-do-dia.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Lista do dia</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/radar-analises.webp" data-tit="Horários e análises" data-txt="quando os clientes respondem" data-alt="Mapa de calor dos horários de resposta"><img src="/portfolio/radar-analises.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Horários e análises</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/radar-equipe.webp" data-tit="Equipe" data-txt="métricas e ranking para gestores" data-alt="Métricas da equipe para gestores"><img src="/portfolio/radar-equipe.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Equipe</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/radar-tempo-real.webp" data-tit="Operação em tempo real" data-txt="ordens da carteira ao vivo" data-alt="Operação em tempo real da carteira"><img src="/portfolio/radar-tempo-real.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Operação em tempo real</span></button>
+          <button type="button" aria-pressed="false" data-src="/portfolio/radar-clientes.webp" data-tit="Clientes" data-txt="ficha e busca na carteira" data-alt="Cadastro de clientes com busca"><img src="/portfolio/radar-clientes.webp" alt="" loading="lazy" width="1600" height="1000"><span class="sr">Clientes</span></button>
+        </div>
+      </div>
+    </article>
+
+    <div class="breve">
+      <div><h3>Próximo projeto</h3><p>Em construção.</p></div>
     </div>
+
+    <section class="contato" id="contato" aria-labelledby="tit-contato">
+      <div>
+        <h2 id="tit-contato">Vamos conversar?</h2>
+        <p>Quer ver uma demonstração do CRM ou construir uma ferramenta para o seu time? Me chama.</p>
+      </div>
+      <div class="acoes" style="margin-top: 0">
+        <a class="bt pri" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener">Falar no LinkedIn</a>
+        <a class="bt sec" href="mailto:gabriel@gfrancis.com.br">gabriel@gfrancis.com.br</a>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -123,7 +283,38 @@ footer .wrap { padding-block: 0 36px; display: flex; justify-content: space-betw
     <span class="bytrops">By <b>trops</b></span>
   </div>
 </footer>
+
+<dialog class="zoom" id="zoom" aria-label="Tela em tamanho grande">
+  <button class="fechar" type="button" aria-label="Fechar">×</button>
+  <img alt="">
+  <p></p>
+</dialog>
+<style>.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
 <!--MURAL-->
-<script>document.getElementById("ano").textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById("ano").textContent = new Date().getFullYear();
+/* Galerias: miniatura troca a tela principal; clique na tela abre em tamanho grande */
+const zoom = document.getElementById("zoom");
+document.querySelectorAll("[data-galeria]").forEach(function (g) {
+  const img = g.querySelector(".palco img"), leg = g.querySelector(".legenda span"), bts = g.querySelectorAll(".miniaturas button");
+  bts.forEach(function (b) {
+    b.addEventListener("click", function () {
+      bts.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      img.style.opacity = "0.25";
+      const nova = new Image();
+      nova.onload = function () { img.src = b.dataset.src; img.alt = b.dataset.alt; img.style.opacity = "1"; };
+      nova.src = b.dataset.src;
+      leg.innerHTML = "<b>" + b.dataset.tit + "</b> · " + b.dataset.txt;
+    });
+  });
+  g.querySelector(".palco").addEventListener("click", function () {
+    zoom.querySelector("img").src = img.src; zoom.querySelector("img").alt = img.alt;
+    zoom.querySelector("p").textContent = leg.textContent;
+    zoom.showModal();
+  });
+});
+zoom.querySelector(".fechar").addEventListener("click", function () { zoom.close(); });
+zoom.addEventListener("click", function (e) { if (e.target === zoom) zoom.close(); });
+</script>
 </body>
 </html>
