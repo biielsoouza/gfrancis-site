@@ -8,6 +8,8 @@
  *
  * Senha do painel: criada pelo dono no primeiro acesso e guardada só como hash (PBKDF2) no KV, em "painel:senha".
  * O login vira um cookie assinado (HttpOnly) válido por 180 dias; o navegador logado também deixa de contar como visita.
+ * Bloqueio: 5 senhas erradas seguidas travam o login por 15 minutos naquela conexão. Para isso guarda, só por
+ * 15 minutos, um código embaralhado da conexão (nunca o IP em si) com o número de tentativas.
  * Esqueceu a senha? Apague a chave "painel:senha" no KV "gfrancis-visitas" (painel da Cloudflare) e crie outra.
  *
  * Guarda um registro por dia no KV "VISITAS" (chave "dia:AAAA-MM-DD"), por 400 dias.
@@ -79,6 +81,11 @@ function igual(a, b) {
   for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return d === 0;
 }
+const MAX_TENTATIVAS = 5, BLOQUEIO_MIN = 15;
+async function chaveTentativas(request, cfg) {
+  const ip = request.headers.get("cf-connecting-ip") || "sem-ip";
+  return `painel:falhas:${(await hmac(cfg.segredo, ip)).slice(0, 24)}`;
+}
 const lerSenha = async (env) => JSON.parse((await env.VISITAS.get("painel:senha")) || "null");
 
 async function logado(request, env) {
@@ -114,10 +121,22 @@ export async function rotasPainel(request, url, env) {
     }
     if (rota === "/entrar") {
       if (!cfg) return resp({ erro: "Crie a senha primeiro." }, 409);
-      if (!igual(await pbkdf2(senha, cfg.sal, cfg.iter), cfg.hash)) {
-        await new Promise((r) => setTimeout(r, 800));   // freia tentativas em sequência
-        return resp({ erro: "Senha incorreta." }, 401);
+      const chave = await chaveTentativas(request, cfg);
+      const t = JSON.parse((await env.VISITAS.get(chave)) || '{"n":0}');
+      if (t.ate && t.ate > Date.now()) {
+        const min = Math.ceil((t.ate - Date.now()) / 60000);
+        return resp({ erro: `Muitas senhas erradas. Tente de novo em ${min} minuto${min > 1 ? "s" : ""}.`, bloqueado: true }, 429);
       }
+      if (!igual(await pbkdf2(senha, cfg.sal, cfg.iter), cfg.hash)) {
+        const n = (t.ate ? 0 : t.n) + 1;   // depois de um bloqueio vencido, a contagem recomeça
+        const novo = n >= MAX_TENTATIVAS ? { n, ate: Date.now() + BLOQUEIO_MIN * 60000 } : { n };
+        await env.VISITAS.put(chave, JSON.stringify(novo), { expirationTtl: BLOQUEIO_MIN * 60 });
+        await new Promise((r) => setTimeout(r, 800));   // freia tentativas em sequência
+        if (novo.ate) return resp({ erro: `Muitas senhas erradas. O login ficou bloqueado por ${BLOQUEIO_MIN} minutos.`, bloqueado: true }, 429);
+        const resta = MAX_TENTATIVAS - n;
+        return resp({ erro: `Senha incorreta. ${resta === 1 ? "Mais 1 erro" : `Mais ${resta} erros`} e o login fica bloqueado por ${BLOQUEIO_MIN} minutos.` }, 401);
+      }
+      if (t.n) await env.VISITAS.put(chave, '{"n":0}', { expirationTtl: 60 });
       return resp({ ok: true }, 200, await cookieDeLogin(cfg));
     }
     if (rota === "/sair") return resp({ ok: true }, 200, `${COOKIE}=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Strict`);
