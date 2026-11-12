@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Análise do mercado · gfrancis</title>
+<meta name="description" content="Análise diária do mercado brasileiro feita por IA: Ibovespa, principais ações, WIN e WDO. Atualizada todo dia útil de manhã. Não é recomendação de investimento.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/ferramentas.css">
+<style>
+.aviso-ia { display: flex; gap: 12px; align-items: flex-start; background: #FFF7E6; border: 1px solid #F3DDA8; color: #6B4A00; border-radius: 14px; padding: 14px 16px; font-size: 14.5px; margin-bottom: 20px; }
+.aviso-ia svg { width: 22px; height: 22px; flex: none; margin-top: 1px; }
+.aviso-ia b { color: #4D3500; }
+.barra { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.quando { font-size: 14px; color: var(--ink-3); font-weight: 600; }
+.barra select { font: 600 14px var(--font); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; background: #fff; }
+.texto { padding: 32px; }
+.selo { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--blue); background: var(--blue-wash); border-radius: 999px; padding: 5px 12px; }
+.selo svg { width: 16px; height: 16px; }
+.selo.regra { color: var(--ink-3); background: #EEF1F6; }
+.cx .titulo { font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; margin: 14px 0 12px; letter-spacing: -0.025em; }
+.abertura { font-size: 18.5px; color: var(--ink-2); max-width: 78ch; }
+.secoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 26px; }
+.secoes article { border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; background: #FCFDFF; }
+.secoes h3 { font-size: 16px; margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
+.secoes h3::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+.secoes p { color: var(--ink-2); font-size: 15.5px; }
+.rodape-texto { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.faixa { display: inline-block; position: relative; width: 90px; height: 6px; border-radius: 3px; background: #E7ECF4; vertical-align: middle; }
+.faixa i { position: absolute; top: -3px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--blue); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--blue); }
+.carregando { color: var(--ink-3); }
+@media (max-width: 760px) { .texto { padding: 20px; } .secoes { grid-template-columns: minmax(0, 1fr); } .abertura { font-size: 16.5px; } }
+</style>
+</head>
+<body>
+<header class="wrap topo">
+  <a class="marca" href="/">gfrancis<span>.</span></a>
+  <nav aria-label="Ferramentas"><a href="/analise/" aria-current="page">Análise do mercado</a><a href="/pregao/">Resumo do pregão</a><a href="/nota/">Leitor de nota</a><a href="/#projetos">Projetos</a></nav>
+</header>
+
+<main class="wrap">
+  <section class="abre">
+    <p class="eyebrow">Análise diária · IA</p>
+    <h1>Análise do mercado</h1>
+    <p class="lead">Ibovespa, principais ações e os minicontratos WIN e WDO, com o último pregão e o último mês. Refeita automaticamente todo dia útil, às 7h40, antes da abertura.</p>
+  </section>
+
+  <p class="aviso-ia" role="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span><b>Análise feita por inteligência artificial.</b> Não é dica nem recomendação de investimento. Os números vêm de dados públicos de mercado e o texto é escrito por IA, que pode errar.</span></p>
+
+  <div class="barra">
+    <span class="quando" id="quando">Carregando…</span>
+    <label><span class="sr">Ver a análise de outro dia</span><select id="dias" hidden></select></label>
+  </div>
+
+  <article class="cx texto" aria-busy="true" id="caixa">
+    <span class="selo" id="selo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z" fill="currentColor"/></svg><span>Feita por IA</span></span>
+    <h2 class="titulo" id="titulo"><span class="carregando">Preparando a análise…</span></h2>
+    <p class="abertura" id="abertura"></p>
+    <div class="secoes" id="secoes"></div>
+    <div class="rodape-texto"><span>Análise feita por IA a partir de dados de mercado.</span><span>Não é dica nem recomendação de investimento.</span></div>
+  </article>
+
+  <section class="cx" aria-labelledby="t-num">
+    <div class="cx-topo"><h2 id="t-num">Números da análise</h2><span class="mut">Último pregão e últimos 22 pregões</span></div>
+    <div class="tab-rol"><table class="tab"><thead><tr><th scope="col">Ativo</th><th scope="col" class="n">Fechamento</th><th scope="col" class="n">Dia</th><th scope="col" class="n">5 pregões</th><th scope="col" class="n">Mês</th><th scope="col" class="n">Máx. do mês</th><th scope="col" class="n">Mín. do mês</th><th scope="col" class="n">Média 20 dias</th><th scope="col">Onde está na faixa do mês</th></tr></thead><tbody id="tab"></tbody></table></div>
+    <p class="mut" style="margin-top:12px">Ações e índice com dados diários; minicontratos pelo ajuste de cada pregão. A bolinha mostra onde o último fechamento está entre a mínima (esquerda) e a máxima (direita) do mês.</p>
+  </section>
+</main>
+
+<footer class="wrap rodape">
+  <span>Feito por <a href="/">Gabriel Francisco de Souza</a> · Não é recomendação de investimento</span>
+  <span class="bytrops">By <b>trops</b></span>
+</footer>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var SEM = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+  function diaLongo(d) { var p = d.split("-"); var dt = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2], 12)); return SEM[dt.getUTCDay()] + ", " + p[2] + "/" + p[1] + "/" + p[0]; }
+  function hora(iso) { return new Date(iso).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" }); }
+  function casas(a) { return a.tipo === "indice" || /^WIN/.test(a.codigo) ? 0 : /^WDO/.test(a.codigo) ? 1 : 2; }
+  function n(a, v) { return v == null ? "—" : (a.tipo === "acao" ? "R$ " : "") + v.toLocaleString("pt-BR", { minimumFractionDigits: casas(a), maximumFractionDigits: casas(a) }); }
+  function pct(v) { return v == null ? "—" : '<span class="' + (v > 0 ? "pos" : v < 0 ? "neg" : "") + '">' + (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(2).replace(".", ",") + "%</span>"; }
+
+  function mostrar(d) {
+    $("#caixa").setAttribute("aria-busy", "false");
+    $("#quando").textContent = "Análise de " + diaLongo(d.dia) + " · feita às " + hora(d.gerado_em);
+    $("#titulo").textContent = d.titulo;
+    $("#abertura").textContent = d.abertura || "";
+    $("#secoes").innerHTML = (d.secoes || []).map(function (s) { return "<article><h3>" + esc(s.titulo) + "</h3><p>" + esc(s.texto) + "</p></article>"; }).join("");
+    var selo = $("#selo");
+    selo.classList.toggle("regra", !d.ia);
+    selo.querySelector("span").textContent = d.ia ? "Feita por IA" : "Montada por regras (IA indisponível no dia)";
+    $("#tab").innerHTML = (d.ativos || []).map(function (a) {
+      return "<tr><td><b>" + esc(a.codigo) + "</b> <span class=\"mut\">" + esc(a.nome) + "</span></td><td class=\"n\">" + n(a, a.fechamento) + "</td><td class=\"n\">" + pct(a.var_dia) + "</td><td class=\"n\">" + pct(a.var_semana) + "</td><td class=\"n\">" + pct(a.var_mes) +
+        "</td><td class=\"n\">" + n(a, a.max_mes) + "</td><td class=\"n\">" + n(a, a.min_mes) + "</td><td class=\"n\">" + n(a, a.mm20) + "</td><td>" +
+        (a.posicao_faixa == null ? "—" : '<span class="faixa" role="img" aria-label="' + a.posicao_faixa + '% da faixa do mês"><i style="left:' + a.posicao_faixa + '%"></i></span> <span class="mut">' + a.posicao_faixa + "%</span>") + "</td></tr>";
+    }).join("");
+  }
+  function erro() {
+    $("#caixa").setAttribute("aria-busy", "false");
+    $("#quando").textContent = "";
+    $("#titulo").textContent = "Não consegui carregar a análise agora. Tente de novo em alguns minutos.";
+  }
+  function carregar(dia) {
+    fetch("/api/analise" + (dia ? "?dia=" + dia : "")).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(mostrar).catch(erro);
+  }
+  carregar();
+  fetch("/api/analise/dias").then(function (r) { return r.ok ? r.json() : []; }).then(function (dias) {
+    if (!dias || dias.length < 2) return;
+    var s = $("#dias");
+    s.innerHTML = dias.map(function (d, i) { return '<option value="' + d + '">' + (i === 0 ? "Mais recente · " : "") + diaLongo(d) + "</option>"; }).join("");
+    s.hidden = false;
+    s.addEventListener("change", function () { carregar(s.selectedIndex === 0 ? "" : s.value); });
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>
