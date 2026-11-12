@@ -18,7 +18,11 @@
   // IA da própria Cloudflare (Workers AI), usada no resumo do pregão em /api/resumo.
   "ai": { "binding": "AI" },
   // Onde fica guardada a análise do mercado da manhã (a do dia e as dos últimos 30 dias).
-  "kv_namespaces": [{ "binding": "ANALISE", "id": "fefc4784ae454fb78c887ce06e283511" }],
+  // ANALISE: análise do mercado da manhã. VISITAS: contador de visitas do site (sem cookies).
+  "kv_namespaces": [
+    { "binding": "ANALISE", "id": "fefc4784ae454fb78c887ce06e283511" },
+    { "binding": "VISITAS", "id": "991453d48ddf469884f7912536d01dd8" }
+  ],
   // Todo dia útil às 10h40 UTC (7h40 em Brasília) o Worker refaz a análise da manhã.
   "triggers": { "crons": ["40 10 * * 1-5"] },
   "observability": { "enabled": true }

@@ -9,6 +9,7 @@
  *   /api/resumo                           resumo do pregão escrito por IA (cotacoes/resumo.mjs)
  *   /api/analise[?dia=AAAA-MM-DD]          análise da manhã feita por IA, guardada no KV (cotacoes/analise.mjs)
  *   /api/analise/dias                     datas com análise guardada
+ *   POST /api/evento, /api/painel         contador de visitas sem cookies (cloudflare/visitas.mjs)
  * Agendamento (triggers.crons no wrangler.jsonc): todo dia útil às 7h40 de Brasília refaz a análise da manhã.
  * As respostas ficam no cache da Cloudflare (minutos durante o pregão, horas fora dele),
  * então a brapi é pouco consultada. O token fica no segredo BRAPI_TOKEN do Worker.
@@ -17,6 +18,7 @@ import { buscarCotacoes } from "../cotacoes/nucleo.mjs";
 import { ativos, historico, PERIODOS } from "../cotacoes/mercado.mjs";
 import { gerarResumo } from "../cotacoes/resumo.mjs";
 import { gerarEGuardar } from "../cotacoes/analise.mjs";
+import { registrar, painel } from "./visitas.mjs";
 import { emPregao } from "../cotacoes/nucleo.mjs";
 
 // Mudar VERSAO_CACHE faz o Worker ignorar respostas antigas guardadas no cache.
@@ -71,6 +73,8 @@ export default {
       if (url.pathname === "/api/cotacoes") {
         return await comCache(`${url.origin}/api/cotacoes`, ctx, () => buscarCotacoes(token));
       }
+      if (url.pathname === "/api/evento" && request.method === "POST") return await registrar(request, env);
+      if (url.pathname === "/api/painel") return env.VISITAS ? json(await painel(url, env), 200, 0) : json({ erro: "contador não configurado" }, 503, 0);
       if (url.pathname === "/api/analise" || url.pathname === "/api/analise/dias") return await analise(url, env);
       if (url.pathname === "/api/resumo") {
         // O texto da IA fica guardado 30 minutos no pregão e 4 horas fora dele.

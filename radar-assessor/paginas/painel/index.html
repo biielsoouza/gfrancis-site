@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel de visitas · gfrancis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/ferramentas.css">
+<style>
+.periodo { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+.periodo button { font: 600 14px var(--font); border: 0; background: none; padding: 8px 14px; cursor: pointer; color: var(--ink-2); }
+.periodo button[aria-pressed="true"] { background: var(--blue); color: #fff; }
+.kpis4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
+.kpis4 div { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow); }
+.kpis4 span { display: block; font-size: 13px; font-weight: 600; color: var(--ink-3); }
+.kpis4 b { display: block; font-size: 30px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.kpis4 small { font-size: 12.5px; color: var(--ink-3); }
+.grafico svg { width: 100%; height: 240px; display: block; }
+.leg { display: flex; gap: 18px; font-size: 13px; color: var(--ink-3); margin-top: 8px; }
+.leg i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
+.tres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.rank { list-style: none; margin: 0; padding: 0; }
+.rank li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 8px 0; border-bottom: 1px solid #EEF1F6; font-size: 14px; position: relative; }
+.rank li:last-child { border-bottom: 0; }
+.rank li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank li b { font-variant-numeric: tabular-nums; }
+.rank li::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: var(--p); background: var(--blue); opacity: .35; }
+.nota-priv { font-size: 13.5px; color: var(--ink-3); }
+@media (max-width: 900px) { .kpis4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tres { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<header class="wrap topo">
+  <a class="marca" href="/">gfrancis<span>.</span></a>
+  <div class="periodo" role="group" aria-label="Período"><button type="button" data-d="7">7 dias</button><button type="button" data-d="30" aria-pressed="true">30 dias</button><button type="button" data-d="90">90 dias</button></div>
+</header>
+
+<main class="wrap">
+  <section class="abre" style="padding-top:8px">
+    <p class="eyebrow">Só para você</p>
+    <h1>Painel de visitas</h1>
+    <p class="lead">Quantas pessoas entraram no site, de onde vieram e quantas baixaram o currículo ou chamaram você.</p>
+  </section>
+
+  <div class="kpis4" aria-live="polite">
+    <div><span>Visitas</span><b id="k-vis">—</b><small id="k-vis-s"></small></div>
+    <div><span>Baixaram o currículo</span><b id="k-cv">—</b><small id="k-cv-s"></small></div>
+    <div><span>Chamaram no WhatsApp</span><b id="k-wpp">—</b><small id="k-wpp-s"></small></div>
+    <div><span>Abriram o LinkedIn ou e-mail</span><b id="k-li">—</b><small id="k-li-s"></small></div>
+  </div>
+
+  <section class="cx grafico" aria-labelledby="t-g">
+    <div class="cx-topo"><h2 id="t-g">Visitas por dia</h2><span class="mut" id="g-sub"></span></div>
+    <svg id="g" role="img" aria-label="Gráfico de visitas por dia"></svg>
+    <div class="leg"><span><i style="background:#0057D9"></i>Visitas</span><span><i style="background:#0E7A46;border-radius:50%"></i>Baixaram o currículo (número no círculo)</span></div>
+  </section>
+
+  <div class="tres">
+    <section class="cx"><h2 style="font-size:17px;margin-bottom:8px">De onde vieram</h2><ul class="rank" id="r-orig"></ul></section>
+    <section class="cx"><h2 style="font-size:17px;margin-bottom:8px">Páginas mais vistas</h2><ul class="rank" id="r-pag"></ul></section>
+    <section class="cx"><h2 style="font-size:17px;margin-bottom:8px">Países</h2><ul class="rank" id="r-pais"></ul></section>
+  </div>
+
+  <p class="nota-priv">O contador não usa cookies e não guarda IP nem nada que identifique quem visitou. Robôs de busca ficam de fora. Os números são aproximados. Esta página não aparece no Google nem no menu do site.</p>
+</main>
+
+<footer class="wrap rodape"><span>gfrancis.com.br</span><span class="bytrops">By <b>trops</b></span></footer>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var PAIS = { BR: "Brasil", US: "Estados Unidos", PT: "Portugal", CA: "Canadá", GB: "Reino Unido", DE: "Alemanha", IE: "Irlanda", NL: "Holanda", FR: "França", ES: "Espanha", AR: "Argentina" };
+  var ORIG = { direto: "Direto (link ou digitado)", "linkedin.com": "LinkedIn", "lnkd.in": "LinkedIn", "google.com": "Google", "google.com.br": "Google", "l.instagram.com": "Instagram", "t.co": "X (Twitter)", "web.whatsapp.com": "WhatsApp" };
+  function soma(lista, k) { return lista.reduce(function (s, d) { return s + d[k]; }, 0); }
+  function rank(el, itens, nome) {
+    var max = itens.length ? itens[0][1] : 0;
+    el.innerHTML = itens.length ? itens.map(function (i) { return '<li style="--p:' + Math.round(i[1] / max * 100) + '%"><span>' + esc(nome(i[0])) + "</span><b>" + i[1] + "</b></li>"; }).join("")
+      : '<li><span class="mut">Ainda sem dados</span><b></b></li>';
+  }
+  function grafico(dias) {
+    var svg = $("#g"), W = svg.clientWidth || 900, H = 240, pe = 34, pb = 26, pt = 28;
+    var max = Math.max(4, Math.max.apply(null, dias.map(function (d) { return d.visita; })));
+    var passo = Math.pow(10, Math.floor(Math.log10(max))); var topo = Math.ceil(max / passo) * passo;
+    var bw = (W - pe) / dias.length, h = H - pb - pt, out = "";
+    for (var g = 0; g <= 4; g++) { var v = topo * g / 4, y = pt + h - h * g / 4; out += '<line x1="' + pe + '" x2="' + W + '" y1="' + y + '" y2="' + y + '" stroke="#E7ECF4"/><text x="' + (pe - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="#5F6B7D">' + Math.round(v) + "</text>"; }
+    dias.forEach(function (d, i) {
+      var x = pe + i * bw, bh = h * d.visita / topo;
+      out += '<rect x="' + (x + bw * 0.18) + '" y="' + (pt + h - bh) + '" width="' + Math.max(1, bw * 0.64) + '" height="' + bh + '" rx="2" fill="#0057D9"><title>' + d.dia.split("-").reverse().join("/") + ": " + d.visita + " visitas, " + d.curriculo + " currículos</title></rect>";
+      if (d.curriculo) { var cy = Math.max(10, pt + h - bh - 11); out += '<circle cx="' + (x + bw / 2) + '" cy="' + cy + '" r="8" fill="#0E7A46"/><text x="' + (x + bw / 2) + '" y="' + (cy + 3.5) + '" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">' + d.curriculo + "</text>"; }
+      var cada = dias.length > 31 ? 14 : dias.length > 8 ? 5 : 1;
+      if ((dias.length - 1 - i) % cada === 0) out += '<text x="' + (x + bw / 2) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#5F6B7D">' + d.dia.slice(8) + "/" + d.dia.slice(5, 7) + "</text>";
+    });
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.innerHTML = out;
+  }
+  function carregar(n) {
+    document.querySelectorAll(".periodo button").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.d === n)); });
+    fetch("/api/painel?dias=" + n, { cache: "no-store" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) {
+      var hoje = d.dias[d.dias.length - 1];
+      $("#k-vis").textContent = soma(d.dias, "visita"); $("#k-vis-s").textContent = hoje.visita + " hoje";
+      $("#k-cv").textContent = soma(d.dias, "curriculo"); $("#k-cv-s").textContent = hoje.curriculo + " hoje";
+      $("#k-wpp").textContent = soma(d.dias, "whatsapp"); $("#k-wpp-s").textContent = hoje.whatsapp + " hoje";
+      $("#k-li").textContent = soma(d.dias, "linkedin") + soma(d.dias, "email"); $("#k-li-s").textContent = (hoje.linkedin + hoje.email) + " hoje";
+      $("#g-sub").textContent = "Últimos " + n + " dias";
+      grafico(d.dias);
+      rank($("#r-orig"), d.origens, function (k) { return ORIG[k] || k; });
+      rank($("#r-pag"), d.paginas, function (k) { return k === "/" ? "Página inicial" : k; });
+      rank($("#r-pais"), d.paises, function (k) { return PAIS[k] || k; });
+    }).catch(function () { $("#g-sub").textContent = "Não consegui carregar os números agora."; });
+  }
+  document.querySelectorAll(".periodo button").forEach(function (b) { b.addEventListener("click", function () { carregar(+b.dataset.d); }); });
+  carregar(30);
+})();
+</script>
+</body>
+</html>
