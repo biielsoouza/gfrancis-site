@@ -6,11 +6,14 @@
  *   /api/cotacoes                         mural de cotações (cotacoes/nucleo.mjs)
  *   /api/historico?ativo=PETR4&periodo=1mo  candles diários para a aba Gráficos
  *   /api/ativos                           lista de códigos para a busca de ativos
+ *   /api/resumo                           resumo do pregão escrito por IA (cotacoes/resumo.mjs)
  * As respostas ficam no cache da Cloudflare (minutos durante o pregão, horas fora dele),
  * então a brapi é pouco consultada. O token fica no segredo BRAPI_TOKEN do Worker.
  */
 import { buscarCotacoes } from "../cotacoes/nucleo.mjs";
 import { ativos, historico, PERIODOS } from "../cotacoes/mercado.mjs";
+import { gerarResumo } from "../cotacoes/resumo.mjs";
+import { emPregao } from "../cotacoes/nucleo.mjs";
 
 // Mudar VERSAO_CACHE faz o Worker ignorar respostas antigas guardadas no cache.
 const VERSAO_CACHE = "3";
@@ -36,6 +39,14 @@ export default {
     try {
       if (url.pathname === "/api/cotacoes") {
         return await comCache(`${url.origin}/api/cotacoes`, ctx, () => buscarCotacoes(token));
+      }
+      if (url.pathname === "/api/resumo") {
+        // O texto da IA fica guardado 30 minutos no pregão e 4 horas fora dele.
+        return await comCache(`${url.origin}/api/resumo`, ctx, async () => {
+          const cot = await (await comCache(`${url.origin}/api/cotacoes`, ctx, () => buscarCotacoes(token))).json();
+          const corpo = await gerarResumo(cot, env.AI);
+          return { corpo, ttl: !corpo.itens.length ? 60 : emPregao() ? 1800 : 4 * 3600, status: corpo.itens.length ? 200 : 503 };
+        });
       }
       if (url.pathname === "/api/ativos") {
         return await comCache(`${url.origin}/api/ativos`, ctx, async () => ({ corpo: await ativos(token), ttl: 24 * 3600 }));

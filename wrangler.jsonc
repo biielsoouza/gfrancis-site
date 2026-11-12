@@ -15,5 +15,7 @@
     "directory": "./radar-assessor/site",
     "run_worker_first": ["/api/*"]
   },
+  // IA da própria Cloudflare (Workers AI), usada no resumo do pregão em /api/resumo.
+  "ai": { "binding": "AI" },
   "observability": { "enabled": true }
 }

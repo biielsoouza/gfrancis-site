@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Resumo do pregão · gfrancis</title>
+<meta name="description" content="Resumo do pregão da bolsa brasileira escrito por IA a partir das cotações do dia: Ibovespa, principais ações, WIN e WDO.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/ferramentas.css">
+<style>
+.resumo { padding: 28px; }
+.selo { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--blue); background: var(--blue-wash); border-radius: 999px; padding: 5px 12px; }
+.selo svg { width: 16px; height: 16px; }
+.selo.regra { color: var(--ink-3); background: #EEF1F6; }
+.cx .manchete { font-size: clamp(24px, 3vw, 32px); line-height: 1.2; margin: 14px 0 18px; letter-spacing: -0.02em; }
+.pontos { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.pontos li { position: relative; padding-left: 22px; font-size: 17px; color: var(--ink-2); }
+.pontos li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); }
+.meta { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13.5px; color: var(--ink-3); }
+.grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.tile { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.tile .s { font-size: 13px; font-weight: 700; }
+.tile .nm { font-size: 12.5px; color: var(--ink-3); }
+.tile .p { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin-top: 4px; }
+.tile .v { font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.carregando { color: var(--ink-3); }
+.pulso { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--alta); margin-right: 6px; }
+.pulso.off { background: #A9B3C2; }
+.fluxo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 14px 0; counter-reset: f; }
+.fluxo div { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: #FAFCFF; }
+.fluxo div::before { counter-increment: f; content: counter(f); display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+.fluxo b { display: block; font-size: 15px; }
+.fluxo span { font-size: 13.5px; color: var(--ink-3); }
+@media (max-width: 760px) { .resumo { padding: 20px; } .fluxo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .pontos li { font-size: 16px; } }
+</style>
+</head>
+<body>
+<header class="wrap topo">
+  <a class="marca" href="/">gfrancis<span>.</span></a>
+  <nav aria-label="Ferramentas"><a href="/nota/">Leitor de nota</a><a href="/pregao/" aria-current="page">Resumo do pregão</a><a href="/#projetos">Projetos</a></nav>
+</header>
+
+<main class="wrap">
+  <section class="abre">
+    <p class="eyebrow">Ferramenta · IA</p>
+    <h1>Resumo do pregão</h1>
+    <p class="lead">Um resumo curto do mercado, escrito por inteligência artificial a partir das cotações do dia: Ibovespa, principais ações e os minicontratos WIN e WDO.</p>
+  </section>
+
+  <section class="cx resumo" aria-labelledby="manchete" aria-busy="true" id="caixa">
+    <span class="selo" id="selo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z" fill="currentColor"/></svg><span>Escrito por IA</span></span>
+    <h2 class="manchete" id="manchete"><span class="carregando">Montando o resumo…</span></h2>
+    <ul class="pontos" id="pontos"></ul>
+    <div class="meta" id="meta"></div>
+  </section>
+
+  <section class="cx" aria-labelledby="t-cot">
+    <div class="cx-topo"><h2 id="t-cot">Números usados no resumo</h2><span class="mut" id="situacao"></span></div>
+    <div class="grade" id="grade"></div>
+  </section>
+
+  <section class="cx como" aria-labelledby="t-como">
+    <h2 id="t-como">Como funciona</h2>
+    <div class="fluxo">
+      <div><b>Busca as cotações</b><span>Ibovespa, 8 ações e os minicontratos, numa fonte de dados de mercado.</span></div>
+      <div><b>Organiza os fatos</b><span>Variação de cada ativo, quantas sobem e quantas caem.</span></div>
+      <div><b>A IA escreve</b><span>Um modelo de linguagem transforma os números em texto, sem inventar notícia.</span></div>
+      <div><b>Guarda e atualiza</b><span>O texto vale por 30 minutos no pregão e é refeito sozinho depois.</span></div>
+    </div>
+    <p class="mut">Se a IA estiver indisponível, o resumo é montado por regras simples, e o selo avisa. Cotações com atraso de cerca de 30 minutos; minicontratos pelo último ajuste. Não é recomendação de investimento.</p>
+  </section>
+</main>
+
+<footer class="wrap rodape">
+  <span>Feito por <a href="/">Gabriel Francisco de Souza</a></span>
+  <span class="bytrops">By <b>trops</b></span>
+</footer>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var hora = function (iso) { return iso ? new Date(iso).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" }) : "—"; };
+  var dia = function (iso) { return iso ? new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", timeZone: "America/Sao_Paulo" }) : ""; };
+  function fmt(i) {
+    var casas = i.tipo === "indice" || /^WIN/.test(i.simbolo) ? 0 : /^WDO/.test(i.simbolo) ? 1 : 2;
+    var v = i.preco.toLocaleString("pt-BR", { minimumFractionDigits: casas, maximumFractionDigits: casas });
+    return i.tipo === "acao" ? "R$ " + v : v;
+  }
+  function pct(v) { return v == null ? "—" : (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(2).replace(".", ",") + "%"; }
+  fetch("/api/resumo").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
+    $("#caixa").setAttribute("aria-busy", "false");
+    $("#manchete").textContent = d.manchete;
+    $("#pontos").innerHTML = (d.pontos || []).map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("");
+    if (!d.ia) { $("#selo").classList.add("regra"); $("#selo span").textContent = "Montado por regras (IA indisponível agora)"; }
+    $("#meta").innerHTML = "<span>Gerado em " + dia(d.gerado_em) + " às " + hora(d.gerado_em) + "</span><span>" +
+      (d.em_pregao ? "Atualiza a cada 30 minutos durante o pregão" : "Pregão fechado: números do último pregão") + "</span>";
+    $("#situacao").innerHTML = '<span class="pulso' + (d.em_pregao ? "" : " off") + '"></span>' + (d.em_pregao ? "Pregão aberto · atraso de ~30 min" : "Pregão fechado");
+    $("#grade").innerHTML = (d.itens || []).filter(function (i) { return i.preco != null; }).map(function (i) {
+      var c = i.variacao > 0 ? "pos" : i.variacao < 0 ? "neg" : "";
+      return '<div class="tile"><div class="s">' + esc(i.simbolo) + '</div><div class="nm">' + esc(i.nome) + '</div><div class="p">' + fmt(i) + '</div><div class="v ' + c + '">' + pct(i.variacao) + "</div></div>";
+    }).join("");
+  }).catch(function () {
+    $("#caixa").setAttribute("aria-busy", "false");
+    $("#manchete").textContent = "Não consegui buscar as cotações agora. Tente de novo em alguns minutos.";
+  });
+})();
+</script>
+</body>
+</html>

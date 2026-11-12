@@ -119,6 +119,17 @@ main .wrap { padding-block: 24px; display: grid; gap: 24px; }
 
 .faco { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .faco article { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 24px; display: grid; gap: 12px; align-content: start; }
+.ferr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.ferr-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 26px; display: grid; gap: 10px; align-content: start; text-decoration: none; transition: border-color .15s, transform .15s; }
+.ferr-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+.ferr-card .ic { width: 46px; height: 46px; border-radius: 14px; background: var(--blue-wash); color: var(--blue); display: grid; place-items: center; }
+.ferr-card .ic svg { width: 24px; height: 24px; }
+.ferr-card small { font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue); }
+.ferr-card h3 { font-size: 21px; font-weight: 800; }
+.ferr-card p { color: var(--ink-2); font-size: 15.5px; }
+.ferr-card .ir { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; color: var(--blue); margin-top: 4px; }
+.ferr-card .ir svg { width: 18px; height: 18px; }
+@media (max-width: 760px) { .ferr { grid-template-columns: minmax(0, 1fr); } .ferr-card { padding: 20px; } }
 .faco .ic { width: 46px; height: 46px; border-radius: 14px; background: var(--blue-wash); color: var(--blue); display: grid; place-items: center; }
 .faco .ic svg { width: 24px; height: 24px; }
 .faco h3 { font-size: 19px; font-weight: 800; }
@@ -232,6 +243,7 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
         <a href="#sobre">Sobre</a>
         <a href="#trajetoria">Trajetória</a>
         <a href="#projetos">Projetos</a>
+        <a href="#ferramentas">Ferramentas</a>
         <a href="#contato">Contato</a>
       </nav>
     </div>
@@ -489,6 +501,26 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
       </div>
     </article>
 
+
+    <section class="secao" id="ferramentas" aria-labelledby="tit-ferr">
+      <div class="secao-tit"><div><small>Ferramentas</small><h2 id="tit-ferr">Para usar agora, direto no navegador</h2></div><span>Abertas ao público, sem cadastro</span></div>
+      <div class="ferr">
+        <a class="ferr-card" href="/pregao/">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span>
+          <small>IA · Mercado</small>
+          <h3>Resumo do pregão</h3>
+          <p>Uma IA lê as cotações do Ibovespa, das principais ações e dos minicontratos e escreve um resumo curto do mercado, atualizado a cada 30 minutos.</p>
+          <span class="ir">Ver o resumo de agora <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="ferr-card" href="/nota/">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+          <small>Automação · Mercado</small>
+          <h3>Leitor de nota de corretagem</h3>
+          <p>Solte o PDF da nota e veja operações, custos e o resultado por contrato, conferido com o ajuste da corretora. O arquivo não sai do seu computador.</p>
+          <span class="ir">Testar com uma nota de exemplo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+    </section>
 
     <section class="secao mercado" id="mercado" aria-labelledby="tit-mercado">
       <div class="secao-tit"><div><small>Mercado</small><h2 id="tit-mercado">Cotações do dia</h2></div><span>Ações, Ibovespa, dólar e minicontratos</span></div>

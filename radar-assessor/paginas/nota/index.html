@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leitor de nota de corretagem · gfrancis</title>
+<meta name="description" content="Solte o PDF da nota de corretagem e veja operações, custos e resultado. O arquivo é lido no seu navegador e não sai do seu computador.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/ferramentas.css">
+</head>
+<body>
+<header class="wrap topo">
+  <a class="marca" href="/">gfrancis<span>.</span></a>
+  <nav aria-label="Ferramentas"><a href="/nota/" aria-current="page">Leitor de nota</a><a href="/pregao/">Resumo do pregão</a><a href="/#projetos">Projetos</a></nav>
+</header>
+
+<main class="wrap">
+  <section class="abre">
+    <p class="eyebrow">Ferramenta · Mercado</p>
+    <h1>Leitor de nota de corretagem</h1>
+    <p class="lead">Solte o PDF da nota e veja na hora as operações, os custos e o resultado do dia. Funciona com notas de futuros (WIN, WDO) e de ações no layout padrão das corretoras.</p>
+    <p class="priv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>O arquivo é lido no seu navegador. Nada é enviado para servidor nenhum.</p>
+  </section>
+
+  <section class="cx entrada" aria-labelledby="t-entrada">
+    <h2 id="t-entrada" class="sr">Escolher notas</h2>
+    <label class="drop" id="drop">
+      <input type="file" id="arquivo" accept="application/pdf" multiple>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <b>Arraste os PDFs das notas aqui</b>
+      <span>ou clique para escolher · pode mandar várias de uma vez</span>
+    </label>
+    <div class="exemplos">
+      <span>Sem nota em mãos?</span>
+      <button type="button" class="bt sec" data-exemplo="/nota/exemplos/nota-exemplo-futuros.pdf">Testar com nota de futuros</button>
+      <button type="button" class="bt sec" data-exemplo="/nota/exemplos/nota-exemplo-acoes.pdf">Testar com nota de ações</button>
+    </div>
+    <p class="aviso" id="aviso" role="status" aria-live="polite"></p>
+  </section>
+
+  <section id="resultado" hidden>
+    <div class="cx" id="caixa-notas" hidden>
+      <div class="cx-topo"><h2>Notas lidas</h2><span class="mut" id="qtd-notas"></span></div>
+      <div class="tab-rol"><table class="tab" id="tab-notas"><thead><tr><th scope="col">Data</th><th scope="col">Nota</th><th scope="col">Tipo</th><th scope="col" class="n">Operações</th><th scope="col" class="n">Custos</th><th scope="col" class="n">Líquido na conta</th><th scope="col"><span class="sr">Ver</span></th></tr></thead><tbody></tbody><tfoot></tfoot></table></div>
+    </div>
+
+    <div class="cx" id="detalhe">
+      <div class="cx-topo">
+        <div><h2 id="det-tit">Nota</h2><p class="mut" id="det-sub"></p></div>
+        <button type="button" class="bt pri" id="baixar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Baixar planilha</button>
+      </div>
+      <div class="kpis">
+        <div><span id="k-bruto-rot">Resultado do dia</span><b id="k-bruto">—</b></div>
+        <div><span>Custos da nota</span><b id="k-custos">—</b></div>
+        <div class="dest"><span>Líquido da nota</span><b id="k-liq">—</b></div>
+      </div>
+      <p class="confere" id="confere" hidden></p>
+
+      <div id="bloco-contratos" hidden>
+        <h3>Resultado por contrato</h3>
+        <div class="tab-rol"><table class="tab" id="tab-contratos"><thead><tr><th scope="col">Contrato</th><th scope="col" class="n">Compras</th><th scope="col" class="n">Vendas</th><th scope="col" class="n">Preço médio compra</th><th scope="col" class="n">Preço médio venda</th><th scope="col" class="n">Pontos</th><th scope="col" class="n">Resultado</th></tr></thead><tbody></tbody></table></div>
+      </div>
+
+      <div class="duas">
+        <div>
+          <h3>Operações</h3>
+          <div class="tab-rol"><table class="tab" id="tab-ops"><thead><tr><th scope="col">C/V</th><th scope="col">Ativo</th><th scope="col">Tipo</th><th scope="col" class="n">Qtd.</th><th scope="col" class="n">Preço</th><th scope="col" class="n">Valor</th></tr></thead><tbody></tbody></table></div>
+        </div>
+        <div>
+          <h3>Custos</h3>
+          <ul class="custos" id="lista-custos"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cx como">
+    <h2>Como funciona</h2>
+    <ol>
+      <li><b>Lê o texto do PDF</b> no seu navegador, página por página.</li>
+      <li><b>Reconhece as linhas de negócio</b> (compra ou venda, ativo, quantidade, preço) e o quadro de resumo da nota.</li>
+      <li><b>Calcula o resultado</b> por contrato pelo preço médio e confere com o ajuste informado pela corretora.</li>
+    </ol>
+    <p class="mut">Notas digitalizadas como imagem não têm texto e não podem ser lidas. Isto não é recomendação de investimento nem substitui a apuração oficial de impostos.</p>
+  </section>
+</main>
+
+<footer class="wrap rodape">
+  <span>Feito por <a href="/">Gabriel Francisco de Souza</a></span>
+  <span class="bytrops">By <b>trops</b></span>
+</footer>
+
+<script type="module" src="/nota/app.mjs"></script>
+</body>
+</html>

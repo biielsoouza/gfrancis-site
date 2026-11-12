@@ -65,4 +65,6 @@ if __name__ == "__main__":
     home = incluir_mural((PASTA / "templates" / "home.html").read_text(encoding="utf-8"))
     (SAIDA / "index.html").write_text(home, encoding="utf-8")
     shutil.copytree(PASTA / "portfolio", SAIDA / "portfolio")
+    # Ferramentas (Leitor de nota, Resumo do pregão): páginas estáticas copiadas como estão.
+    shutil.copytree(PASTA / "paginas", SAIDA, dirs_exist_ok=True)
     print(f"Site pronto em {SAIDA.resolve()}")
