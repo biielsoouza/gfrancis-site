@@ -80,7 +80,12 @@ img { display: block; max-width: 100%; height: auto; }
 .mono { width: 64px; height: 64px; flex: none; border-radius: 18px; background: linear-gradient(135deg, var(--blue) 0%, #4C93FF 100%); color: #FFFFFF; display: grid; place-items: center; font-weight: 800; font-size: 24px; letter-spacing: -0.02em; }
 .perfil-topo b { display: block; font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
 .perfil-topo span { font-size: 14px; color: var(--ink-3); }
-.perfil-topo .mono { color: #FFFFFF; font-size: 24px; }
+.foto { margin: -26px -26px 4px; position: relative; }
+.foto img { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; object-position: 50% 22%; border-radius: 22px 22px 0 0; }
+.foto span { position: absolute; left: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: var(--ink); background: rgba(255,255,255,0.92); border-radius: 999px; padding: 6px 12px; box-shadow: var(--shadow); }
+.foto span i { width: 7px; height: 7px; border-radius: 50%; background: #12A35E; }
+.bt.wpp { background: #E7F7EE; color: #0B6B3D; border: 1px solid #BFE6CF; }
+.bt.wpp:hover { background: #D9F2E4; border-color: #0E7A46; color: #075A32; }
 .fatos { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 .fatos li { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
 .fatos li:first-child { border-top: 0; }
@@ -237,12 +242,13 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
         <div class="acoes">
           <a class="bt pri" href="#projetos">Ver projetos</a>
           <a class="bt sec" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.83v1.54h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13V21h-4v-5.07c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68V21h-4z"/></svg>LinkedIn</a>
+          <a class="bt wpp" href="https://wa.me/5511953845195?text=Ol%C3%A1%2C%20Gabriel!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>WhatsApp</a>
           <a class="bt sec" href="mailto:gabriel@gfrancis.com.br"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>E-mail</a>
         </div>
       </div>
       <aside class="perfil" aria-label="Resumo">
+        <div class="foto"><img src="/portfolio/gabriel.webp" width="800" height="1200" alt="Foto de Gabriel Francisco de Souza"><span><i aria-hidden="true"></i>Disponível para conversar</span></div>
         <div class="perfil-topo">
-          <span class="mono" aria-hidden="true">GF</span>
           <div><b>Gabriel Francis</b><span>Mercado financeiro · Brasil</span></div>
         </div>
         <ul class="fatos">
@@ -483,6 +489,7 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
       </div>
       <div class="acoes" style="margin-top: 0">
         <a class="bt pri" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener">Falar no LinkedIn</a>
+        <a class="bt wpp" href="https://wa.me/5511953845195?text=Ol%C3%A1%2C%20Gabriel!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>Chamar no WhatsApp</a>
         <a class="bt sec" href="mailto:gabriel@gfrancis.com.br">gabriel@gfrancis.com.br</a>
       </div>
     </section>
