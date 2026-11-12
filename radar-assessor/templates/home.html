@@ -117,12 +117,13 @@ main .wrap { padding-block: 24px; display: grid; gap: 24px; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { font-size: 13px; font-weight: 600; padding: 5px 11px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); color: var(--ink-2); }
 
-.faco { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.faco { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 .faco article { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 24px; display: grid; gap: 12px; align-content: start; }
 .faco .ic { width: 46px; height: 46px; border-radius: 14px; background: var(--blue-wash); color: var(--blue); display: grid; place-items: center; }
 .faco .ic svg { width: 24px; height: 24px; }
 .faco h3 { font-size: 19px; font-weight: 800; }
-.faco p { color: var(--ink-2); font-size: 15.5px; }
+.faco p { color: var(--ink-2); font-size: 15px; }
+@media (max-width: 1100px) { .faco { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 .linha { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; position: relative; }
 .linha::before { content: ""; position: absolute; left: 11px; top: 10px; bottom: 10px; width: 2px; background: var(--line); }
@@ -238,9 +239,10 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
       <div>
         <span class="eyebrow"><i aria-hidden="true"></i>Mercado financeiro + tecnologia</span>
         <h1>Gabriel Francisco<br>de Souza</h1>
-        <p class="lead">Operador de mesa de renda variável e formado em Ciência da Computação. Uno o dia a dia da mesa com programação para construir <b>sistemas e automações</b> que tiram o time da planilha e dão mais tempo para o cliente.</p>
+        <p class="lead">Operador de mesa de renda variável e formado em Ciência da Computação. Uno o dia a dia da mesa com programação para construir <b>sistemas, automações e fluxos com IA</b> que tiram o time da planilha e dão mais tempo para o cliente.</p>
         <div class="acoes">
           <a class="bt pri" href="#projetos">Ver projetos</a>
+          <a class="bt sec" href="/portfolio/curriculo-gabriel-francis.pdf" download="Curriculo-Gabriel-Francis.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Baixar currículo</a>
           <a class="bt sec" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.83v1.54h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.13V21h-4v-5.07c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68V21h-4z"/></svg>LinkedIn</a>
           <a class="bt wpp" href="https://wa.me/5511953845195?text=Ol%C3%A1%2C%20Gabriel!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>WhatsApp</a>
           <a class="bt sec" href="mailto:gabriel@gfrancis.com.br"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>E-mail</a>
@@ -254,7 +256,7 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
         <ul class="fatos">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg><span><small>Hoje</small><b>Operador de mesa de renda variável</b></span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span><small>Formação</small><b>Ciência da Computação</b></span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg><span><small>Constrói</small><b>Sistemas web e automações em Python</b></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg><span><small>Constrói</small><b>Sistemas web, automações e IA</b></span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span><small>Idiomas</small><b>Português · Inglês intermediário</b></span></li>
         </ul>
       </aside>
@@ -285,6 +287,7 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
             <div><small>Mercado financeiro</small><div class="chips"><span class="chip">Renda variável</span><span class="chip">Minicontratos WIN e WDO</span><span class="chip">Corretagem e custos</span><span class="chip">Back-office</span><span class="chip">Relacionamento com clientes</span></div></div>
             <div><small>Dados e automação</small><div class="chips"><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">openpyxl</span><span class="chip">Excel avançado</span><span class="chip">VBA</span></div></div>
             <div><small>Desenvolvimento web</small><div class="chips"><span class="chip">JavaScript</span><span class="chip">HTML e CSS</span><span class="chip">Flask</span><span class="chip">Cloudflare Workers e D1</span><span class="chip">Supabase</span><span class="chip">Git e GitHub</span></div></div>
+            <div><small>Inteligência artificial</small><div class="chips"><span class="chip">n8n</span><span class="chip">IA generativa</span><span class="chip">Claude</span><span class="chip">Engenharia de prompt</span><span class="chip">Integrações por API</span><span class="chip">Webhooks</span></div></div>
           </div>
         </div>
       </div>
@@ -307,6 +310,11 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
           <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></span>
           <h3>Sistemas web</h3>
           <p>Painéis, quadros de tarefas e controles com login e permissões por perfil, publicados e funcionando no computador e no celular.</p>
+        </article>
+        <article>
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></span>
+          <h3>IA e automação</h3>
+          <p>Fluxos no n8n que buscam dados, integram sistemas por API e publicam sozinhos, e desenvolvimento de ferramentas com apoio de IA generativa.</p>
         </article>
       </div>
     </section>
@@ -496,6 +504,7 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
         <a class="bt pri" href="https://www.linkedin.com/in/gfrancissouza" target="_blank" rel="noopener">Falar no LinkedIn</a>
         <a class="bt wpp" href="https://wa.me/5511953845195?text=Ol%C3%A1%2C%20Gabriel!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>Chamar no WhatsApp</a>
         <a class="bt sec" href="mailto:gabriel@gfrancis.com.br">gabriel@gfrancis.com.br</a>
+        <a class="bt sec" href="/portfolio/curriculo-gabriel-francis.pdf" download="Curriculo-Gabriel-Francis.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Baixar currículo (PDF)</a>
       </div>
     </section>
   </div>
