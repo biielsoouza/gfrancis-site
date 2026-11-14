@@ -64,6 +64,10 @@ if __name__ == "__main__":
     (SAIDA / "radar" / "index.html").write_text(pagina_completa(radar, "Radar do Assessor"), encoding="utf-8")
     home = incluir_mural((PASTA / "templates" / "home.html").read_text(encoding="utf-8"))
     (SAIDA / "index.html").write_text(home, encoding="utf-8")
+    # Versão em inglês (gfrancis.com.br/en/): a mesma página com os textos de templates/traducao_en.py
+    from templates.traducao_en import traduzir   # noqa: E402
+    (SAIDA / "en").mkdir(exist_ok=True)
+    (SAIDA / "en" / "index.html").write_text(incluir_mural(traduzir((PASTA / "templates" / "home.html").read_text(encoding="utf-8"))), encoding="utf-8")
     shutil.copytree(PASTA / "portfolio", SAIDA / "portfolio")
     # Ferramentas (Leitor de nota, Resumo do pregão): páginas estáticas copiadas como estão.
     shutil.copytree(PASTA / "paginas", SAIDA, dirs_exist_ok=True)

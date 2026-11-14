@@ -52,8 +52,13 @@
 (function () {
   const caixas = document.querySelectorAll("[data-mural]");
   if (!caixas.length) return;
+  // Idioma: segue o <html lang> da página (pt-BR na principal, en em /en/).
+  const EN = (document.documentElement.lang || "").toLowerCase().startsWith("en");
+  const T = (pt, en) => (EN ? en : pt);
+  const NOMES_EN = { "Dólar comercial": "US dollar", "Mini dólar": "Mini dollar" };
+  const nomeAtivo = (nm) => (EN && NOMES_EN[nm]) || nm;
   const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const n = (v, casas) => Number(v).toLocaleString("pt-BR", { minimumFractionDigits: casas, maximumFractionDigits: casas });
+  const n = (v, casas) => Number(v).toLocaleString(EN ? "en-US" : "pt-BR", { minimumFractionDigits: casas, maximumFractionDigits: casas });
   function preco(i) {
     if (i.tipo === "indice" || i.simbolo.startsWith("WIN")) return `${n(i.preco, 0)} pts`;
     if (i.tipo === "moeda") return `R$ ${n(i.preco, 4)}`;
@@ -65,24 +70,25 @@
     const cls = v > 0.004 ? "alta" : v < -0.004 ? "baixa" : "zero";
     return `<span class="mural-var ${cls}">${v > 0 ? "▲" : v < 0 ? "▼" : ""} ${n(Math.abs(v), 2)}%</span>`;
   }
-  const hora = (iso) => new Date(iso).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+  const hora = (iso) => new Date(iso).toLocaleTimeString(EN ? "en-US" : "pt-BR", { hour: "2-digit", minute: "2-digit" });
   function nota(d) {
     const fut = d.itens.some((i) => i.tipo === "futuro");
+    if (EN) return `Quotes delayed by ${esc(d.atraso)}${fut ? " · mini futures: last session's settlement" : ""} · sources: brapi.dev${d.itens.some((i) => i.tipo === "moeda") ? " and AwesomeAPI" : ""} · updated at ${hora(d.atualizado_em)}${d.em_pregao ? "" : " · market closed"}. Not investment advice.`;
     return `Cotações com atraso de ${esc(d.atraso)}${fut ? " · minicontratos: ajuste do último pregão" : ""} · fontes: brapi.dev${d.itens.some((i) => i.tipo === "moeda") ? " e AwesomeAPI" : ""} · atualizado às ${hora(d.atualizado_em)}${d.em_pregao ? "" : " · mercado fechado"}. Não é recomendação de investimento.`;
   }
   function desenhar(caixa, d) {
     const faixa = caixa.dataset.variante === "faixa", topo = caixa.dataset.variante === "topo";
     if (topo) {
-      if (!d || !d.itens || !d.itens.length) { caixa.innerHTML = `<div class="mural-topo"><span class="mural-selo fechado"><i></i><span>Cotações indisponíveis</span></span></div>`; return; }
+      if (!d || !d.itens || !d.itens.length) { caixa.innerHTML = `<div class="mural-topo"><span class="mural-selo fechado"><i></i><span>${T("Cotações indisponíveis", "Quotes unavailable")}</span></span></div>`; return; }
       const chips = d.itens.map((i) => `<span class="mural-chip" role="listitem"><b>${esc(i.simbolo)}</b><span class="p">${preco(i)}</span>${variacao(i.variacao)}</span>`).join("");
       caixa.innerHTML = `<div class="mural-topo">
-          <span class="mural-selo ${d.em_pregao ? "" : "fechado"}" title="${esc(nota(d).replace(/<[^>]+>/g, ""))}" tabindex="0"><i></i><span>${d.em_pregao ? "Mercado · atraso 30 min" : "Mercado fechado"}</span></span>
+          <span class="mural-selo ${d.em_pregao ? "" : "fechado"}" title="${esc(nota(d).replace(/<[^>]+>/g, ""))}" tabindex="0"><i></i><span>${d.em_pregao ? T("Mercado · atraso 30 min", "Market · 30 min delay") : T("Mercado fechado", "Market closed")}</span></span>
           <div class="mural-anda" style="--mural-dur:${Math.max(30, d.itens.length * 4)}s">
-            <div class="mural-trilho"><div class="mural-grupo" role="list" aria-label="Cotações">${chips}</div><div class="mural-grupo" aria-hidden="true">${chips}</div></div></div></div>`;
+            <div class="mural-trilho"><div class="mural-grupo" role="list" aria-label="${T("Cotações", "Quotes")}">${chips}</div><div class="mural-grupo" aria-hidden="true">${chips}</div></div></div></div>`;
       return;
     }
     if (!d || !d.itens || !d.itens.length) {
-      caixa.innerHTML = `<p class="mural-nota" style="margin:0">Cotações indisponíveis no momento.</p>`;
+      caixa.innerHTML = `<p class="mural-nota" style="margin:0">${T("Cotações indisponíveis no momento.", "Quotes are unavailable right now.")}</p>`;
       return;
     }
     if (faixa) {
@@ -90,12 +96,12 @@
         `<span class="mural-chip" role="listitem"><b>${esc(i.simbolo)}</b><span class="p">${preco(i)}</span>${variacao(i.variacao)}</span>`).join("");
       // ~4 segundos por cotação: devagar o bastante para ler. Passar o mouse pausa.
       caixa.innerHTML = `<div class="mural-anda" style="--mural-dur:${Math.max(30, d.itens.length * 4)}s">
-          <div class="mural-trilho"><div class="mural-grupo" role="list" aria-label="Cotações">${chips}</div><div class="mural-grupo" aria-hidden="true">${chips}</div></div></div>
+          <div class="mural-trilho"><div class="mural-grupo" role="list" aria-label="${T("Cotações", "Quotes")}">${chips}</div><div class="mural-grupo" aria-hidden="true">${chips}</div></div></div>
         <p class="mural-nota" style="margin-top:4px">${nota(d)}</p>`;
     } else {
       caixa.innerHTML = `<div class="mural-grade">${d.itens.map((i) => `<div class="mural-card">
-          <span class="sim">${esc(i.simbolo)}${i.tipo === "futuro" ? '<span class="mural-tag">futuro</span>' : ""}</span>
-          <span class="nome">${esc(i.nome)}</span>
+          <span class="sim">${esc(i.simbolo)}${i.tipo === "futuro" ? '<span class="mural-tag">' + T("futuro", "futures") + '</span>' : ""}</span>
+          <span class="nome">${esc(nomeAtivo(i.nome))}</span>
           <span class="preco">${preco(i)}</span>
           <span>${variacao(i.variacao)}</span></div>`).join("")}</div>
         <p class="mural-nota">${nota(d)}</p>`;
