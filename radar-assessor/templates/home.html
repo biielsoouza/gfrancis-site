@@ -3,8 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0057D9">
 <title>Gabriel Francisco de Souza · Mercado financeiro e tecnologia</title>
 <meta name="description" content="Gabriel Francisco de Souza: operador de mesa de renda variável, formado em Ciência da Computação. Construo sistemas e automações para times comerciais e de operações no mercado financeiro.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="gfrancis">
+<meta property="og:url" content="https://gfrancis.com.br/">
+<meta property="og:title" content="Gabriel Francisco de Souza · Mercado financeiro e tecnologia">
+<meta property="og:description" content="Operador de mesa de renda variável e formado em Ciência da Computação. Sistemas, automações e IA para o mercado financeiro.">
+<meta property="og:image" content="https://gfrancis.com.br/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="pt-BR" href="https://gfrancis.com.br/">
 <link rel="alternate" hreflang="en" href="https://gfrancis.com.br/en/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +66,7 @@ img { display: block; max-width: 100%; height: auto; }
 /* Cabeçalho */
 .topo { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 22px; }
 .marca { font-weight: 800; letter-spacing: -0.02em; font-size: 18px; text-decoration: none; }
-.marca span { color: var(--blue); }
+.marca .ponto { display: inline-block; width: 0.42em; height: 0.42em; margin-left: 0.07em; fill: var(--blue); stroke: var(--blue); stroke-width: 2; stroke-linejoin: round; vertical-align: baseline; }
 .topo nav { display: flex; gap: 26px; font-size: 14.5px; font-weight: 600; }
 .topo nav a { text-decoration: none; color: var(--ink-2); }
 .topo nav a:hover { color: var(--blue); }
@@ -246,7 +260,7 @@ dialog.zoom p { color: rgba(255,255,255,0.88); text-align: center; margin: 12px 
 <header class="hero">
   <div class="wrap">
     <div class="topo">
-      <a class="marca" href="/">gfrancis<span>.</span></a>
+      <a class="marca" href="/" aria-label="gfrancis, página inicial">gfrancis<svg class="ponto" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 18 L10 4 L17 18 Z"/></svg></a>
       <nav aria-label="Seções">
         <a href="#sobre">Sobre</a>
         <a href="#trajetoria">Trajetória</a>

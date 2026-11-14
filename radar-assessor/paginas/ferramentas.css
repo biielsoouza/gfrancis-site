@@ -19,7 +19,7 @@ a { color: inherit; }
 
 .topo { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 22px; flex-wrap: wrap; }
 .marca { font-weight: 800; letter-spacing: -0.02em; font-size: 18px; text-decoration: none; }
-.marca span { color: var(--blue); }
+.marca .ponto { display: inline-block; width: 0.42em; height: 0.42em; margin-left: 0.07em; fill: var(--blue); stroke: var(--blue); stroke-width: 2; stroke-linejoin: round; vertical-align: baseline; }
 .topo nav { display: flex; gap: 22px; font-size: 14.5px; font-weight: 600; flex-wrap: wrap; }
 .topo nav a { text-decoration: none; color: var(--ink-2); }
 .topo nav a:hover, .topo nav a[aria-current] { color: var(--blue); }

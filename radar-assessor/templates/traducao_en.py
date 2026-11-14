@@ -19,7 +19,13 @@ PARES = [
      '<link rel="alternate" hreflang="pt-BR" href="https://gfrancis.com.br/">\n<link rel="alternate" hreflang="en" href="https://gfrancis.com.br/en/">'),
 
     # Topo e menu
-    ('<a class="marca" href="/">', '<a class="marca" href="/en/">'),
+    ('<a class="marca" href="/" aria-label="gfrancis, página inicial">', '<a class="marca" href="/en/" aria-label="gfrancis, home">'),
+    ('<meta property="og:url" content="https://gfrancis.com.br/">', '<meta property="og:url" content="https://gfrancis.com.br/en/">'),
+    ('<meta property="og:title" content="Gabriel Francisco de Souza · Mercado financeiro e tecnologia">', '<meta property="og:title" content="Gabriel Francisco de Souza · Financial markets and technology">'),
+    ('<meta property="og:description" content="Operador de mesa de renda variável e formado em Ciência da Computação. Sistemas, automações e IA para o mercado financeiro.">',
+     '<meta property="og:description" content="Equities trading desk operator with a degree in Computer Science. Systems, automations and AI for financial markets.">'),
+    ('<meta property="og:image" content="https://gfrancis.com.br/og.png">', '<meta property="og:image" content="https://gfrancis.com.br/og-en.png">'),
+    ('<meta property="og:locale" content="pt_BR">', '<meta property="og:locale" content="en_US">'),
     ('<nav aria-label="Seções">', '<nav aria-label="Sections">'),
     ('<a href="#sobre">Sobre</a>', '<a href="#sobre">About</a>'),
     ('<a href="#trajetoria">Trajetória</a>', '<a href="#trajetoria">Experience</a>'),
